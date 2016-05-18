@@ -11,6 +11,13 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_list_data(){
-	$output = 'abc';
+	global $base_url;
+	$url = $base_url."/provide-listing-data";
+	$request = drupal_http_request($url);
+	$data = drupal_json_decode($request->data);
+	print_r($data);die();
+	foreach ($json_response as $response_data) {
+	  //your operation code  
+	}
 	return $output;		
 }
