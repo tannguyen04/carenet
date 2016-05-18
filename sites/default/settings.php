@@ -210,22 +210,23 @@
  *   );
  * @endcode
  */
-$databases = array (
-  'default' => 
-  array (
-    'default' => 
+if (!defined('PANTHEON_ENVIRONMENT')) {
+  $databases = array (
+    'default' =>
     array (
-      'database' => 'drupal_evolve',
-      'username' => 'root',
-      'password' => 'root',
-      'host' => 'localhost',
-      'port' => '',
-      'driver' => 'mysql',
-      'prefix' => '',
+      'default' =>
+      array (
+        'database' => 'project_carenet',
+        'username' => 'root',
+        'password' => '123',
+        'host' => 'localhost',
+        'port' => '',
+        'driver' => 'mysql',
+        'prefix' => '',
+      ),
     ),
-  ),
-);
-
+  );
+}
 /**
  * Access control for update.php script.
  *
