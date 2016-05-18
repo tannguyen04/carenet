@@ -12,7 +12,14 @@ function carenet_custom_menu() {
 
 function carenet_custom_list_data(){
 	global $base_url;
-	$url = $base_url.'/provide-listing-data';
+	$output = '';
+
+	$page_parameter = '';
+	if(!empty($_GET['page'])){
+		$page_parameter = '?page='.$_GET['page'];
+	}
+
+	$url = $base_url.'/provide-listing-data'.$page_parameter;
 	$request = drupal_http_request($url);
 	$data = drupal_json_decode($request->data);
 	$data_telephone = array();
@@ -21,7 +28,7 @@ function carenet_custom_list_data(){
 	}
 	$data_telephone = array_unique($data_telephone);
 	
-	$header = array('Phone #', 'Provider', 'City', 'Country', 'Status', 'View', 'Last Activity');
+	$header = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
 	$rows = array();
 	foreach($data_telephone as $phone){
 
@@ -50,5 +57,23 @@ function carenet_custom_list_data(){
 
 	$tables =  theme('table', array('header' => $header, 'rows' => $rows));
 
-	return $tables;		
+	$pager = '<ul class="pager">';
+	for($i = 0; $i < $data['pager']['pages'];$i++){
+		$active = '';
+		if(!empty($_GET['page']) && $_GET['page'] == ($i + 1)){
+			$active = 'class="active"';
+		}
+
+		if($i == 0){
+			$pager .= '<li><a href="/provide-listing-data" '.$active.'>'.($i + 1).'</a></li>';
+		}else{
+			$pager .= '<li><a href="/provide-listing-data?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
+		}
+	}
+	$pager = '</ul>';
+	
+	$output .= $tables;
+	$output .= $pager;
+
+	return $output;		
 }
