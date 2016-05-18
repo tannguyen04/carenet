@@ -19,7 +19,7 @@ function carenet_custom_list_data(){
 	foreach ($data['nodes'] as $response_data) {
 	  $data_telephone[] = $response_data['node']['Telephone'];
 	}
-	array_unique($data_telephone);
+	$data_telephone = array_unique($data_telephone);
 	print_r(count($data_telephone));die();
 	return $output;		
 }
