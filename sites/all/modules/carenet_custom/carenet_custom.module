@@ -1,0 +1,16 @@
+<?php
+
+function carenet_custom_menu() {
+  $items['provider-listing'] = array(
+    'title' => 'Provider Listing',
+    'page callback' => 'carenet_custom_list_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+function carenet_custom_list_data(){
+	$output = 'abc';
+	return $output;		
+}
