@@ -36,10 +36,11 @@ function carenet_custom_list_data(){
 		$request = drupal_http_request($url);
 		$data_child = drupal_json_decode($request->data);
 
-		$provider = count($data_child['nodes']);
+		$provider = array();
 		$city = array();
 		$county = array();
 		foreach($data_child['nodes'] as $item){
+			$provider = $item['node']['nid'];
 			$city[] = $item['node']['city'];
 			$county[] = $item['node']['county'];
 		}
@@ -47,7 +48,7 @@ function carenet_custom_list_data(){
 		$city = array_unique($city);
 		$county = array_unique($county);
 		$rows[] = array($phone,
-										$provider,
+										count($provider),
 										count($city),
 										count($county),
 										'New',
@@ -70,8 +71,8 @@ function carenet_custom_list_data(){
 			$pager .= '<li><a href="/provide-listing-data?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
 		}
 	}
-	$pager = '</ul>';
-	
+	$pager .= '</ul>';
+
 	$output .= $tables;
 	$output .= $pager;
 
