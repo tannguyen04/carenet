@@ -15,7 +15,6 @@ function carenet_custom_list_data(){
 	$url = $base_url."/provide-listing-data";
 	$request = drupal_http_request($url);
 	$data = drupal_json_decode($request->data);
-	print_r($data);die();
 	$data_telephone = array();
 	foreach ($data['nodes'] as $response_data) {
 	  $data_telephone[] = $response_data['node']['Telephone'];
