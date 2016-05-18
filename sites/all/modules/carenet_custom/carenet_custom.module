@@ -66,9 +66,9 @@ function carenet_custom_list_data(){
 		}
 
 		if($i == 0){
-			$pager .= '<li><a href="/provide-listing-data" '.$active.'>'.($i + 1).'</a></li>';
+			$pager .= '<li><a href="/provider-listing" '.$active.'>'.($i + 1).'</a></li>';
 		}else{
-			$pager .= '<li><a href="/provide-listing-data?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
+			$pager .= '<li><a href="/provider-listing?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
 		}
 	}
 	$pager .= '</ul>';
