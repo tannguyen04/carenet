@@ -16,8 +16,11 @@ function carenet_custom_list_data(){
 	$request = drupal_http_request($url);
 	$data = drupal_json_decode($request->data);
 	print_r($data);die();
-	foreach ($json_response as $response_data) {
-	  //your operation code  
+	$data_telephone = array();
+	foreach ($data['nodes'] as $response_data) {
+	  $data_telephone[] = $response_data['node']['Telephone'];
 	}
+	array_unique($data_telephone);
+	print_r(count($data_telephone));die();
 	return $output;		
 }
