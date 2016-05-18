@@ -40,7 +40,7 @@ function carenet_custom_list_data(){
 		$city = array();
 		$county = array();
 		foreach($data_child['nodes'] as $item){
-			$provider = $item['node']['nid'];
+			$provider[] = $item['node']['nid'];
 			$city[] = $item['node']['city'];
 			$county[] = $item['node']['county'];
 		}
