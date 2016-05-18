@@ -61,7 +61,7 @@ function carenet_custom_list_data(){
 	$pager = '<ul class="pager">';
 	for($i = 0; $i < $data['pager']['pages'];$i++){
 		$active = '';
-		if(!empty($_GET['page']) && $_GET['page'] == ($i + 1)){
+		if(!empty($_GET['page']) && $_GET['page'] == ($i + 2)){
 			$active = 'class="active"';
 		}
 
