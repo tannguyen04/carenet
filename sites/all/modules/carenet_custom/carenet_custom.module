@@ -31,15 +31,16 @@ function carenet_custom_list_data(){
 
 		$provider = count($data_child['nodes']);
 		$city = array();
-		$country = array();
+		$county = array();
 		foreach($data_child['nodes'] as $item){
 			$city[] = $item['node']['city'];
-			$country[] = $item['node']['county'];
+			$county[] = $item['node']['county'];
 		}
 
 		$city = array_unique($city);
-		$country = array_unique($country);
-		$rows[] = array($provider,
+		$county = array_unique($county);
+		$rows[] = array($phone,
+										$provider,
 										count($city),
 										count($county),
 										'New',
