@@ -90,11 +90,8 @@ function carenet_custom_get_data(){
 	$page_parameter = '?page='.$curPage;
 
 	$url = $base_url.'/provide-listing-data'.$page_parameter;
-
-	$request = drupal_http_request($url);
-	$request = file_get_contents($url);
-	print_r($request);die();
-	$data = drupal_json_decode($request->data);
+	
+	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
 
 	foreach ($data['nodes'] as $response_data) {
@@ -108,8 +105,7 @@ function carenet_custom_get_data(){
 	foreach($data_telephone as $phone){
 
 		$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
-		$request = drupal_http_request($url);
-		$data_child = drupal_json_decode($request->data);
+		$data_child = drupal_json_decode(file_get_contents($url));
 
 		$provider = array();
 		$city = array();
