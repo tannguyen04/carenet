@@ -77,9 +77,8 @@ function carenet_custom_list_data(){
         $output .='</tr>
           </tfoot>
     </table>';
-  
-  $header['data'] = $fieldsArr;
-  drupal_add_js(array('carenet_custom_list_data_fields' => json_encode($header)), 'setting');
+    
+  drupal_add_js(array('carenet_custom_list_data_fields' => json_encode($projects_fields)), 'setting');
 	return $output;
 }
 
@@ -93,6 +92,8 @@ function carenet_custom_get_data(){
 	$url = $base_url.'/provide-listing-data'.$page_parameter;
 
 	$request = drupal_http_request($url);
+	$request = file_get_contents($url);
+	print_r($request);die();
 	$data = drupal_json_decode($request->data);
 	$data_telephone = array();
 
@@ -121,6 +122,7 @@ function carenet_custom_get_data(){
 
 		$city = array_unique($city);
 		$county = array_unique($county);
+
 		$rows[] = array($phone,
 										count($provider),
 										count($city),
