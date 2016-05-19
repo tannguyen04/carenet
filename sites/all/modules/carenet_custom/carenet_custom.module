@@ -149,10 +149,10 @@ function carenet_custom_get_data(){
 	// $output .= $tables;
 	// $output .= $pager;
 
-	$data['data'] = $rows;
-  $data['options'] = '';
-  $data['files'] = '';
-  $data['recordsTotal'] = $data['pager']['count'];
-  $data['recordsFiltered'] = $data['pager']['count'];
-  return drupal_json_output($data);
+	$data_listing['data'] = $rows;
+  $data_listing['options'] = '';
+  $data_listing['files'] = '';
+  $data_listing['recordsTotal'] = $data['pager']['count'];
+  $data_listing['recordsFiltered'] = $data['pager']['count'];
+  return drupal_json_output($data_listing);
 }
