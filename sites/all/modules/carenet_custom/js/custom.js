@@ -19,10 +19,6 @@
       datatable.ajax.url( '/provider-get-data?npi='+npi ).load();
     });
 
-    
-    //data
-    //
-
   });
 }(jQuery));
 
