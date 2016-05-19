@@ -13,7 +13,7 @@ function carenet_admin_provider_active_form($form, &$form_state) {
   );
   $form['carenet_provider_active_contract'] = array(
     '#type' => 'text_format',
-    '#title' => t('Program Review'),
+    '#title' => t('Contract'),
     '#default_value' => variable_get('carenet_provider_active_contract', ''),
     '#format' => variable_get('carenet_provider_active_contract_format', 'full_html'),
     '#required' => TRUE,
