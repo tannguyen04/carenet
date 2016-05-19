@@ -39,6 +39,70 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_list_data(){
-	$output = 'abc';
+	global $base_url;
+	$output = '';
+
+	$page_parameter = '';
+	if(!empty($_GET['page'])){
+		$page_parameter = '?page='.$_GET['page'];
+	}
+
+	$url = $base_url.'/provide-listing-data'.$page_parameter;
+	$request = drupal_http_request($url);
+	$data = drupal_json_decode($request->data);
+	$data_telephone = array();
+	foreach ($data['nodes'] as $response_data) {
+	  $data_telephone[] = $response_data['node']['Telephone'];
+	}
+	$data_telephone = array_unique($data_telephone);
+	
+	$header = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+	$rows = array();
+	foreach($data_telephone as $phone){
+
+		$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
+		$request = drupal_http_request($url);
+		$data_child = drupal_json_decode($request->data);
+
+		$provider = array();
+		$city = array();
+		$county = array();
+		foreach($data_child['nodes'] as $item){
+			$provider[] = $item['node']['nid'];
+			$city[] = $item['node']['city'];
+			$county[] = $item['node']['county'];
+		}
+
+		$city = array_unique($city);
+		$county = array_unique($county);
+		$rows[] = array($phone,
+										count($provider),
+										count($city),
+										count($county),
+										'New',
+										'<a href="#">View</a>',
+										'');
+	}
+
+	$tables =  theme('table', array('header' => $header, 'rows' => $rows));
+
+	$pager = '<ul class="pager">';
+	for($i = 0; $i < $data['pager']['pages'];$i++){
+		$active = '';
+		if(!empty($_GET['page']) && $_GET['page'] == $i){
+			$active = 'class="active"';
+		}
+
+		if($i == 0){
+			$pager .= '<li><a href="/provider-listing" '.$active.'>'.($i + 1).'</a></li>';
+		}else{
+			$pager .= '<li><a href="/provider-listing?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
+		}
+	}
+	$pager .= '</ul>';
+
+	$output .= $tables;
+	$output .= $pager;
+
 	return $output;		
 }
