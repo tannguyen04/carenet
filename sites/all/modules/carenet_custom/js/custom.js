@@ -52,6 +52,7 @@
       data['state'] = $('#state').val();
       data['county'] = $('#county').val();
       data['status'] = $('#status').val();
+      return data;
     }
 
   });
