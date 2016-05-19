@@ -63,9 +63,19 @@ function carenet_custom_list_data(){
 	$output = '';
 
 	$output .= '<div class="filter_npi"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
-	// $output .= '<div class="filter_city"><label>City</label><input type="text" id="npi" name="npi"></div>';
+
+	$city = '<select id="city">';
+	$city .='<option value="All" selected="selected">- Any -</option>';
+	$data_city = taxonomy_get_tree(6);
+	print_r($data_city);die();
+	foreach($data_city as $key => $value){
+		$city .='<option value="All" selected="selected">- Any -</option>';
+	}
+	$city .='</select>';
+
+	$output .= '<div class="filter_city"><label>City</label><input type="text" id="npi" name="npi"></div>';
 	// $output .= '<div class="filter_state"><label>State</label><input type="text" id="npi" name="npi"></div>';
-	
+
 	// $output .= '<div class="filter_county"><label>County</label><input type="text" id="npi" name="npi"></div>';
 	// $output .= '<div class="filter_status"><label>Status</label><input type="text" id="npi" name="npi"></div>';
 
