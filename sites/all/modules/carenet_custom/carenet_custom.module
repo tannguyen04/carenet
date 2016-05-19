@@ -116,7 +116,7 @@ function carenet_custom_get_data(){
 		$county = array_unique($county);
 
 		$rows[] = array('DT_RowId' => $i,
-										'Phone #' => $phone,
+										'Phone #' => $key,
 										'Provider' => count($provider),
 										'City' => count($city),
 										'County' => count($county),
