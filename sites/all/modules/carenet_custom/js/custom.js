@@ -8,6 +8,7 @@
             type: "POST"
         },
         serverSide: true,
+        processing: true,
         columns: fields,
         select: true,
         
