@@ -95,8 +95,10 @@ function carenet_custom_get_data(){
 	$data_telephone = array();
 
 	foreach ($data['nodes'] as $response_data) {
-	  $data_telephone[] = $response_data['node']['Telephone'];
+	  $data_telephone[$response_data['node']['telephone']][] = $response_data['node'];
 	}
+
+	print_r($data_telephone);die();
 
 	$data_telephone = array_unique($data_telephone);
 
@@ -115,7 +117,7 @@ function carenet_custom_get_data(){
 			$city[] = $item['node']['city'];
 			$county[] = $item['node']['county'];
 		}
-		
+
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $phone,
 										'Provider' => count($provider),
