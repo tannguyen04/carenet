@@ -100,7 +100,7 @@ function carenet_custom_get_data(){
 		$parameter['page'] = $_POST['start']/$_POST['length'];
 	}
 
-	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&page='.$parameter['page'];
+	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
