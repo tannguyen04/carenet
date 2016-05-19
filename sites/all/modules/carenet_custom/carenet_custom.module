@@ -10,6 +10,14 @@ function carenet_custom_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
+
+  $items['provider-get-data'] = array(
+    'title' => 'Provider Listing',
+    'page callback' => 'carenet_custom_get_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['admin/config/carenet'] = array(
     'title' => 'Carenet',
     'description' => 'Settings for Carenet',
@@ -39,70 +47,96 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_list_data(){
+	//drupal_add_js(drupal_get_path('module', 'wb_project').'/js/jquery-1.12.0.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.dataTables.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/dataTables.select.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom.js', 'file');
+
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/select.dataTables.min.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.dataTables.min.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	
+
+	$fieldsArr = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+
+	$projects_fields = array();
+
+	$output = '<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>';
+            	foreach ($fieldsArr as $field) {
+            		$output .= '<th>'.trim($field).'</th>';
+            		$projects_fields[] = array('data' => trim($field));
+            	}
+        $output .='</tr>
+        </thead>
+        <tfoot>
+            <tr>';
+                foreach ($fieldsArr as $field) {
+            		$output .= '<th>'.trim($field).'</th>';
+            	}
+        $output .='</tr>
+          </tfoot>
+    </table>';
+    
+  drupal_add_js(array('carenet_custom_list_data_fields' => json_encode($projects_fields)), 'setting');
+	return $output;
+}
+
+function carenet_custom_get_data(){
 	global $base_url;
 	$output = '';
 
-	$page_parameter = '';
-	if(!empty($_GET['page'])){
-		$page_parameter = '?page='.$_GET['page'];
+	// Add parameter filter
+	$parameter = array();
+	if(!empty($_POST['search']['value'])){
+		$parameter['search_full'] = $_POST['search']['value'];
 	}
 
-	$url = $base_url.'/provide-listing-data'.$page_parameter;
-	$request = drupal_http_request($url);
-	$data = drupal_json_decode($request->data);
+	if(!empty($_POST['start']) && !empty($_POST['length'])){
+		$parameter['page'] = $_POST['start']/$_POST['length'];
+	}
+
+	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&page='.$parameter['page'];
+
+	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
+
 	foreach ($data['nodes'] as $response_data) {
-	  $data_telephone[] = $response_data['node']['Telephone'];
+	  $data_telephone[$response_data['node']['telephone']][] = $response_data['node'];
 	}
-	$data_telephone = array_unique($data_telephone);
-	
-	$header = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+
 	$rows = array();
-	foreach($data_telephone as $phone){
-
-		$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
-		$request = drupal_http_request($url);
-		$data_child = drupal_json_decode($request->data);
-
+	$i = 1;
+	foreach($data_telephone as $key => $phone){
 		$provider = array();
 		$city = array();
 		$county = array();
-		foreach($data_child['nodes'] as $item){
-			$provider[] = $item['node']['nid'];
-			$city[] = $item['node']['city'];
-			$county[] = $item['node']['county'];
+
+		foreach($data_telephone[$key] as $item){
+			$provider[] = $item['nid'];
+			$city[] = $item['city'];
+			$county[] = $item['county'];
 		}
 
+		$provider = array_unique($provider);
 		$city = array_unique($city);
 		$county = array_unique($county);
-		$rows[] = array($phone,
-										count($provider),
-										count($city),
-										count($county),
-										'New',
-										'<a href="#">View</a>',
-										'');
+
+		$rows[] = array('DT_RowId' => $i,
+										'Phone #' => $key,
+										'Provider' => count($provider),
+										'City' => count($city),
+										'County' => count($county),
+										'Status' => 'New',
+										'View' => '<a href="#">View</a>',
+										'Last Activity' => '');
+		$i++;
 	}
 
-	$tables =  theme('table', array('header' => $header, 'rows' => $rows));
-
-	$pager = '<ul class="pager">';
-	for($i = 0; $i < $data['pager']['pages'];$i++){
-		$active = '';
-		if(!empty($_GET['page']) && $_GET['page'] == $i){
-			$active = 'class="active"';
-		}
-
-		if($i == 0){
-			$pager .= '<li><a href="/provider-listing" '.$active.'>'.($i + 1).'</a></li>';
-		}else{
-			$pager .= '<li><a href="/provider-listing?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
-		}
-	}
-	$pager .= '</ul>';
-
-	$output .= $tables;
-	$output .= $pager;
-
-	return $output;		
+	$data_listing['data'] = $rows;
+  $data_listing['options'] = '';
+  $data_listing['files'] = '';
+  $data_listing['recordsTotal'] = $data['pager']['count'];
+  $data_listing['recordsFiltered'] = $data['pager']['count'];
+  return drupal_json_output($data_listing);
 }
