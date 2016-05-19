@@ -60,7 +60,11 @@ function carenet_custom_list_data(){
 
 	$projects_fields = array();
 
-	$output = '<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
+	$output = '';
+
+	$output .= '<div class="filter_npi"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
+
+	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>';
             	foreach ($fieldsArr as $field) {

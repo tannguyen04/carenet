@@ -1,7 +1,7 @@
 (function ($) {
   $( document ).ready(function() {
   	var fields = JSON.parse(Drupal.settings.carenet_custom_list_data_fields);
-  	$('#carenet_custom_list_data').DataTable( {
+  	var datatable = $('#carenet_custom_list_data').DataTable( {
         dom: "Bfrtip",
         ajax: {
             url: "/provider-get-data",
@@ -13,6 +13,18 @@
         select: true,
         
     } );
+
+    datatable.load();
+    
+    $('#npi').keyup(function(event) {
+      var npi = $(this).val();
+      datatable.ajax.url( '/provider-get-data?npi='+npi ).load();
+    });
+
+    
+    //data
+    //
+
   });
 }(jQuery));
 
