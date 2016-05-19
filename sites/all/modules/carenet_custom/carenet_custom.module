@@ -67,17 +67,42 @@ function carenet_custom_list_data(){
 	$city = '<select id="city">';
 	$city .='<option value="All" selected="selected">- Any -</option>';
 	$data_city = taxonomy_get_tree(6);
-	print_r($data_city);die();
 	foreach($data_city as $key => $value){
-		$city .='<option value="All" selected="selected">- Any -</option>';
+		$city .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
 	}
 	$city .='</select>';
 
-	$output .= '<div class="filter_city"><label>City</label><input type="text" id="npi" name="npi"></div>';
-	// $output .= '<div class="filter_state"><label>State</label><input type="text" id="npi" name="npi"></div>';
+	$output .= '<div class="filter_city"><label>City</label>'.$city.'</div>';
 
-	// $output .= '<div class="filter_county"><label>County</label><input type="text" id="npi" name="npi"></div>';
-	// $output .= '<div class="filter_status"><label>Status</label><input type="text" id="npi" name="npi"></div>';
+	$state = '<select id="state">';
+	$state .='<option value="All" selected="selected">- Any -</option>';
+	$data_state = taxonomy_get_tree(7);
+	foreach($data_state as $key => $value){
+		$state .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+	}
+	$state .='</select>';
+
+	$output .= '<div class="filter_state"><label>State</label>'.$state.'</div>';
+
+	$county = '<select id="county">';
+	$county .='<option value="All" selected="selected">- Any -</option>';
+	$data_county = taxonomy_get_tree(7);
+	foreach($data_county as $key => $value){
+		$county .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+	}
+	$county .='</select>';
+
+	$output .= '<div class="filter_county"><label>County</label>'.$county.'</div>';
+	
+	$status = '<select id="status">';
+	$status .='<option value="All" selected="selected">- Any -</option>';
+	$data_status = taxonomy_get_tree(7);
+	foreach($data_status as $key => $value){
+		$status .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+	}
+	$status .='</select>';
+
+	$output .= '<div class="filter_status"><label>Status</label>'.$status.'</div>';
 
 	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
@@ -115,7 +140,7 @@ function carenet_custom_get_data(){
 		$parameter['page'] = $_POST['start']/$_POST['length'];
 	}
 
-	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&page='.$parameter['page'];
+	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
