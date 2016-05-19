@@ -77,8 +77,9 @@ function carenet_custom_list_data(){
         $output .='</tr>
           </tfoot>
     </table>';
-    
-  drupal_add_js(array('carenet_custom_list_data_fields' => json_encode($projects_fields)), 'setting');
+  
+  $header['data'] = $fieldsArr;
+  drupal_add_js(array('carenet_custom_list_data_fields' => json_encode($header)), 'setting');
 	return $output;
 }
 
@@ -128,26 +129,6 @@ function carenet_custom_get_data(){
 										'<a href="#">View</a>',
 										'test');
 	}
-
-	//$tables =  theme('table', array('header' => $header, 'rows' => $rows));
-
-	// $pager = '<ul class="pager">';
-	// for($i = 0; $i < $data['pager']['pages'];$i++){
-	// 	$active = '';
-	// 	if(!empty($_GET['page']) && $_GET['page'] == $i){
-	// 		$active = 'class="active"';
-	// 	}
-
-	// 	if($i == 0){
-	// 		$pager .= '<li><a href="/provider-listing" '.$active.'>'.($i + 1).'</a></li>';
-	// 	}else{
-	// 		$pager .= '<li><a href="/provider-listing?page='.$i.'" '.$active.'>'.($i + 1).'</a></li>';
-	// 	}
-	// }
-	// $pager .= '</ul>';
-
-	// $output .= $tables;
-	// $output .= $pager;
 
 	$data_listing['data'] = $rows;
   $data_listing['options'] = '';
