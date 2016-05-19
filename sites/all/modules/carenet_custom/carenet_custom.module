@@ -98,25 +98,22 @@ function carenet_custom_get_data(){
 	  $data_telephone[$response_data['node']['telephone']][] = $response_data['node'];
 	}
 
-	print_r($data_telephone);die();
-
-	$data_telephone = array_unique($data_telephone);
-
 	$rows = array();
-
 	$i = 1;
-	foreach($data_telephone as $phone){
-		$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
-		$data_child = drupal_json_decode(file_get_contents($url));
+	foreach($data_telephone as $key => $phone){
 		$provider = array();
 		$city = array();
 		$county = array();
 
-		foreach($data_child['nodes'] as $item){
-			$provider[] = $item['node']['nid'];
-			$city[] = $item['node']['city'];
-			$county[] = $item['node']['county'];
+		foreach($data_telephone[$key] as $item){
+			$provider[] = $item['nid'];
+			$city[] = $item['city'];
+			$county[] = $item['county'];
 		}
+		
+		$provider = array_unique($provider);
+		$city = array_unique($city);
+		$county = array_unique($county);
 
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $phone,
