@@ -62,7 +62,7 @@ function carenet_custom_list_data(){
 
 	$output = '';
 
-	$output .= '<div class="filter_npi"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
+	$output .= '<div class="filter_npi" style="display: inline-block;margin-right: 20px;"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
 
 	$city = '<select id="city">';
 	$city .='<option value="All" selected="selected">- Any -</option>';
@@ -72,7 +72,7 @@ function carenet_custom_list_data(){
 	}
 	$city .='</select>';
 
-	$output .= '<div class="filter_city"><label>City</label>'.$city.'</div>';
+	$output .= '<div class="filter_city" style="display: inline-block;margin-right: 20px;"><label>City</label>'.$city.'</div>';
 
 	$state = '<select id="state">';
 	$state .='<option value="All" selected="selected">- Any -</option>';
@@ -82,7 +82,7 @@ function carenet_custom_list_data(){
 	}
 	$state .='</select>';
 
-	$output .= '<div class="filter_state"><label>State</label>'.$state.'</div>';
+	$output .= '<div class="filter_state" style="display: inline-block;margin-right: 20px;"><label>State</label>'.$state.'</div>';
 
 	$county = '<select id="county">';
 	$county .='<option value="All" selected="selected">- Any -</option>';
@@ -92,7 +92,7 @@ function carenet_custom_list_data(){
 	}
 	$county .='</select>';
 
-	$output .= '<div class="filter_county"><label>County</label>'.$county.'</div>';
+	$output .= '<div class="filter_county" style="display: inline-block;margin-right: 20px;"><label>County</label>'.$county.'</div>';
 	
 	$status = '<select id="status">';
 	$status .='<option value="All" selected="selected">- Any -</option>';
@@ -102,7 +102,7 @@ function carenet_custom_list_data(){
 	}
 	$status .='</select>';
 
-	$output .= '<div class="filter_status"><label>Status</label>'.$status.'</div>';
+	$output .= '<div class="filter_status" style="display: inline-block;margin-right: 20px;"><label>Status</label>'.$status.'</div>';
 
 	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
