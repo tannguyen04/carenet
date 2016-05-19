@@ -56,7 +56,7 @@ function carenet_custom_list_data(){
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.dataTables.min.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	
 
-	$fieldsArr = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+	$fieldsArr = array('Phone', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
 
 	$projects_fields = array();
 
