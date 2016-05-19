@@ -86,10 +86,19 @@ function carenet_custom_get_data(){
 	global $base_url;
 	$output = '';
 
-	$curPage = $_POST['start']/$_POST['length'];
-	$page_parameter = '?page='.$curPage;
+	// Add parameter filter
+	$parameter = array();
+	if(!empty($_POST['search']['value'])){
+		$parameter['search_full'] = $_POST['search']['value'];
+	}
 
-	$url = $base_url.'/provide-listing-data'.$page_parameter;
+	if(!empty($_POST['start']) && !empty($_POST['length'])){
+		$parameter['page'] = $_POST['start']/$_POST['length'];
+	}
+
+	$query = drupal_http_build_query($parameter);
+
+	$url = $base_url.'/provide-listing-data'.$query;
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
@@ -110,7 +119,7 @@ function carenet_custom_get_data(){
 			$city[] = $item['city'];
 			$county[] = $item['county'];
 		}
-		
+
 		$provider = array_unique($provider);
 		$city = array_unique($city);
 		$county = array_unique($county);
