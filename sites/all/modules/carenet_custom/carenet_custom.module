@@ -86,7 +86,7 @@ function carenet_custom_list_data(){
 
 	$county = '<select id="county">';
 	$county .='<option value="All" selected="selected">- Any -</option>';
-	$data_county = taxonomy_get_tree(7);
+	$data_county = taxonomy_get_tree(8);
 	foreach($data_county as $key => $value){
 		$county .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
 	}
@@ -96,7 +96,7 @@ function carenet_custom_list_data(){
 	
 	$status = '<select id="status">';
 	$status .='<option value="All" selected="selected">- Any -</option>';
-	$data_status = taxonomy_get_tree(7);
+	$data_status = taxonomy_get_tree(13);
 	foreach($data_status as $key => $value){
 		$status .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
 	}
