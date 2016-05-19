@@ -90,7 +90,7 @@ function carenet_custom_get_data(){
 	$page_parameter = '?page='.$curPage;
 
 	$url = $base_url.'/provide-listing-data'.$page_parameter;
-	
+
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
 
@@ -98,34 +98,42 @@ function carenet_custom_get_data(){
 	  $data_telephone[] = $response_data['node']['Telephone'];
 	}
 
-	$data_telephone = array_unique($data_telephone);
+	//$data_telephone = array_unique($data_telephone);
 
 	$rows = array();
 
 	foreach($data_telephone as $phone){
 
-		$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
-		$data_child = drupal_json_decode(file_get_contents($url));
-
-		$provider = array();
-		$city = array();
-		$county = array();
-		foreach($data_child['nodes'] as $item){
-			$provider[] = $item['node']['nid'];
-			$city[] = $item['node']['city'];
-			$county[] = $item['node']['county'];
-		}
-
-		$city = array_unique($city);
-		$county = array_unique($county);
-
 		$rows[] = array($phone,
-										count($provider),
-										count($city),
-										count($county),
+										1,
+										1,
+										1,
 										'New',
 										'<a href="#">View</a>',
 										'test');
+
+		//$url = $base_url.'/listing-multi-provider?field_pv_telephone='.$phone;
+		//$data_child = drupal_json_decode(file_get_contents($url));
+
+		// $provider = array();
+		// $city = array();
+		// $county = array();
+		// foreach($data_child['nodes'] as $item){
+		// 	$provider[] = $item['node']['nid'];
+		// 	$city[] = $item['node']['city'];
+		// 	$county[] = $item['node']['county'];
+		// }
+
+		// $city = array_unique($city);
+		// $county = array_unique($county);
+
+		// $rows[] = array($phone,
+		// 								count($provider),
+		// 								count($city),
+		// 								count($county),
+		// 								'New',
+		// 								'<a href="#">View</a>',
+		// 								'test');
 	}
 
 	$data_listing['data'] = $rows;
