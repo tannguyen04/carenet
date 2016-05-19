@@ -13,8 +13,6 @@
         select: true,
         
     } );
-
-    datatable.load();
     
     $('#npi').keyup(function(event) {
       var npi = $(this).val();
