@@ -42,7 +42,7 @@ function carenet_custom_menu() {
 function carenet_custom_get_data_city(){
 	global $base_url;
 	if(!empty($_GET['state'])){
-		$url = $base_url.'/get-city-by-state?state=';
+		$url = $base_url.'/get-city-by-state?state='.$_GET['state'];
 		$data = drupal_json_decode(file_get_contents($url));
 
 		$list_data = array();
