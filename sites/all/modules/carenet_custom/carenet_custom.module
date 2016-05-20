@@ -59,15 +59,15 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 	$form = array();
 	//Get Doctor
-	$form['providers'] = array(
-	  '#type' => 'fieldset', 
-	  '#title' => t('Providers'), 
-	  '#collapsible' => TRUE, 
-	  '#collapsed' => FALSE,
-	);
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
 	$data = drupal_json_decode(file_get_contents($url));
 	if(!empty($data['nodes'])){
+		$form['providers'] = array(
+		  '#type' => 'fieldset', 
+		  '#title' => t('Providers'), 
+		  '#collapsible' => TRUE, 
+		  '#collapsed' => FALSE,
+		);
 		$doctor = array();
 		foreach($data['nodes'] as $item){
 			$doctor_tb_info = '<table>
@@ -89,6 +89,90 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#type' => 'checkboxes',
 		  '#options' => $doctor
   	);
+
+		$form['action-doctor'] = array(
+		  '#type' => 'fieldset', 
+		  '#title' => t('Actions'), 
+		  '#collapsible' => TRUE, 
+		  '#collapsed' => FALSE,
+		);
+
+		$status = array();
+		$data_status = taxonomy_get_tree(13);
+		foreach($data_status as $key => $value){
+			$status[$value->tid] = $value->name;
+		}
+
+		$form['action-doctor']['status'] = array(
+       '#type' => 'select',
+       '#title' => t('Status'),
+       '#options' => $status,
+   	);
+
+   	$reason = array();
+		$data_reason = taxonomy_get_tree(13);
+		foreach($data_reason as $key => $value){
+			$reason[$value->tid] = $value->name;
+		}
+
+		$form['action-doctor']['reason'] = array(
+       '#type' => 'select',
+       '#title' => t('Reason'),
+       '#options' => $reason,
+   	);
+
+   	$form['action-doctor']['person'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Person'), 
+		  '#default_value' => 'Person', 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#required' => TRUE,
+		);
+
+		$form['action-doctor']['email'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Email'), 
+		  '#default_value' => 'email', 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#required' => TRUE,
+		);
+
+		$form['action-doctor']['phone'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Phone'), 
+		  '#default_value' => 'phone', 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#required' => TRUE,
+		);
+
+		$form['action-doctor']['designation'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Designation'), 
+		  '#default_value' => 'designation', 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#required' => TRUE,
+		);
+
+		$form['action-doctor']['date_time'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Date Time Callback'), 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#required' => TRUE,
+		);
+
+		$form['action-doctor']['comment'] = array(
+			'#title' => t('Comment'),
+			'#type' => 'textarea',
+			'#default_value' => '',
+		);
+
+
+
 	}else{
 		drupal_set_message('Telephone not found','status');
 		drupal_goto('/provider-listing');
