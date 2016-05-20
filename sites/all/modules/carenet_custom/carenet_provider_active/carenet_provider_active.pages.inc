@@ -81,12 +81,8 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#attributes' => array(
       'class' => array('element-invisible', 'signature-execute-accept'),
     ),
+    '#after_build' => array('_after_build_signature_execute_accept'),
   );
-  dpm($form_state);
-  if (isset($form_state['input']['op']) && $form_state['input']['op'] == t('Accept')) {
-    //Remove class element-invisible if submit accept
-    unset($form['signature_execute']['accept']['#attributes']['class'][0]);
-  }
 
   $form['signature_execute']['accept']['name'] = array(
     '#type' => 'textfield',
@@ -110,6 +106,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#value' => t('Accept'),
     '#submit' => array('carenet_provider_active_form_signature_execute_accept_submit'),
     '#validate' => array('carenet_provider_active_form_signature_execute_accept_validate'),
+    '#name' => 'op_accept',
     '#limit_validation_errors' => array(
       array('mail'), //Only validate email and username when click submit
       array('name'),
@@ -123,11 +120,8 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#attributes' => array(
       'class' => array('element-invisible', 'signature-execute-ask-question'),
     ),
+    '#after_build' => array('_after_build_signature_execute_ask_question'),
   );
-  if (isset($form_state['input']['op']) && $form_state['input']['op'] == t('Ask question')) {
-    //Remove class element-invisible if submit accept
-    unset($form['signature_execute']['ask_question']['#attributes']['class'][0]);
-  }
   $form['signature_execute']['ask_question']['question'] = array(
     '#type' => 'textarea',
     '#title' => t('Ask questions'),
@@ -141,8 +135,23 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#limit_validation_errors' => array(
       array('question'), //Only validate question when click submit
     ),
+    '#name' => 'op_ask_question',
   );
   return $form;
+}
+
+function _after_build_signature_execute_accept(&$element, $form_state) {
+  if ($form_state['triggering_element']['#name'] == 'op_accept') {
+    unset($element['#attributes']['class'][0]);
+  }
+  return $element;
+}
+
+function _after_build_signature_execute_ask_question(&$element, $form_state) {
+  if ($form_state['triggering_element']['#name'] == 'op_ask_question') {
+    unset($element['#attributes']['class'][0]);
+  }
+  return $element;
 }
 
 /*
