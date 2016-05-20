@@ -87,7 +87,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		$form['providers']['list_doctor'] = array(
 		  '#type' => 'checkboxes',
-		  '#options' => $doctor_tb_info
+		  '#options' => $doctor
   	);
 	}else{
 		drupal_set_message('Telephone not found','status');
