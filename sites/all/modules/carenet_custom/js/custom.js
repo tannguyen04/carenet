@@ -29,7 +29,7 @@
       var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
       datatable.ajax.url(url).load();
       $.get( "/get_data_county?city="+data['city'], function( data ) {
-        $('#city').html(data);
+        $('#county').html(data);
       });
     });
 
