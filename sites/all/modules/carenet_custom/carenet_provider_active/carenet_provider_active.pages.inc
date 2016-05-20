@@ -231,7 +231,7 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
 function carenet_provider_active_form($form, &$form_state) {
   //Init step
   if (empty($form_state['step'])) {
-    $form_state['step'] = 4;
+    $form_state['step'] = 1;
     $form_state['step_information'] = _carenet_provider_active_form_steps();
   }
   $step = &$form_state['step'];
