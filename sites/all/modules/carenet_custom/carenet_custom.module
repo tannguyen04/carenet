@@ -51,7 +51,7 @@ function carenet_custom_get_data_county(){
 	if(!empty($_GET['city'])){
 		if($_GET['city'] == 'All'){
 			$county ='<option value="All" selected="selected">- Any -</option>';
-			$data_county = taxonomy_get_tree(6);
+			$data_county = taxonomy_get_tree(8);
 			foreach($data_county as $key => $value){
 				$county .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
 			}
@@ -81,7 +81,7 @@ function carenet_custom_get_data_city(){
 	if(!empty($_GET['state'])){
 		if($_GET['state'] == 'All'){
 			$city ='<option value="All" selected="selected">- Any -</option>';
-			$data_city = taxonomy_get_tree(8);
+			$data_city = taxonomy_get_tree(6);
 			foreach($data_city as $key => $value){
 				$city .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
 			}
