@@ -28,12 +28,22 @@
       var data = get_value_all();
       var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
       datatable.ajax.url(url).load();
+      $('#county').prop('disabled', true);
+      $.get( "/get_data_county?city="+data['city'], function( data ) {
+        $('#county').html(data);
+        $('#county').prop('disabled', false);
+      });
     });
 
     $('#state').change(function(event) {
       var data = get_value_all();
       var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
       datatable.ajax.url(url).load();
+      $('#city').prop('disabled', true);
+      $.get( "/get_data_city?state="+data['state'], function( data ) {
+        $('#city').html(data);
+        $('#city').prop('disabled', false);
+      });
     });
 
     $('#county').change(function(event) {
