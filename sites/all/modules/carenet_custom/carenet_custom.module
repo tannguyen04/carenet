@@ -283,7 +283,7 @@ function carenet_custom_get_data(){
 										'City' => count($city),
 										'County' => count($county),
 										'Status' => 'New',
-										'View' => '<a href="/provider-action/'.$phone.'">View</a>',
+										'View' => '<a href="/provider-action/'.$key.'">View</a>',
 										'Last Activity' => '');
 		$i++;
 	}
