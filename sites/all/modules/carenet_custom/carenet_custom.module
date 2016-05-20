@@ -55,8 +55,45 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
-	$form = array();
+	global $base_url;
 
+	$form = array();
+	//Get Doctor
+	$form['providers'] = array(
+	  '#type' => 'fieldset', 
+	  '#title' => t('Providers'), 
+	  '#collapsible' => TRUE, 
+	  '#collapsed' => FALSE,
+	);
+	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
+	$data = drupal_json_decode(file_get_contents($url));
+	if(!empty($data['nodes'])){
+		$doctor = array();
+		foreach($data['nodes'] as $item){
+			$doctor_tb_info = '<table>
+														<tr>
+															<td>Name</td>
+															<td>NPI</td>
+															<td>State</td>
+														</tr>
+														<tr>
+															<td>'.$item['name'].'</td>
+															<td>'.$item['npi'].'</td>
+															<td>'.$item['state'].'</td>
+														</tr>
+													</table>';
+			$doctor[$item['node']['nid']] = $doctor_tb_info;
+		}
+
+		$form['providers']['list_doctor'] = array(
+		  '#type' => 'checkboxes',
+		  '#options' => $doctor_tb_info
+  	);
+	}else{
+		drupal_set_message('Telephone not found','status');
+		drupal_goto('/provider-listing');
+	}
+	
 	return $form;
 }
 
