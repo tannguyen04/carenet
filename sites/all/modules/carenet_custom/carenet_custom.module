@@ -25,6 +25,13 @@ function carenet_custom_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['get_data_county'] = array(
+    'title' => 'Data City',
+    'page callback' => 'carenet_custom_get_data_county',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['admin/config/carenet'] = array(
     'title' => 'Carenet',
     'description' => 'Settings for Carenet',
@@ -39,22 +46,62 @@ function carenet_custom_menu() {
   return $items;
 }
 
+function carenet_custom_get_data_county(){
+	global $base_url;
+	if(!empty($_GET['county'])){
+		if($_GET['county'] == 'All'){
+			$county ='<option value="All" selected="selected">- Any -</option>';
+			$data_county = taxonomy_get_tree(6);
+			foreach($data_county as $key => $value){
+				$county .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+			}
+			print $county;
+		}else{
+			$url = $base_url.'/get_county_by_city?city='.$_GET['county'];
+			$data = drupal_json_decode(file_get_contents($url));
+
+			$list_data = array();
+			foreach ($data['nodes'] as $response_data) {
+		  	$list_data[$response_data['node']['tid']] = $response_data['node']['county'];
+			}
+
+			$list = '<option selected="selected" value="All">- Any -</option>';
+			foreach($list_data as $key => $item){
+				$list .='<option value="'.$key.'" >'.$item.'</option>';
+			}
+			print $list;
+		}
+		
+		exit();
+	}
+}
+
 function carenet_custom_get_data_city(){
 	global $base_url;
 	if(!empty($_GET['state'])){
-		$url = $base_url.'/get-city-by-state?state='.$_GET['state'];
-		$data = drupal_json_decode(file_get_contents($url));
+		if($_GET['state'] == 'All'){
+			$city ='<option value="All" selected="selected">- Any -</option>';
+			$data_city = taxonomy_get_tree(8);
+			foreach($data_city as $key => $value){
+				$city .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+			}
+			print $city;
+		}else{
+			$url = $base_url.'/get-city-by-state?state='.$_GET['state'];
+			$data = drupal_json_decode(file_get_contents($url));
 
-		$list_data = array();
-		foreach ($data['nodes'] as $response_data) {
-	  	$list_data[$response_data['node']['tid']] = $response_data['node']['city'];
-		}
+			$list_data = array();
+			foreach ($data['nodes'] as $response_data) {
+		  	$list_data[$response_data['node']['tid']] = $response_data['node']['city'];
+			}
 
-		$list = '<option selected="selected" value="All">- Any -</option>';
-		foreach($list_data as $key => $item){
-			$list .='<option value="'.$key.'" >'.$item.'</option>';
+			$list = '<option selected="selected" value="All">- Any -</option>';
+			foreach($list_data as $key => $item){
+				$list .='<option value="'.$key.'" >'.$item.'</option>';
+			}
+			print $list;
 		}
-		print $list;
+		
 		exit();
 	}
 }
