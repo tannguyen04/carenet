@@ -18,6 +18,13 @@ function carenet_custom_menu() {
     'type' => MENU_CALLBACK,
   );
 
+  $items['get_data_city'] = array(
+    'title' => 'Data City',
+    'page callback' => 'carenet_custom_get_data_city',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
   $items['admin/config/carenet'] = array(
     'title' => 'Carenet',
     'description' => 'Settings for Carenet',
@@ -30,6 +37,26 @@ function carenet_custom_menu() {
   );
   
   return $items;
+}
+
+function carenet_custom_get_data_city(){
+	global $base_url;
+	if(!empty($_GET['state'])){
+		$url = $base_url.'/get-city-by-state?state='.$_GET['state'];
+		$data = drupal_json_decode(file_get_contents($url));
+
+		$list_data = array();
+		foreach ($data['nodes'] as $response_data) {
+	  	$list_data[$response_data['node']['tid']] = $response_data['node']['city'];
+		}
+
+		$list = '';
+		foreach($list_data as $key => $item){
+			$list .='<option value="'.$key.'" >'.$item.'</option>';
+		}
+		print $list;
+		exit();
+	}
 }
 
 function carenet_custom_list_data(){
