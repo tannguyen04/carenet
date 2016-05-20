@@ -28,21 +28,7 @@ function carenet_custom_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
-  $items['admin/config/carenet/provider-active'] = array(
-    'title' => 'Provider active',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('carenet_admin_provider_active_form'),
-    'access arguments' => array('administer site configuration'),
-    'file' => 'carenet_custom.admin.inc',
-  );
-  $items['provider-active/%'] = array(
-    'title' => 'Provider active',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('carenet_provider_active_form'),
-    'access callback' => TRUE,
-    'file' => 'carenet_custom.pages.inc',
-  );
-
+  
   return $items;
 }
 

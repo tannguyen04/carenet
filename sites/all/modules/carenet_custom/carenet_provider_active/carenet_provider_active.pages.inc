@@ -57,17 +57,36 @@ function carenet_provider_active_form_contract($form, &$form_state) {
 
 function carenet_provider_active_form_signature_execute($form, &$form_state) {
   $form = array(
-    '#type' => 'container'
+    '#type' => 'container',
+    '#attached' => array(
+      'js' => array(
+        drupal_get_path('module', 'carenet_custom') . '/js/signature_execute.js'
+      ),
+    ),
   );
   //Accept
   $form['signature_execute'] = array(
     '#type' => 'container',
   );
-  $form['signature_execute']['accept'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Accept'),
-    '#description' => t('Please enter below fields before submit'),
+  //
+  $form['signature_execute']['signature_execute_show_accept'] = array(
+    '#markup' => '<a class="btn" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
   );
+  $form['signature_execute']['signature_execute_show_ask_question'] = array(
+    '#markup' => '<a class="btn" id="show-ask-question" href="#"> ' . t('Ask question') . ' </a>',
+  );
+  $form['signature_execute']['accept'] = array(
+    '#type' => 'container',
+    '#description' => t('Please enter below fields before submit'),
+    '#attributes' => array(
+      'class' => array('element-invisible', 'signature-execute-accept'),
+    ),
+  );
+  if (isset($form_state['input']['op']) && $form_state['input']['op'] == t('Accept')) {
+    //Remove class element-invisible if submit accept
+    unset($form['signature_execute']['accept']['#attributes']['class'][0]);
+  }
+
   $form['signature_execute']['accept']['name'] = array(
     '#type' => 'textfield',
     '#title' => t('Username'),
@@ -75,6 +94,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#description' => t('Spaces are allowed; punctuation is not allowed except for periods, hyphens, apostrophes, and underscores.'),
     '#required' => TRUE,
     '#attributes' => array('class' => array('username')),
+    '#default_value' => !empty($form_state['values']['name']) ? $form_state['values']['name'] : '',
   );
   $form['signature_execute']['accept']['mail'] = array(
     '#type' => 'textfield',
@@ -82,6 +102,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#maxlength' => EMAIL_MAX_LENGTH,
     '#description' => t('A valid e-mail address. All e-mails from the system will be sent to this address. The e-mail address is not made public and will only be used if you wish to receive a new password or wish to receive certain news or notifications by e-mail.'),
     '#required' => TRUE,
+    '#default_value' => !empty($form_state['values']['mail']) ? $form_state['values']['mail'] : '',
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
@@ -96,14 +117,21 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
 
   //Ask question
   $form['signature_execute']['ask_question'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Ask question'),
+    '#type' => 'container',
     '#description' => t('Please enter question before you submit'),
+    '#attributes' => array(
+      'class' => array('element-invisible', 'signature-execute-ask-question'),
+    ),
   );
+  if (isset($form_state['input']['op']) && $form_state['input']['op'] == t('Ask question')) {
+    //Remove class element-invisible if submit accept
+    unset($form['signature_execute']['ask_question']['#attributes']['class'][0]);
+  }
   $form['signature_execute']['ask_question']['question'] = array(
     '#type' => 'textarea',
     '#title' => t('Ask questions'),
     '#required' => TRUE,
+    '#default_value' => !empty($form_state['values']['question']) ? $form_state['values']['question'] : '',
   );
   $form['signature_execute']['ask_question']['submit'] = array(
     '#type' => 'submit',
@@ -175,22 +203,25 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   if ($uid) {
     //Send mail
     $new_username = user_load($uid);
-    $sent = _user_mail_notify('register_no_approval_required', $new_username);
-     if ($sent) {
-       drupal_set_message(t('A welcome message with further instructions has been sent to your e-mail address.'));
-     }
+    $sent = _carenet_provider_active_mail_notify('email_provider_accept', $new_username);
+    if ($sent) {
+      drupal_set_message(t('A welcome message with further instructions has been sent to your e-mail address.'));
+    }
     $form_state['redirect'] = '<front>';
   }
-
-
 }
 
 /*
  * Handler submit ask question
  */
 function carenet_provider_active_form_signature_execute_ask_question_submit($form, $form_state) {
-  print_r($form_state);
-  die;
+  //Send mail for admin
+  $admin_load = user_load(1);
+  $admin_load->ask_question = $form_state['values']['question'];
+  $sent = _carenet_provider_active_mail_notify('email_provider_ask_question', $admin_load);
+  if ($sent) {
+    drupal_set_message(t('A message with further instructions has been sent to ADMIN e-mail address.'));
+  }
 }
 
 
@@ -200,7 +231,7 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
 function carenet_provider_active_form($form, &$form_state) {
   //Init step
   if (empty($form_state['step'])) {
-    $form_state['step'] = 1;
+    $form_state['step'] = 4;
     $form_state['step_information'] = _carenet_provider_active_form_steps();
   }
   $step = &$form_state['step'];

@@ -1,0 +1,79 @@
+<?php
+
+/**
+* Implements hook_menu()
+*/
+function carenet_provider_active_menu() {
+  $items['admin/config/carenet/provider-active'] = array(
+    'title' => 'Provider active',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('carenet_admin_provider_active_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'carenet_provider_active.admin.inc',
+  );
+  $items['provider-active/%'] = array(
+    'title' => 'Provider active',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('carenet_provider_active_form'),
+    'access callback' => TRUE,
+    'file' => 'carenet_provider_active.pages.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Token callback to add unsafe tokens for user mails.
+ */
+function provider_active_mail_tokens(&$replacements, $data, $options) {
+  if (isset($data['user'])) {
+    $replacements['[user:one-time-login-url]'] = user_pass_reset_url($data['user']);
+    $replacements['[user:cancel-url]'] = user_cancel_url($data['user']);
+    $replacements['[user:ask_question]'] = isset($data['user']->ask_question) ? $data['user']->ask_question : '';
+  }
+}
+
+/*
+ * Implements hook_mail()
+ */
+function carenet_provider_active_mail($key, &$message, $params) {
+  $language = $message['language'];
+  $variables = array('user' => $params['account']);
+  $message['subject'] = _carenet_provider_active_mail_text($key . '_subject', $language, $variables);
+  $message['body'][] = _carenet_provider_active_mail_text($key . '_body', $language, $variables);
+}
+
+function _carenet_provider_active_mail_text($key, $language = NULL, $variables = array(), $replace = TRUE) {
+  $langcode = isset($language) ? $language->language : NULL;
+  if ($admin_setting = variable_get($key, FALSE)) {
+    // An admin setting overrides the default string.
+    $text = $admin_setting;
+  }else {
+    $text = t("[user:name],
+
+A site administrator at [site:name] has created an account for you. You may now log in by clicking this link or copying and pasting it to your browser:
+
+[user:one-time-login-url]
+
+This link can only be used once to log in and will lead you to a page where you can set your password.
+
+After setting your password, you will be able to log in at [site:login-url] in the future using:
+
+username: [user:name]
+password: Your password
+
+--  [site:name] team", array(), array('langcode' => $langcode));
+  }
+  if ($replace) {
+    return token_replace($text, $variables, array('language' => $language, 'callback' => 'provider_active_mail_tokens', 'sanitize' => FALSE, 'clear' => TRUE));
+  }
+
+  return $text;
+}
+
+function _carenet_provider_active_mail_notify($key, $account, $language = NULL) {
+  $params['account'] = $account;
+  $language = $language ? $language : user_preferred_language($account);
+  $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
+  return empty($mail) ? NULL : $mail['result'];
+}

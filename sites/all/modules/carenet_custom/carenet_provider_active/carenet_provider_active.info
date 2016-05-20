@@ -1,0 +1,5 @@
+name = Carenet Provider Active
+description = Custom workflow provider active.
+core = 7.x
+package = Carenet
+dependencies[] = carenet_custom
