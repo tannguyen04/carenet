@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Carenet field base and taxonomies feature.
+ */
+
+include_once 'carenet_field_base_and_taxonomies.features.inc';

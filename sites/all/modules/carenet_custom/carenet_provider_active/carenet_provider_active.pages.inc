@@ -35,11 +35,39 @@ function carenet_provider_active_form_program_review($form, &$form_state) {
 }
 
 function carenet_provider_active_form_rate_card($form, &$form_state) {
+
+  //Discussion and card rate
+  $discussion = $form['#discussion'];
+  $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
+  $price_custom = $discussion_wrapper->field_dc_price->value();
+  $card_rate = $discussion_wrapper->field_card_rate_ref->value();
+  $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
+
+  //Title card rate
+  $title_card = $card_rate_wrapper->title->value(array('sanitize' => TRUE));
+
+  //Price
+  $price = 0;
+  if (empty($price_custom)) {
+    if (!empty($card_rate)) {
+      $price = $card_rate_wrapper->field_card_rate_price->value();
+    }
+  }else {
+    $price = $price_custom;
+  }
+
+  //Description card rate
+  $description_card = $card_rate_wrapper->body->value(array('decode' => TRUE));
+  $description_card_value = $description_card['value'];
+  $output = '<div> ' . $title_card . ' </div>';
+  $output .= '<div>'.$description_card_value.'</div>';
+  $output .= '<div>Price: $'.$price.'</div>';
+
   $form = array(
     '#type' => 'container'
   );
   $form['rate_card'] = array(
-    '#markup' => 'This is card',
+    '#markup' => $output,
     '#type' => 'item',
   );
   return $form;
@@ -120,7 +148,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#attributes' => array(
       'class' => array('element-invisible', 'signature-execute-ask-question'),
     ),
-    '#after_build' => array('_after_build_signature_execute_ask_question'),
+    //'#after_build' => array('_after_build_signature_execute_ask_question'),
   );
   $form['signature_execute']['ask_question']['question'] = array(
     '#type' => 'textarea',
@@ -140,6 +168,10 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   return $form;
 }
 
+/*
+ * After rebuild, remove class "element-invisible" if clicked button submit
+ */
+
 function _after_build_signature_execute_accept(&$element, $form_state) {
   if (isset($form_state['triggering_element'])) {
     if ($form_state['triggering_element']['#name'] == 'op_accept') {
@@ -148,7 +180,9 @@ function _after_build_signature_execute_accept(&$element, $form_state) {
   }
   return $element;
 }
-
+/*
+ * After rebuild, remove class "element-invisible" if clicked button submit
+ */
 function _after_build_signature_execute_ask_question(&$element, $form_state) {
   if (isset($form_state['triggering_element'])) {
     if ($form_state['triggering_element']['#name'] == 'op_ask_question') {
@@ -242,7 +276,16 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
 /*
  * Form provider active
  */
-function carenet_provider_active_form($form, &$form_state) {
+function carenet_provider_active_form($form, &$form_state, $token) {
+
+  //Get discussion
+  $discussion = _carenet_provider_active_get_discussion_by_token($token);
+  if (!$discussion) {
+    drupal_set_message(t('Sorry, token invalid'));
+    drupal_goto('<front>');
+  }
+  $form['#discussion'] = ($discussion) ? $discussion : NULL;
+
   //Init step
   if (empty($form_state['step'])) {
     $form_state['step'] = 1;

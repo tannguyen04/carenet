@@ -11,10 +11,10 @@ function carenet_provider_active_menu() {
     'access arguments' => array('administer site configuration'),
     'file' => 'carenet_provider_active.admin.inc',
   );
-  $items['provider-active/%'] = array(
+  $items['activate/%'] = array(
     'title' => 'Provider active',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('carenet_provider_active_form'),
+    'page arguments' => array('carenet_provider_active_form', 1),
     'access callback' => TRUE,
     'file' => 'carenet_provider_active.pages.inc',
   );
@@ -43,6 +43,14 @@ function carenet_provider_active_mail($key, &$message, $params) {
   $message['body'][] = _carenet_provider_active_mail_text($key . '_body', $language, $variables);
 }
 
+/**
+ * @param $key
+ * @param null $language
+ * @param array $variables
+ * @param bool $replace
+ * @return mixed|null|string
+ * Format mail text
+ */
 function _carenet_provider_active_mail_text($key, $language = NULL, $variables = array(), $replace = TRUE) {
   $langcode = isset($language) ? $language->language : NULL;
   if ($admin_setting = variable_get($key, FALSE)) {
@@ -71,9 +79,35 @@ password: Your password
   return $text;
 }
 
+/**
+ * @param $key
+ * @param $account
+ * @param null $language
+ * @return null
+ * Send mail
+ */
+
 function _carenet_provider_active_mail_notify($key, $account, $language = NULL) {
   $params['account'] = $account;
   $language = $language ? $language : user_preferred_language($account);
   $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
   return empty($mail) ? NULL : $mail['result'];
+}
+
+/**
+ * @param $token
+ */
+function _carenet_provider_active_get_discussion_by_token($token = 'abc') {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'discuss')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_token', 'value', $token, '=')
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    return node_load($nids[0]);
+  }
+  return NULL;
 }
