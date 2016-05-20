@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Implements hook_update_N()
+ * Revert features carenet_variables
+ */
+function carenet_update_update_7002(&$sandbox) {
+  //Revert
+  features_revert_module('carenet_variables');
+  drupal_set_message('Revert carenet_variables');
+}
