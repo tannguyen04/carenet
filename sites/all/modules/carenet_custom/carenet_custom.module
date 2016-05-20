@@ -127,7 +127,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => 'Person', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#required' => TRUE,
 		);
 
 		$form['action-doctor']['email'] = array(
@@ -136,7 +135,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => 'email', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#required' => TRUE,
 		);
 
 		$form['action-doctor']['phone'] = array(
@@ -145,7 +143,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => 'phone', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#required' => TRUE,
 		);
 
 		$form['action-doctor']['designation'] = array(
@@ -154,7 +151,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => 'designation', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#required' => TRUE,
 		);
 
 		$form['action-doctor']['date_time'] = array(
@@ -162,7 +158,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Date Time Callback'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#required' => TRUE,
 		);
 
 		$form['action-doctor']['comment'] = array(
@@ -171,7 +166,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			'#default_value' => '',
 		);
 
-
+		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
 	}else{
 		drupal_set_message('Telephone not found','status');
