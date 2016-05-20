@@ -141,15 +141,19 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
 }
 
 function _after_build_signature_execute_accept(&$element, $form_state) {
-  if ($form_state['triggering_element']['#name'] == 'op_accept') {
-    unset($element['#attributes']['class'][0]);
+  if (isset($form_state['triggering_element'])) {
+    if ($form_state['triggering_element']['#name'] == 'op_accept') {
+      unset($element['#attributes']['class'][0]);
+    }
   }
   return $element;
 }
 
 function _after_build_signature_execute_ask_question(&$element, $form_state) {
-  if ($form_state['triggering_element']['#name'] == 'op_ask_question') {
-    unset($element['#attributes']['class'][0]);
+  if (isset($form_state['triggering_element'])) {
+    if ($form_state['triggering_element']['#name'] == 'op_ask_question') {
+      unset($element['#attributes']['class'][0]);
+    }
   }
   return $element;
 }
