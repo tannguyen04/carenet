@@ -34,7 +34,7 @@
       var data = get_value_all();
       var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
       datatable.ajax.url(url).load();
-      $.getJSON( "/get_data_city?state="+data['state'], function( data ) {
+      $.get( "/get_data_city?state="+data['state'], function( data ) {
         $('#city').html(data);
       });
     });

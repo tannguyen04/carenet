@@ -50,7 +50,7 @@ function carenet_custom_get_data_city(){
 	  	$list_data[$response_data['node']['tid']] = $response_data['node']['city'];
 		}
 
-		$list = '';
+		$list = '<option selected="selected" value="All">- Any -</option>';
 		foreach($list_data as $key => $item){
 			$list .='<option value="'.$key.'" >'.$item.'</option>';
 		}
