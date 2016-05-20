@@ -77,9 +77,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 															<td>State</td>
 														</tr>
 														<tr>
-															<td>'.$item['name'].'</td>
-															<td>'.$item['npi'].'</td>
-															<td>'.$item['state'].'</td>
+															<td>'.$item['node']['name'].'</td>
+															<td>'.$item['node']['npi'].'</td>
+															<td>'.$item['node']['state'].'</td>
 														</tr>
 													</table>';
 			$doctor[$item['node']['nid']] = $doctor_tb_info;
