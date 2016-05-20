@@ -60,7 +60,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#type' => 'container',
     '#attached' => array(
       'js' => array(
-        drupal_get_path('module', 'carenet_custom') . '/js/signature_execute.js'
+        drupal_get_path('module', 'carenet_provider_active') . '/js/signature_execute.js'
       ),
     ),
   );
@@ -82,6 +82,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
       'class' => array('element-invisible', 'signature-execute-accept'),
     ),
   );
+  dpm($form_state);
   if (isset($form_state['input']['op']) && $form_state['input']['op'] == t('Accept')) {
     //Remove class element-invisible if submit accept
     unset($form['signature_execute']['accept']['#attributes']['class'][0]);
