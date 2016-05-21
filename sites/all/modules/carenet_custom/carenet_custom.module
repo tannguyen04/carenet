@@ -384,3 +384,93 @@ function carenet_custom_get_data(){
   $data_listing['recordsFiltered'] = $data['pager']['count'];
   return drupal_json_output($data_listing);
 }
+
+/**
+ * Implements hook_libraries_info().
+ */
+function carenet_custom_libraries_info() {
+  $libraries = array();
+  $libraries['fpdf'] = array(
+    'name' => 'FPDF',
+    'vendor url' => 'http://www.fpdf.org/',
+    'download url' => 'http://www.fpdf.org/',
+    'files' => array(
+      'php' => array(
+        'fpdf.php',
+      ),
+    ),
+    'version arguments' => array(
+      'file' => 'fpdf.php',
+      'pattern' => '/((\d+).(\d+))/',
+      'lines' => 6,
+    ),
+  );
+
+  $libraries['fpdi'] = array(
+    'name' => 'FPDI',
+    'vendor url' => 'http://www.setasign.com/products/fpdi/about/',
+    'download url' => 'http://www.setasign.com/products/fpdi/downloads/',
+    'files' => array(
+      'php' => array(
+        'fpdi.php',
+        'fpdf_tpl.php',
+      ),
+    ),
+    'dependencies' => array('fpdf'),
+    'version arguments' => array(
+      'file' => 'fpdi.php',
+      'pattern' => '/((\d+)\.(\d+)\.(\d+))/',
+      'lines' => 6,
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_requirements()
+ */
+function carenet_custom_requirements($phase) {
+  $requirements = array();
+  if ($phase == 'runtime') {
+    $t = get_t();
+    if ($path = libraries_get_path('fpdf')) {
+      if (file_exists($path . '/fpdf.php')) {
+        $requirements['fpdf'] = array(
+          'title' => $t('FPDF'),
+          'value' => $t('fpdf.php found under !path', array('!path' => $path . '/fpdf.php')),
+          'severity' => REQUIREMENT_OK,
+        );
+      }
+    }else {
+      $requirements['fpdf'] = array(
+        'title' => $t('FPDF'),
+        'value' => $t('FPDF library was not found. !download the library and place in under sites/all/libraries/fpdf, so that the library can be found at sites/all/libraries/fpdf/fpdf.php.', array('!download' => l(t('Download'), 'http://www.fpdf.org/'))),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+
+    if ($path = libraries_get_path('fpdi')) {
+      if (file_exists($path . '/fpdi.php') && file_exists($path . '/fpdf_tpl.php')) {
+        $requirements['fpdi'] = array(
+          'title' => $t('FPDI'),
+          'value' => $t('fpdi.php and fpdf_tpl.php found under !path', array('!path' => $path)),
+          'severity' => REQUIREMENT_OK,
+        );
+      }
+      else if (!file_exists($path . '/fpdi.php')) {
+        $requirements['fpdi'] = array(
+          'title' => $t('FPDI'),
+          'value' => $t('fpdi.php not found under !path. View README.txt for further instructions.', array('!path' => $path)),
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+    }else {
+      $requirements['fpdi'] = array(
+        'title' => $t('FPDI'),
+        'value' => $t('fpdf_tpl.php not found under !path. View README.txt for further instructions.', array('!path' => $path)),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+  }
+  return $requirements;
+}
