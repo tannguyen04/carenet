@@ -101,16 +101,16 @@ jQuery(document).ready(function($) {
 	}
 
 	$('#carenet-custom-provider-action .form-item-card-rate select').change(function(event) {
-		if($(this).val() == 'custom'){
-			$('#carenet-custom-provider-action .form-item-custom-price').show();
-		}else{
-			$('#carenet-custom-provider-action .form-item-custom-price').hide();
-		}
+		var price = $('#card_rate_price_'+$(this).val()).val();
+		$('#carenet-custom-provider-action .form-item-custom-price').val(price);
+		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	});
 
 
 	var card_rate = $('#carenet-custom-provider-action .form-item-card-rate select').val();
-	if(card_rate == 'custom'){
+	if(card_rate != 'All'){
+		var price = $('#card_rate_price_'+$(this).val()).val();
+		$('#carenet-custom-provider-action .form-item-custom-price').val(price);
 		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	}
 
