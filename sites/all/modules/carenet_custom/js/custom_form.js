@@ -18,6 +18,8 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		
 	}
+	
+	hide_all();
 
 	$('.form-item-status select').change(function(event) {
 		/* Act on the event */
