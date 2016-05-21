@@ -85,7 +85,6 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-comment').show();	
 	}
 
-
 	$('#carenet-custom-provider-action .form-item-method-contact input').click(function() {
 	   if($('#edit-method-contact-fax').is(':checked')) { 
 	   		$('#carenet-custom-provider-action .form-item-fax').show();

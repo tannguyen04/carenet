@@ -75,6 +75,17 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	//Get Doctor
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
 	$data = drupal_json_decode(file_get_contents($url));
+
+
+	$nid = 0;
+	$nid = db_query('SELECT nid FROM {node} WHERE type = :type AND title = :title',array(':type' => 'discuss', ':title' => $telephone))->fetchField();	
+	if($nid > 0 ){
+		$form['discuss_nid'] = array('#type' => 'hidden', '#value' => $nid);
+		$node = node_load($nid);
+	}
+	
+	$form['telephone'] = array('#type' => 'hidden', '#value' => $telephone);
+
 	if(!empty($data['nodes'])){
 
 		$doctor = array();
@@ -123,6 +134,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $status,
        '#prefix' => '<div class="col-md-6">',
        '#suffix' => '</div>'
+       '#default_value' => (!empty($node->field_dc_status[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_status[LANGUAGE_NONE][0]['tid'] : 'All'
    	);
 
    	$reason = array('All' => ' - Any - ');
@@ -136,7 +148,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#title' => t('Reason'),
        '#options' => $reason,
        '#prefix' => '<div class="col-md-6">',
-       '#suffix' => '</div>'
+       '#suffix' => '</div>',
+       '#default_value' => (!empty($node->field_dc_reason[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['tid'] : 'All'
    	);
 
    	$form['action-doctor']['person'] = array(
@@ -145,7 +158,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
-       	  '#suffix' => '</div>'
+       	  '#suffix' => '</div>',
+      '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['value'] : '',   
 		);
 
 		$form['action-doctor']['email'] = array(
@@ -155,7 +169,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
        	  '#suffix' => '</div>',
-		  '#require' => TRUE
+		  '#require' => TRUE,
+		  '#default_value' => (!empty($node->field_dc_email[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_email[LANGUAGE_NONE][0]['value'] : '',
 		);
 
 		$form['action-doctor']['phone'] = array(
@@ -164,7 +179,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
-       	  '#suffix' => '</div>'
+       	  '#suffix' => '</div>',
+      '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : '',
 		);
 
 		$form['action-doctor']['designation'] = array(
@@ -173,20 +189,28 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#size' => 60, 
 		  '#maxlength' => 128,
 		  '#prefix' => '<div class="col-md-6">',
-          '#suffix' => '</div>'
+          '#suffix' => '</div>',
+      '#default_value' => (!empty($node->field_dc_designation[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_designation[LANGUAGE_NONE][0]['value'] : '',
 		);
+
+		$date_default = '';
+		if(!empty($node->field_dc_date['und'][0]['value'])){
+			$time = strtotime($node->field_dc_date['und'][0]['value']);
+			$date_default = date('m/d/Y H:i');
+		}
 
 		$form['action-doctor']['date_time'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Date Time Callback'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		  '#default_value' => $date_default
 		);
 
 		$form['action-doctor']['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
-			'#default_value' => '',
+			'#default_value' => (!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] : '',
 		);
 
 		$card_rate = array('All' => ' - Any - ');
@@ -203,6 +227,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Card Rate'),
        '#options' => $card_rate,
+       '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All'
    	);
 
    	$form['action-doctor']['custom_price'] = array(
@@ -210,6 +235,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Custom Price'), 
 		  '#size' => 30, 
 		  '#maxlength' => 128,
+		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['target_id'])) ? $node->field_dc_price[LANGUAGE_NONE][0]['target_id'] : 'All'
 		);
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
@@ -217,6 +243,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'radios',
        '#title' => t('Method contact'),
        '#options' => $method_contact,
+       '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? 'fax' : 'mail'
    	);
 
    	$fax_status = array('notsend' => 'Not sent yet','send' => 'Fax sent');
@@ -224,13 +251,19 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Fax status'),
        '#options' => $fax_status,
+       '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
 		$form['action_end'] = array(
 		  '#markup' => '</div>',
 		);
 
+		$form['button_cancel'] = array(
+		  '#markup' => '<a href="/prodivers">Cancel</a>',
+		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
+
+
 
 	}else{
 		drupal_set_message('Telephone not found','status');
@@ -303,158 +336,103 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 	if(!empty($form_state['values']['list_doctor'])){
 		$data = $form_state['values'];
 		$list_doctor = $data['list_doctor'];
-		foreach($list_doctor as $key => $doctor){
-			if($doctor > 0){
-				$node_doctor = node_load($doctor);
-				
-				if(!empty($node_doctor->nid)){
-						//check doctor discuss
-						if(!empty($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id'])){
-							$node_revision = node_load($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id']);
 
-							$node_revision->revision = 1;
-  						$node_revision->log = t('Update Discuss');
-
-							if(!empty($data['status']) && $data['status'] != 'All'){
-						  	$node_revision->field_revision_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
-						  }
-
-						  if(!empty($data['reason']) && $data['reason'] !='All'){
-						  	$node_revision->field_revision_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
-						  }
-
-						  if(!empty($data['person'])){
-						  	$node_revision->field_revision_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
-						  }
-
-						  if(!empty($data['email'])){
-						  	$node_revision->field_revision_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
-						  }
-
-						  if(!empty($data['phone'])){
-						  	$node_revision->field_revision_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
-						  }
-
-						  if(!empty($data['designation'])){
-						  	$node_revision->field_revision_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
-						  }
-
-						  if(!empty($data['date_time'])){
-						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
-						  }
-
-						  if(!empty($data['comment'])){
-						  	$node_revision->field_revision_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
-						  }
-
-						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-						  	$node_revision->field_revision_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
-						  }
-
-						  if(!empty($data['fax'])){
-						  	$node_revision->field_revision_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
-						  }
-
-						  if(!empty($data['email_sent'])){
-						  	$node->field_revision_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
-						  }
-						  node_save($node_revision);
-						  drupal_set_message('Discuss update success');
-						}else{
-							$node = new stdClass();
-						  $node->title = $node_doctor->field_pv_og_name[LANGUAGE_NONE][0]['value'];
-						  $node->type = 'discuss';
-						  node_object_prepare($node);
-						  $node->language = LANGUAGE_NONE;
-						  $node->uid = $user->uid; 
-						  $node->status = 1; //(1 or 0): published or not
-						  $node->promote = 0; 
-
-						  if(!empty($data['status']) && $data['status'] != 'All'){
-						  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
-						  }
-
-						  if(!empty($data['reason']) && $data['reason'] !='All'){
-						  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
-						  }
-
-						  if(!empty($data['person'])){
-						  	$node->field_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
-						  }
-
-						  if(!empty($data['email'])){
-						  	$node->field_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
-						  }
-
-						  if(!empty($data['phone'])){
-						  	$node->field_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
-						  }
-
-						  if(!empty($data['designation'])){
-						  	$node->field_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
-						  }
-
-						  if(!empty($data['date_time'])){
-						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
-						  }
-
-						  if(!empty($data['comment'])){
-						  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
-						  }
-
-						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-						  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
-						  }
-
-						  if(!empty($data['fax'])){
-						  	$node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
-						  }
-
-						  if(!empty($data['email_sent'])){
-						  	$node->field_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
-						  }
-
-						  $node = node_submit($node);
-						  node_save($node);
-
-						  //Save field references
-						  $field = new stdClass();
-							$field->type = $node_doctor->type;
-							$field->nid = $node_doctor->nid;
-							$field->field_discuss_reference[LANGUAGE_NONE][0]['target_id'] = $node->nid;
-							field_attach_update('node', $field);
-
-							drupal_set_message('Discuss update success');
-						}
-
-						if($data['status'] == 4919){
-							switch ($data['method_contact']) {
-								case 'mail':
-									$mail_sent = $data['email_sent'];
-									$params = array('mail_to' => $mail_sent,
-																	'subject' => 'test',
-																	'body' => '213'
-																 );
-									drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-									drupal_set_message('Sent mail to doctor success');
-									break;
-								case 'fax':
-									$mail_sent = 'haibqit@gmail.com';
-									$params = array('mail_to' => $mail_sent,
-																	'subject' => 'test',
-																	'body' => '213'
-																 );
-									drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-									drupal_set_message('Sent mail to Admin success');
-									break;
-							}
-						}
-						
-						//End create node disscus for provider
-				}
-				//End check node isset
-			}
+		//Check node discuss
+		if(!empty($data['discuss_nid']) && $data['discuss_nid'] != 0){
+			$node = node_load($data['discuss_nid']);
+		}else{
+			$node = new stdClass();
+		  $node->title = $data['telephone'];
+		  $node->type = 'discuss';
+		  node_object_prepare($node);
+		  $node->language = LANGUAGE_NONE;
+		  $node->uid = $user->uid; 
+		  $node->status = 1; //(1 or 0): published or not
+		  $node->promote = 0; 
 		}
+
+		if(!empty($data['status']) && $data['status'] != 'All'){
+		  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+		  }
+
+		  if(!empty($data['reason']) && $data['reason'] !='All'){
+		  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+		  }
+
+		  if(!empty($data['person'])){
+		  	$node->field_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
+		  }
+
+		  if(!empty($data['email'])){
+		  	$node->field_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
+		  }
+
+		  if(!empty($data['phone'])){
+		  	$node->field_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
+		  }
+
+		  if(!empty($data['designation'])){
+		  	$node->field_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
+		  }
+
+		  if(!empty($data['date_time'])){
+		  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+		  }
+
+		  if(!empty($data['comment'])){
+		  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+		  }
+
+		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
+		  	if($data['card_rate'] == 'custom'){
+		  		$node->field_dc_price[LANGUAGE_NONE][0]['value'] = $data['custom_price'];
+		  	}else{
+		  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
+		  	}
+		  	
+		  }
+
+		  if(!empty($data['fax'])){
+		  	$node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
+		  }
+
+		  //List doctor save
+		  $list_doctor_save = array();
+		  foreach($list_doctor as $key => $doctor){
+				if($doctor > 0){
+					$list_doctor_save[]['target_id'] = $doctor;
+				}
+			}
+
+			if(!empty($list_doctor_save)){
+				$node->field_list_provider[LANGUAGE_NONE] = $list_doctor_save;
+			}
+			
+		  $node = node_submit($node);
+		  node_save($node);
+
+		  if($data['status'] == 4919){
+				switch ($data['method_contact']) {
+					case 'mail':
+						$mail_sent = $data['email'];
+						$params = array('mail_to' => $mail_sent,
+														'subject' => 'test',
+														'body' => '213'
+													 );
+						drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+						drupal_set_message('Sent mail to doctor success');
+						break;
+					case 'fax':
+						$mail_sent = 'haibqit@gmail.com';
+						$params = array('mail_to' => $mail_sent,
+														'subject' => 'test',
+														'body' => '213'
+													 );
+						drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+						drupal_set_message('Sent mail to Admin success');
+						break;
+				}
+			}
 	}
 }
 
