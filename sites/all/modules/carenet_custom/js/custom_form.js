@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 
-	$('.form-item-date-time input').datetimepicker();
+	//$('.form-item-date-time input').datetimepicker();
 
 	
 	
@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
 		}else{
 			hide_all();
 		}
-		
+
 	});
 
 	$('#carenet-custom-provider-action .form-item-reason').change(function(event) {
