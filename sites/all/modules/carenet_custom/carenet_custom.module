@@ -337,7 +337,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 						  }
 
 						  if(!empty($data['date_time'])){
-						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 						  }
 
 						  if(!empty($data['comment'])){
@@ -392,7 +392,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 						  }
 
 						  if(!empty($data['date_time'])){
-						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 						  }
 
 						  if(!empty($data['comment'])){
