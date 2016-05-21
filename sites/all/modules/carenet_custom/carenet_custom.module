@@ -187,7 +187,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $method_contact,
    	);
 
-   	$fax_status = array('not_sent_yet' => 'Not sent yet','fax_sent' => 'Fax sent');
+   	$fax_status = array('notsend' => 'Not sent yet','send' => 'Fax sent');
    	$form['action-doctor']['fax'] = array(
        '#type' => 'select',
        '#title' => t('Fax status'),
