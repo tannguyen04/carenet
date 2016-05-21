@@ -61,6 +61,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/custom.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+	
 	$form = array();
 	//Get Doctor
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
@@ -303,6 +305,55 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				if(!empty($node_doctor->nid)){
 						//check doctor discuss
 						if(!empty($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id'])){
+							$node_revision = node_load($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id']);
+
+							$node_revision->revision = 1;
+  						$node_revision->log = t('Update Discuss');
+
+							if(!empty($data['status']) && $data['status'] != 'All'){
+						  	$node_revision->field_revision_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['reason']) && $data['reason'] !='All'){
+						  	$node_revision->field_revision_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['person'])){
+						  	$node_revision->field_revision_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
+						  }
+
+						  if(!empty($data['email'])){
+						  	$node_revision->field_revision_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
+						  }
+
+						  if(!empty($data['phone'])){
+						  	$node_revision->field_revision_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
+						  }
+
+						  if(!empty($data['designation'])){
+						  	$node_revision->field_revision_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
+						  }
+
+						  if(!empty($data['date_time'])){
+						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  }
+
+						  if(!empty($data['comment'])){
+						  	$node_revision->field_revision_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+						  }
+
+						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
+						  	$node_revision->field_revision_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
+						  }
+
+						  if(!empty($data['fax'])){
+						  	$node_revision->field_revision_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
+						  }
+
+						  if(!empty($data['email_sent'])){
+						  	$node->field_revision_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
+						  }
+						  node_save($node_revision);
 
 						}else{
 							$node = new stdClass();

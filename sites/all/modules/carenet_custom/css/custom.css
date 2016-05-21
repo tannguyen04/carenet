@@ -1,0 +1,9 @@
+#carenet-custom-provider-action .form-checkboxes table,
+#carenet-custom-provider-action .form-checkboxes td,
+#carenet-custom-provider-action .form-checkboxes tr{
+	border:1px solid #6666;
+}
+
+#carenet-custom-provider-action .form-checkboxes td{
+	padding:5px;
+}
