@@ -213,6 +213,11 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	return $form;
 }
 
+function carenet_custom_provider_action_submit($form, &$form_state, $telephone){
+	print_r($form_state);
+	die();
+}
+
 function carenet_custom_get_data_county(){
 	global $base_url;
 	if(!empty($_GET['city'])){
