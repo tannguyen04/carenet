@@ -111,12 +111,12 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
-       '#states' => array(
-			    'visible' => array(
-			      ':select[name="reason"]' => array('value' => 4848),
-			      ':textarea[name="comment"]' => array('value' => 4848),
-			    ),
-			  ),
+     //   '#states' => array(
+			  //   'visible' => array(
+			  //     ':select[name="reason"]' => array('value' => 4848),
+			  //     ':textarea[name="comment"]' => array('value' => 4848),
+			  //   ),
+			  // ),
    	);
 
    	$reason = array('All' => ' - Any - ');
