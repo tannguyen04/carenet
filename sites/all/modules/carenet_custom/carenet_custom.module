@@ -416,6 +416,23 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  foreach($list_doctor as $key => $doctor){
 				if($doctor > 0){
 					$list_doctor_save[]['target_id'] = $doctor;
+
+					if(!empty($data['date_time'])){
+						$field = new stdClass();
+						$field->type = 'provider';
+						$field->nid = $doctor;
+				  	$field->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+				  	field_attach_update('node', $field);
+				  }
+					
+				  if(!empty($data['status']) && $data['status'] != 'All'){
+				  	$field = new stdClass();
+						$field->type = 'provider';
+						$field->nid = $doctor;
+						$field->field_pv_status[LANGUAGE_NONE][0]['target_id'] = $data['status'];
+						field_attach_update('node', $field);
+				  }
+					
 				}
 			}
 
