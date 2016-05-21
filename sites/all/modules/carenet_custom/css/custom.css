@@ -17,3 +17,13 @@
 #carenet-custom-provider-action .form-type-checkbox label{
 	display: inline-block;
 }
+
+#carenet-custom-provider-action .form-checkboxes .form-type-checkbox{
+	display: inline-block;
+    width: 48%;
+    margin-right: 2%;
+}
+
+#carenet-custom-provider-action .form-checkboxes .form-type-checkbox:nth-child(2n+2){
+	margin-right:0;
+}
