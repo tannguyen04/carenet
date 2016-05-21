@@ -154,7 +154,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
-       	  '#suffix' => '</div>'
+       	  '#suffix' => '</div>',
 		  '#require' => TRUE
 		);
 
