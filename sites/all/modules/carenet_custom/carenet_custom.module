@@ -193,8 +193,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
 
 		foreach($result as $record){
-			$node_card = node_load($record->price);
-			$card_rate[$record->nid] =  $record->title .' - $'.$node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'];
+			$node_card = node_load($record->nid);
+			$card_rate[$node_card->nid] =  $node_card->title .' - $'.$node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'];
 		}
 
 		$card_rate['custom'] = 'Custom price';
