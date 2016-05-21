@@ -15,24 +15,24 @@
     } );
 
     var data = get_value_all();
-    var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+    var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
     datatable.ajax.url(url).load();
      
-    $('#npi').keyup(function(event) {
+    $('#priority').change(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
     });
 
     $('#date_pick').keyup(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
     });
 
     $('#city').change(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
       $('#county').prop('disabled', true);
       $.get( "/get_data_county?city="+data['city'], function( data ) {
@@ -43,7 +43,7 @@
 
     $('#state').change(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
       $('#city').prop('disabled', true);
       $.get( "/get_data_city?state="+data['state'], function( data ) {
@@ -54,13 +54,13 @@
 
     $('#county').change(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
     });
 
     $('#status').change(function(event) {
       var data = get_value_all();
-      var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
+      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
       datatable.ajax.url(url).load();
 
       if($(this).val() == 4851 || $(this).val() == 4850 || $(this).val() == 4920){
@@ -73,7 +73,7 @@
 
     function get_value_all(){
       var data = [];
-      data['npi'] = $('#npi').val();
+      data['priority'] = $('#priority').val();
       data['city'] = $('#city').val();
       data['state'] = $('#state').val();
       data['county'] = $('#county').val();

@@ -558,9 +558,15 @@ function carenet_custom_list_data(){
 
 	$output = '';
 
-	$output .= '<div class="filter_npi" style="display: inline-block;margin-right: 20px;"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
+	$priority = '<select id="priority">';
+	$priority .='<option value="All" selected="selected">- Any -</option>';
+	$data_priority = taxonomy_get_tree(10);
+	foreach($data_priority as $key => $value){
+		$priority .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+	}
+	$priority .='</select>';
 
-	
+	$output .= '<div class="filter_priority" style="display: inline-block;margin-right: 20px;"><label>Priority</label>'.$priority.'</div>';
 
 	$state = '<select id="state">';
 	$state .='<option value="All" selected="selected">- Any -</option>';
@@ -646,7 +652,7 @@ function carenet_custom_get_data(){
 		$date = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 	}
 
-	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
+	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
