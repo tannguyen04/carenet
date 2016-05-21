@@ -621,8 +621,13 @@ function carenet_custom_get_data(){
 	if(!empty($_POST['start']) && !empty($_POST['length'])){
 		$parameter['page'] = $_POST['start']/$_POST['length'];
 	}
+	$date = '';
+	if(!empty($_GET['date'])){
+		$time = strtotime($_GET['date']);
+		$date = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+	}
 
-	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&page='.$parameter['page'];
+	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&npi='.$_GET['npi'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
