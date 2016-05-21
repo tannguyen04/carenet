@@ -176,6 +176,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			'#default_value' => '',
 		);
 
+		$form['action-doctor']['email_sent'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Email sent'),  
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		);
+
 		$card_rate = array();
 		$result = db_query('SELECT nid,title FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
 		foreach($result as $record){
@@ -193,6 +200,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Method contact'),
        '#options' => $method_contact,
+   	);
+
+   	$fax_status = array(0 => 'Not sent yet',1 => 'Fax sent');
+   	$form['action-doctor']['method_contact'] = array(
+       '#type' => 'select',
+       '#title' => t('Fax status'),
+       '#options' => $fax_status,
    	);
 
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
