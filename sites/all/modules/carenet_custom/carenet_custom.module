@@ -170,12 +170,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			'#default_value' => '',
 		);
 
-		$form['action-doctor']['comment'] = array(
-			'#title' => t('Comment'),
-			'#type' => 'textarea',
-			'#default_value' => '',
-		);
-
 		$form['action-doctor']['email_sent'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email sent'),  
@@ -203,7 +197,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	);
 
    	$fax_status = array(0 => 'Not sent yet',1 => 'Fax sent');
-   	$form['action-doctor']['method_contact'] = array(
+   	$form['action-doctor']['fax'] = array(
        '#type' => 'select',
        '#title' => t('Fax status'),
        '#options' => $fax_status,
