@@ -121,7 +121,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
-       '#prefix' => 'div class="row">',
+       '#prefix' => '<div class="row">',
        '#attributes' => array('class' => array('col-md-6'))
    	);
 
@@ -144,7 +144,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Person'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#prefix' => 'div class="row">',
+		  '#prefix' => '<div class="row">',
        	  '#attributes' => array('class' => array('col-md-6'))
 		);
 
@@ -163,7 +163,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Phone'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
-		  '#prefix' => 'div class="row">',
+		  '#prefix' => '<div class="row">',
        	  '#attributes' => array('class' => array('col-md-6'))
 		);
 
