@@ -225,7 +225,6 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 	//validate doctor
 	$list_check_doctor = 0;
 	$data = $form_state['values'];
-	print_r($data);die();
 	foreach($data['list_doctor'] as $key => $doctor){
 		if($doctor > 0){
 			$list_check_doctor = 1;
