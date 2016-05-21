@@ -108,6 +108,7 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-custom-price').hide();
 		}
 	});
+	
 
 	var card_rate = $('#carenet-custom-provider-action .form-item-card-rate select').val();
 	if(card_rate == 'custom'){
