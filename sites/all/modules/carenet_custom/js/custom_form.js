@@ -1,10 +1,9 @@
 jQuery(document).ready(function($) {
 
-	var today = new Date(today.getTime());
 	$('#edit-date-time').datetimepicker({
 		 mask:true,
 		 format:'m/d/Y H:i',
-		 startDate:today
+		 minDate:'-1970/01/02', // yesterday is minimum date
 	});
 	
 	function hide_all(){
