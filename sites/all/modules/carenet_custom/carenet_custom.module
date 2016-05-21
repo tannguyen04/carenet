@@ -278,7 +278,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$form['button_cancel'] = array(
-		  '#markup' => '<a href="/prodivers">Cancel</a>',
+		  '#markup' => '<a href="/providers">Cancel</a>',
 		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
@@ -668,6 +668,7 @@ function carenet_custom_get_data(){
 		$city = array_unique($city);
 		$county = array_unique($county);
 
+		//$discuss_nid = db_query('SELECT entity_id FROM {field_data_field_list_provider} WHERE ') 
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $key,
 										'Type' => $type,
