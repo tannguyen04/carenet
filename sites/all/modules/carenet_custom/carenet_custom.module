@@ -79,26 +79,25 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		$doctor = array();
 		foreach($data['nodes'] as $item){
-			$doctor_tb_info = '<table>
-														<tr>
-															<td>Name</td>
-															<td>NPI</td>
-															<td>State</td>
-														</tr>
+			$doctor_tb_info = '
 														<tr>
 															<td>'.$item['node']['name'].'</td>
 															<td>'.$item['node']['npi'].'</td>
 															<td>'.$item['node']['state'].'</td>
-														</tr>
-													</table>';
+														</tr>';
 			$doctor[$item['node']['nid']] = $doctor_tb_info;
 		}
 
 		$form['list_doctor'] = array(
 		  '#type' => 'checkboxes',
 		  '#options' => $doctor,
-		  '#prefix' => '<div class="provider">',
-		  '#suffix' => '</div>', 
+		  '#prefix' => '<div class="provider"><table>
+														<tr>
+															<td>Name</td>
+															<td>NPI</td>
+															<td>State</td>
+														</tr>',
+		  '#suffix' => '</table></div>', 
   	);
 
 		
