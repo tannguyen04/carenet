@@ -348,7 +348,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 						  	$node->field_revision_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
 						  }
 						  node_save($node_revision);
-
+						  drupal_set_message('Discuss update success');
 						}else{
 							$node = new stdClass();
 						  $node->title = $node_doctor->field_pv_og_name[LANGUAGE_NONE][0]['value'];
@@ -412,6 +412,8 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 							$field->nid = $node_doctor->nid;
 							$field->field_discuss_reference[LANGUAGE_NONE][0]['target_id'] = $node->nid;
 							field_attach_update('node', $field);
+
+							drupal_set_message('Discuss update success');
 						}
 						//End create node disscus for provider
 				}
