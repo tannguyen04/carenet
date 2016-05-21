@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
 
-	$('.form-item-date-time input').datetimepicker({
+	$('#edit-date-time').datetimepicker({
 		 mask:true,
 		 format:'m/d/Y H:i',
 	});
