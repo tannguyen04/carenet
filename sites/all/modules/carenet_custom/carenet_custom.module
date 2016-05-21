@@ -403,12 +403,11 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-		  	if($data['card_rate'] == 'custom'){
+		  	if(!empty($data['custom_price'])){
 		  		$node->field_dc_price[LANGUAGE_NONE][0]['value'] = $data['custom_price'];
-		  	}else{
-		  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
 		  	}
 		  	
+		  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
 		  }
 
 		  if(!empty($data['fax'])){
