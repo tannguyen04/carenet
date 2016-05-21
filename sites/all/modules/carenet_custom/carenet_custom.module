@@ -679,7 +679,7 @@ function carenet_custom_get_data(){
 			$discuss_nid = $record->entity_id;
 		}
 
-		$satus = 'New';
+		$status = 'New';
 		$activity = '';
 		if($discuss_nid > 0){
 			$node_discuss = node_load($discuss_nid);
