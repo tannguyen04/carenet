@@ -1,8 +1,6 @@
 jQuery(document).ready(function($) {
 
-	//$('.form-item-date-time input').datetimepicker();
-
-	
+	$('.form-item-date-time input').datetimepicker();
 	
 	function hide_all(){
 		$('#carenet-custom-provider-action .form-item-reason').hide();
@@ -41,6 +39,11 @@ jQuery(document).ready(function($) {
 	}else{
 		hide_all();
 	}
+
+	// $('#carenet-custom-provider-action .form-item-person').show();
+	// $('#carenet-custom-provider-action .form-item-email').show();
+	// $('#carenet-custom-provider-action .form-item-phone').show();
+	// $('#carenet-custom-provider-action .form-item-designation').show();
 
 	$('.form-item-status select').change(function(event) {
 		/* Act on the event */
