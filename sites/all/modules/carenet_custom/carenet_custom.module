@@ -337,14 +337,6 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('card_rate', 'Please choose one option card rate');
 			}
-
-			if($data['method_contact'] == 'mail' && empty($data['email_sent'])){
-				form_set_error('email_sent', 'Please enter mail sent');
-			}
-
-			if($data['method_contact'] == 'mail' && !valid_email_address($data['email_sent'])){
-				form_set_error('email_sent', 'Email wrong');
-			}
 			break;
 	}
 	
