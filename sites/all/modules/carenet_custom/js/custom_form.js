@@ -14,7 +14,6 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-method-contact').hide();
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		$('#carenet-custom-provider-action .form-item-custom-price').hide();
-		
 	}
 
 	var status_id = $('.form-item-status select').val();
