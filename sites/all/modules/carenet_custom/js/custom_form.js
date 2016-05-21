@@ -95,7 +95,7 @@ jQuery(document).ready(function($) {
 	   }
 	});
 
-	if($('#edit-method-contact-fax').is(':checked')) { 
+	if($('#edit-method-contact-fax').is(':checked') && $('#carenet-custom-provider-action .form-item-method-contact').css('display') == 'block') { 
 		$('#carenet-custom-provider-action .form-item-fax').show();
 		$('#carenet-custom-provider-action .form-item-comment').show();	
 	}
