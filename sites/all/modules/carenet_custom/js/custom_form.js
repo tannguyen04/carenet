@@ -1,6 +1,9 @@
 jQuery(document).ready(function($) {
 
-	$('.form-item-date-time input').datetimepicker();
+	$('.form-item-date-time input').datetimepicker({
+		 mask:true,
+		 format:'m/d/Y H:i',
+	});
 	
 	function hide_all(){
 		$('#carenet-custom-provider-action .form-item-reason').hide();
