@@ -213,9 +213,107 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	return $form;
 }
 
+function carenet_custom_provider_action_validate($form, &$form_state, $telephone){
+	//validate doctor
+	$list_check_doctor = false;
+	$data = $form_state['values'];
+	foreach($data['list_doctor'] as $key => $doctor){
+		if($doctor > 0){
+			$list_check_doctor = true;
+		}
+	}
+
+	if($list_check_doctor){
+		form_error('list_doctor', 'Please choose one option');
+	}else{
+		form_error('list_doctor', 'test');
+	}
+	
+}
+
 function carenet_custom_provider_action_submit($form, &$form_state, $telephone){
-	print_r($form_state);
-	die();
+	global $user;
+	if(!empty($form_state['values']['list_doctor'])){
+		$data = $form_state['values'];
+		$list_doctor = $data['list_doctor'];
+		foreach($list_doctor as $key => $doctor){
+			if($doctor > 0){
+				$node_doctor = node_load($doctor);
+				
+				if(!empty($node_doctor->nid)){
+						//check doctor discuss
+						if(!empty($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id'])){
+
+						}else{
+							$node = new stdClass();
+						  $node->title = $node_doctor->field_pv_og_name[LANGUAGE_NONE][0]['value'];
+						  $node->type = 'discuss';
+						  node_object_prepare($node);
+						  $node->language = LANGUAGE_NONE;
+						  $node->uid = $user->uid; 
+						  $node->status = 1; //(1 or 0): published or not
+						  $node->promote = 0; 
+
+						  if(!empty($data['status']) && $data['status'] != 'All'){
+						  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['reason']) && $data['reason'] !='All'){
+						  	$node->->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['person'])){
+						  	$node->field_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
+						  }
+
+						  if(!empty($data['email'])){
+						  	$node->field_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
+						  }
+
+						  if(!empty($data['phone'])){
+						  	$node->field_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
+						  }
+
+						  if(!empty($data['designation'])){
+						  	$node->field_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
+						  }
+
+						  if(!empty($data['date_time'])){
+						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  }
+
+						  if(!empty($data['comment'])){
+						  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+						  }
+
+						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
+						  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
+						  }
+
+						  if(!empty($data['fax'])){
+						  	$node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
+						  }
+
+						  if(!empty($data['email_sent'])){
+						  	$node->field_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
+						  }
+
+						  $node = node_submit($node);
+						  node_save($node);
+
+						  //Save field references
+						  $field = new stdClass();
+							$field->type = $node_doctor->type;
+							$field->nid = $node_doctor->nid;
+							$field->field_discuss_reference[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+							field_attach_update('node', $field);
+						}
+						//End create node disscus for provider
+				}
+				//End check node isset
+			}
+		}
+	}
 }
 
 function carenet_custom_get_data_county(){
