@@ -213,7 +213,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	return $form;
 }
 
-function carenet_custom_provider_action_validate($form, &$form_state, $telephone){
+function carenet_custom_provider_action_validate($form, &$form_state){
 	//validate doctor
 	$list_check_doctor = false;
 	$data = $form_state['values'];
@@ -228,10 +228,14 @@ function carenet_custom_provider_action_validate($form, &$form_state, $telephone
 	}else{
 		form_set_error('list_doctor', 'test');
 	}
+
+	if($data['status'] == 'All'){
+		form_set_error('status', 'Please choose one option status');
+	}
 	
 }
 
-function carenet_custom_provider_action_submit($form, &$form_state, $telephone){
+function carenet_custom_provider_action_submit($form, &$form_state){
 	global $user;
 	if(!empty($form_state['values']['list_doctor'])){
 		$data = $form_state['values'];
