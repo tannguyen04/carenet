@@ -249,7 +249,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Price'), 
 		  '#size' => 30, 
 		  '#maxlength' => 128,
-		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['value'])) ? $node->$node->field_dc_price[LANGUAGE_NONE][0]['value'] : ''
+		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_price[LANGUAGE_NONE][0]['value'] : ''
 		);
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
