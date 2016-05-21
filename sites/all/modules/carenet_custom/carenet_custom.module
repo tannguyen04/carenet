@@ -249,6 +249,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Price'), 
 		  '#size' => 30, 
 		  '#maxlength' => 128,
+		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['value'])) ? $node->$node->field_dc_price[LANGUAGE_NONE][0]['value'] : ''
 		);
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
@@ -402,7 +403,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
 		  }
 
-		  if(!empty($data['fax'])){
+		  if(!empty($data['fax']) && $data['method_contact'] != 'mail'){
 		  	$node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
 		  }
 
@@ -668,7 +669,8 @@ function carenet_custom_get_data(){
 		$city = array_unique($city);
 		$county = array_unique($county);
 
-		//$discuss_nid = db_query('SELECT entity_id FROM {field_data_field_list_provider} WHERE ') 
+		$result_d = db_query('SELECT entity_id FROM {field_data_field_list_provider} WHERE bundle = :bundle AND field_list_provider_target_id IN(:nid)',array(':bundle' => 'discuss',':nid' => $provider)) ;
+
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $key,
 										'Type' => $type,
