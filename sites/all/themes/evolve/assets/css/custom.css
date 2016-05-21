@@ -1,0 +1,28 @@
+#edit-progress-bar .item-list h3{
+	display: none;
+}
+
+#edit-progress-bar .item-list > ul{
+	float: right;
+}
+
+#edit-progress-bar .item-list > ul > li{
+	display: inline-block;
+}
+
+#carenet-provider-active-form #edit-actions{
+	float: right;
+}
+
+#carenet-provider-active-form #edit-actions #edit-next{
+	margin-left: 20px;
+}
+
+#carenet-provider-active-form #edit-step #show-ask-question{
+	margin-left: 20px;
+}
+
+#carenet-provider-active-form #edit-step{
+	margin: 50px auto;
+	clear: both;
+}
