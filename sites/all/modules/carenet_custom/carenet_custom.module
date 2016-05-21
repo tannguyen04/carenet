@@ -7,7 +7,7 @@ function carenet_custom_menu() {
   $items['providers'] = array(
     'title' => 'Provider Listing',
     'page callback' => 'carenet_custom_list_data',
-    'access arguments' => array('Access all Providers'),
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
 
@@ -36,7 +36,7 @@ function carenet_custom_menu() {
     'title' => 'Provider Discussion',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('carenet_custom_provider_action', 2),
-    'access arguments' => array('Access all Providers'),
+    'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
 
