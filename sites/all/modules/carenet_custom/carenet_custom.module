@@ -86,6 +86,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	
 	$form['telephone'] = array('#type' => 'hidden', '#value' => $telephone);
 
+
+	$authorized_official = '';
+	$official_telephone = '';
+
 	if(!empty($data['nodes'])){
 
 		$doctor = array();
@@ -105,6 +109,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	      'city' => $item['node']['city'],
 	      'county' => $item['node']['county']
 	    );
+	    $authorized_official = $item['node']['authorized_official'];
+			$official_telephone = $item['node']['official_telephone'];
 		}
 
 		$nid_default = array();
@@ -168,7 +174,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
       '#suffix' => '</div>',
-      '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_person[LANGUAGE_NONE][0]['value'] : '',  
+      '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_person[LANGUAGE_NONE][0]['value'] : $authorized_official,  
 		);
 
 		$form['action-doctor']['email'] = array(
@@ -189,7 +195,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
        	  '#suffix' => '</div>',
-      '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : ''
+      '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : $official_telephone
 		);
 
 		$form['action-doctor']['designation'] = array(
