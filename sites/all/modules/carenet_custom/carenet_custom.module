@@ -525,6 +525,8 @@ function carenet_custom_get_data_city(){
 
 function carenet_custom_list_data(){
 	//drupal_add_js(drupal_get_path('module', 'wb_project').'/js/jquery-1.12.0.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.js', 'file');
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.dataTables.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/dataTables.select.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom.js', 'file');
@@ -580,6 +582,8 @@ function carenet_custom_list_data(){
 	$status .='</select>';
 
 	$output .= '<div class="filter_status" style="display: inline-block;margin-right: 20px;"><label>Status</label>'.$status.'</div>';
+
+	$output .= '<div class="filter_date" style="display: none;margin-right: 20px;"><label>Date</label><input type="text" id="date_tick" name="date"></div>';
 
 	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
