@@ -68,11 +68,10 @@
       return data;
     }
 
-    var today = new Date(today.getTime());
     $('#date_tick').datetimepicker({
        mask:true,
        format:'m/d/Y H:i',
-       startDate:today
+       minDate:'-1970/01/02'
     });
 
   });

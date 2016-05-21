@@ -146,20 +146,21 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Email'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		  '#require' => TRUE
 		);
 
 		$form['action-doctor']['phone'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Phone'), 
 		  '#size' => 60, 
-		  '#maxlength' => 128, 
+		  '#maxlength' => 128,
 		);
 
 		$form['action-doctor']['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
 		  '#size' => 60, 
-		  '#maxlength' => 128, 
+		  '#maxlength' => 128,
 		);
 
 		$form['action-doctor']['date_time'] = array(
@@ -176,10 +177,14 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$card_rate = array('All' => ' - Any - ');
-		$result = db_query('SELECT nid,title FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
+		$result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
+
 		foreach($result as $record){
-			$card_rate[$record->nid] =  $record->title;
+			$node_card = node_load($record->price);
+			$card_rate[$record->nid] =  $record->title .' - $'.$node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'];
 		}
+
+		$card_rate['custom'] = 'Custom price';
 
 		$form['action-doctor']['card_rate'] = array(
        '#type' => 'select',
@@ -187,9 +192,19 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $card_rate,
    	);
 
+   	$form['action-doctor']['custom_price'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Custom Price'), 
+		  '#size' => 30, 
+		  '#maxlength' => 128,
+		  '#prefix' => '$',
+		);
+
+
+
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['action-doctor']['method_contact'] = array(
-       '#type' => 'select',
+       '#type' => 'radios',
        '#title' => t('Method contact'),
        '#options' => $method_contact,
    	);
@@ -200,13 +215,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#title' => t('Fax status'),
        '#options' => $fax_status,
    	);
-
-   	$form['action-doctor']['email_sent'] = array(
-		  '#type' => 'textfield', 
-		  '#title' => t('Email sent'),  
-		  '#size' => 60, 
-		  '#maxlength' => 128, 
-		);
 
 		$form['action_end'] = array(
 		  '#markup' => '</div>',
@@ -236,20 +244,8 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 		form_set_error('list_doctor', 'Please choose one option');
 	}
 
-	if(empty($data['person'])){
-		form_set_error('person', 'Please enter person');
-	}
-
 	if(empty($data['email'])){
 		form_set_error('email', 'Please enter email');
-	}
-
-	if(empty($data['phone'])){
-		form_set_error('phone', 'Please enter phone');
-	}
-
-	if(empty($data['designation'])){
-		form_set_error('designation', 'Please enter designation');
 	}
 
 	if(!valid_email_address($data['email'])){
@@ -259,32 +255,6 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 	switch ($data['status']) {
 		case 'All':
 			form_set_error('status', 'Please choose one option status');
-			break;
-		case 4851:
-			if(empty($data['person'])){
-				form_set_error('person', 'Please enter person');
-			}
-
-			if(empty($data['email'])){
-				form_set_error('email', 'Please enter email');
-			}
-
-			if(empty($data['phone'])){
-				form_set_error('phone', 'Please enter phone');
-			}
-
-			if(empty($data['designation'])){
-				form_set_error('designation', 'Please enter designation');
-			}
-
-			if(empty($data['date_time'])){
-				form_set_error('date_time', 'Please enter date time');
-			}
-
-			if(!valid_email_address($data['email'])){
-				form_set_error('email_sent', 'Email wrong');
-			}
-
 			break;
 		case 4848:
 			if(empty($data['reason']) || $data['reason'] == 'All'){
@@ -447,27 +417,29 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 							drupal_set_message('Discuss update success');
 						}
 
-						switch ($data['method_contact']) {
-							case 'mail':
-
-								$mail_sent = $data['email_sent'];
-								$params = array('mail_to' => $mail_sent,
-																'subject' => 'test',
-																'body' => '213'
-															 );
-								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-								drupal_set_message('Sent mail to doctor success');
-								break;
-							case 'fax':
-								$mail_sent = 'haibqit@gmail.com';
-								$params = array('mail_to' => $mail_sent,
-																'subject' => 'test',
-																'body' => '213'
-															 );
-								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-								drupal_set_message('Sent mail to Admin success');
-								break;
+						if($data['status'] == 4919){
+							switch ($data['method_contact']) {
+								case 'mail':
+									$mail_sent = $data['email_sent'];
+									$params = array('mail_to' => $mail_sent,
+																	'subject' => 'test',
+																	'body' => '213'
+																 );
+									drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+									drupal_set_message('Sent mail to doctor success');
+									break;
+								case 'fax':
+									$mail_sent = 'haibqit@gmail.com';
+									$params = array('mail_to' => $mail_sent,
+																	'subject' => 'test',
+																	'body' => '213'
+																 );
+									drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+									drupal_set_message('Sent mail to Admin success');
+									break;
+							}
 						}
+						
 						//End create node disscus for provider
 				}
 				//End check node isset
