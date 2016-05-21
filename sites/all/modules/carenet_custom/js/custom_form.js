@@ -15,6 +15,8 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-email-sent').hide();
 		$('#carenet-custom-provider-action .form-item-card-rate').hide();
 		$('#carenet-custom-provider-action .form-item-method-contact').hide();
+		$('#carenet-custom-provider-action .form-item-fax').hide();
+		
 	}
 
 	$('.form-item-status select').change(function(event) {
@@ -34,8 +36,8 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-date-time').show();
 		}else if($(this).val() == 4919){
 			hide_all();
-			$('#carenet-custom-provider-action .form-item-card-rate').hide();
-			$('#carenet-custom-provider-action .form-item-method-contact').hide();
+			$('#carenet-custom-provider-action .form-item-card-rate').show();
+			$('#carenet-custom-provider-action .form-item-method-contact').show();
 		}else{
 			hide_all();
 		}
