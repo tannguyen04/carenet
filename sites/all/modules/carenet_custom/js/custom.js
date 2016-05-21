@@ -56,6 +56,13 @@
       var data = get_value_all();
       var url = '/provider-get-data?npi='+data['npi']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
       datatable.ajax.url(url).load();
+
+      if($(this).val() == 4851 || $(this).val() == 4850 || $(this).val() == 4920){
+        $('.filter_date').css('display','inline-block');
+      }else{
+        $('.filter_date').css('display','none');
+      }
+
     });
 
     function get_value_all(){
