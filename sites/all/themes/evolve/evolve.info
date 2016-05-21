@@ -3,6 +3,8 @@ description = "Evolve - Responsive Multi-Purpose Drupal Theme"
 core = 7.x
 base theme = drupalexp
 
+
+stylesheets[all][] = assets/css/custom.css
 regions[content] = Content
 regions[top] = Top
 regions[call_us] = Call Us

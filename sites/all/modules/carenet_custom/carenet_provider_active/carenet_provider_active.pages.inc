@@ -98,10 +98,10 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   //
   $form['signature_execute']['signature_execute_show_accept'] = array(
-    '#markup' => '<a class="btn" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
+    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
   );
   $form['signature_execute']['signature_execute_show_ask_question'] = array(
-    '#markup' => '<a class="btn" id="show-ask-question" href="#"> ' . t('Ask question') . ' </a>',
+    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask question') . ' </a>',
   );
   $form['signature_execute']['accept'] = array(
     '#type' => 'container',
@@ -131,7 +131,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Accept'),
+    '#value' => t('Submit'),
     '#submit' => array('carenet_provider_active_form_signature_execute_accept_submit'),
     '#validate' => array('carenet_provider_active_form_signature_execute_accept_validate'),
     '#name' => 'op_accept',
@@ -158,7 +158,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   $form['signature_execute']['ask_question']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Ask question'),
+    '#value' => t('Send'),
     '#submit' => array('carenet_provider_active_form_signature_execute_ask_question_submit'),
     '#limit_validation_errors' => array(
       array('question'), //Only validate question when click submit
@@ -294,15 +294,24 @@ function carenet_provider_active_form($form, &$form_state, $token) {
     $form_state['step_information'] = _carenet_provider_active_form_steps();
   }
   $step = &$form_state['step'];
-  drupal_set_title(t('Provider active: Step @step', array('@step' => $step)));
+  drupal_set_title(t('Provider activation: @step', array('@step' => $form_state['step_information'][$step]['title'])));
   $form['#user'] = drupal_anonymous_user();
 
   //Progress bar
+
+
   foreach ($form_state['step_information'] as $step_id => $values) {
-    $progress_bar_items[] = array(
+    $progress_bar_items[$step_id] = array(
       'data' => $values['title'],
-      'class' => ($step_id == $step) ? array('active', 'progress-item') : array('progress-item'),
     );
+
+    if($step_id < $step){
+      $progress_bar_items[$step_id]['class'] = array('progress-item dexp-shortcodes-button gray btn');
+    } elseif($step_id == $step){
+      $progress_bar_items[$step_id]['class'] = array('progress-item dexp-shortcodes-button btn');
+    } else {
+      $progress_bar_items[$step_id]['class'] = array('progress-item dexp-shortcodes-button light-gray btn');
+    }
   }
   //Build form
   $form['progress_bar'] = array(
