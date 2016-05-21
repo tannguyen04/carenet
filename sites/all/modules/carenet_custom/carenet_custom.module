@@ -222,11 +222,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => $date_default
 		);
 
-		$form['action-doctor']['comment'] = array(
-			'#title' => t('Comment'),
-			'#type' => 'textarea',
-			'#default_value' => (!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] : '',
-		);
+		
 
 		$card_rate = array('All' => ' - Any - ');
 		$result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
@@ -234,9 +230,11 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		foreach($result as $record){
 			$node_card = node_load($record->nid);
 			$card_rate[$node_card->nid] =  $node_card->title .' - $'.$node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'];
+			$form['card_rate_price_'.$node_card->nid] = array('#type' => 'hidden', 
+				'#value' => $node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'],
+				'#prefix' => '<div id="card_rate_price_'.$node_card->nid.'">',
+				'#suffix' => '</div>',);
 		}
-
-		$card_rate['custom'] = 'Custom price';
 
 		$form['action-doctor']['card_rate'] = array(
        '#type' => 'select',
@@ -245,12 +243,12 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All'
    	);
 
+
    	$form['action-doctor']['custom_price'] = array(
 		  '#type' => 'textfield', 
-		  '#title' => t('Custom Price'), 
+		  '#title' => t('Price'), 
 		  '#size' => 30, 
 		  '#maxlength' => 128,
-		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['target_id'])) ? $node->field_dc_price[LANGUAGE_NONE][0]['target_id'] : 'All'
 		);
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
@@ -268,6 +266,12 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $fax_status,
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
+
+   	$form['action-doctor']['comment'] = array(
+			'#title' => t('Comment'),
+			'#type' => 'textarea',
+			'#default_value' => (!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] : '',
+		);
 
 		$form['action_end'] = array(
 		  '#markup' => '</div>',
@@ -443,28 +447,30 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  $node = node_submit($node);
 		  node_save($node);
 
-		  if($data['status'] == 4919){
-				switch ($data['method_contact']) {
-					case 'mail':
-						$mail_sent = $data['email'];
-						$params = array('mail_to' => $mail_sent,
-														'subject' => 'test',
-														'body' => '213'
-													 );
-						drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-						drupal_set_message('Sent mail to doctor success');
-						break;
-					case 'fax':
-						$mail_sent = 'haibqit@gmail.com';
-						$params = array('mail_to' => $mail_sent,
-														'subject' => 'test',
-														'body' => '213'
-													 );
-						drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-						drupal_set_message('Sent mail to Admin success');
-						break;
-				}
-			}
+		  drupal_set_message('Discuss create success');
+		  //send mail
+		 //  if($data['status'] == 4919){
+			// 	switch ($data['method_contact']) {
+			// 		case 'mail':
+			// 			$mail_sent = $data['email'];
+			// 			$params = array('mail_to' => $mail_sent,
+			// 											'subject' => 'test',
+			// 											'body' => '213'
+			// 										 );
+			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+			// 			drupal_set_message('Sent mail to doctor success');
+			// 			break;
+			// 		case 'fax':
+			// 			$mail_sent = 'haibqit@gmail.com';
+			// 			$params = array('mail_to' => $mail_sent,
+			// 											'subject' => 'test',
+			// 											'body' => '213'
+			// 										 );
+			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+			// 			drupal_set_message('Sent mail to Admin success');
+			// 			break;
+			// 	}
+			// }
 	}
 }
 
