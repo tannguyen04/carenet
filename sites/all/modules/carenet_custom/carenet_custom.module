@@ -411,7 +411,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  foreach($list_doctor as $key => $doctor){
 				if($doctor > 0){
 					$list_doctor_save[]['target_id'] = $doctor;
-
+					
 					if(!empty($data['date_time'])){
 						$field = new stdClass();
 						$field->type = 'provider';
