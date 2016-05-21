@@ -411,7 +411,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  foreach($list_doctor as $key => $doctor){
 				if($doctor > 0){
 					$list_doctor_save[]['target_id'] = $doctor;
-					
+
 					if(!empty($data['date_time'])){
 						$field = new stdClass();
 						$field->type = 'provider';
@@ -547,7 +547,7 @@ function carenet_custom_list_data(){
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.dataTables.min.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	
 
-	$fieldsArr = array('Phone #', 'Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+	$fieldsArr = array('Phone #','Type','Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
 
 	$projects_fields = array();
 
@@ -656,11 +656,12 @@ function carenet_custom_get_data(){
 		$provider = array();
 		$city = array();
 		$county = array();
-
+		$type = '';
 		foreach($data_telephone[$key] as $item){
 			$provider[] = $item['nid'];
 			$city[] = $item['city'];
 			$county[] = $item['county'];
+			$type = $item['type'];
 		}
 
 		$provider = array_unique($provider);
@@ -669,6 +670,7 @@ function carenet_custom_get_data(){
 
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $key,
+										'Type' => $type,
 										'Provider' => count($provider),
 										'City' => count($city),
 										'County' => count($county),
