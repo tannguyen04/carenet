@@ -579,15 +579,7 @@ function carenet_custom_list_data(){
 
 	$output .= '<div class="filter_npi" style="display: inline-block;margin-right: 20px;"><label>NPI</label><input type="text" id="npi" name="npi"></div>';
 
-	$city = '<select id="city">';
-	$city .='<option value="All" selected="selected">- Any -</option>';
-	$data_city = taxonomy_get_tree(6);
-	foreach($data_city as $key => $value){
-		$city .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
-	}
-	$city .='</select>';
-
-	$output .= '<div class="filter_city" style="display: inline-block;margin-right: 20px;"><label>City</label>'.$city.'</div>';
+	
 
 	$state = '<select id="state">';
 	$state .='<option value="All" selected="selected">- Any -</option>';
@@ -598,6 +590,17 @@ function carenet_custom_list_data(){
 	$state .='</select>';
 
 	$output .= '<div class="filter_state" style="display: inline-block;margin-right: 20px;"><label>State</label>'.$state.'</div>';
+
+	$city = '<select id="city">';
+	$city .='<option value="All" selected="selected">- Any -</option>';
+	$data_city = taxonomy_get_tree(6);
+	foreach($data_city as $key => $value){
+		$city .='<option value="'.$value->tid.'" >'.$value->name.'</option>';
+	}
+	$city .='</select>';
+
+	$output .= '<div class="filter_city" style="display: inline-block;margin-right: 20px;"><label>City</label>'.$city.'</div>';
+
 
 	$county = '<select id="county">';
 	$county .='<option value="All" selected="selected">- Any -</option>';
