@@ -66,7 +66,7 @@ function carenet_custom_permission() {
 function carenet_custom_provider_action($form, &$form_state, $telephone){
 	global $base_url;
 
-	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery-1.12.0.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
