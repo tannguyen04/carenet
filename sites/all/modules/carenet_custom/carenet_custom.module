@@ -213,19 +213,16 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 function carenet_custom_provider_action_validate($form, &$form_state){
 	//validate doctor
-	$list_check_doctor = false;
+	$list_check_doctor = 0;
 	$data = $form_state['values'];
-	print_r($data);die();
 	foreach($data['list_doctor'] as $key => $doctor){
 		if($doctor > 0){
-			$list_check_doctor = true;
+			$list_check_doctor = 1;
 		}
 	}
 
-	if($list_check_doctor){
+	if($list_check_doctor == 1){
 		form_set_error('list_doctor', 'Please choose one option');
-	}else{
-		form_set_error('list_doctor', 'test');
 	}
 
 	switch ($data['status']) {
