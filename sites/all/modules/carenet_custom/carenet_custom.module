@@ -221,7 +221,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 		}
 	}
 
-	if($list_check_doctor == 1){
+	if($list_check_doctor == 0){
 		form_set_error('list_doctor', 'Please choose one option');
 	}
 
@@ -282,10 +282,6 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if($data['method_contact'] == 'mail' && !valid_email_address($data['email_sent'])){
 				form_set_error('email_sent', 'Email wrong');
 			}
-			break;
-
-		default:
-			# code...
 			break;
 	}
 	
