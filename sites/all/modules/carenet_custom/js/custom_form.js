@@ -18,8 +18,29 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		
 	}
-
-	hide_all();
+	
+	var status_id = $('.form-item-status select').val();
+	if(status_id == 4848){
+		hide_all();
+		$('#carenet-custom-provider-action .form-item-reason').show();
+	}else if(status_id == 4850){
+		hide_all();
+		$('#carenet-custom-provider-action .form-item-date-time').show();
+	}else if(status_id == 4851){
+		hide_all();
+		$('#carenet-custom-provider-action .form-item-person').show();
+		$('#carenet-custom-provider-action .form-item-email').show();
+		$('#carenet-custom-provider-action .form-item-phone').show();
+		$('#carenet-custom-provider-action .form-item-designation').show();
+		$('#carenet-custom-provider-action .form-item-date-time').show();
+	}else if(status_id == 4919){
+		hide_all();
+		$('#carenet-custom-provider-action .form-item-card-rate').show();
+		$('#carenet-custom-provider-action .form-item-method-contact').show();
+		$('#carenet-custom-provider-action .form-item-email-sent').show();
+	}else{
+		hide_all();
+	}
 
 	$('.form-item-status select').change(function(event) {
 		/* Act on the event */
