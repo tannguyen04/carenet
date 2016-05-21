@@ -649,7 +649,7 @@ function carenet_custom_get_data(){
 										'Provider' => count($provider),
 										'City' => count($city),
 										'County' => count($county),
-										'Status' => 'New',
+										'Status' => '<i class="fa fa-phone">&nbsp;</i>',
 										'View' => '<a title="Discusss with providers" href="/provider/discuss/'.$key.'"><i class="fa fa-tasks">&nbsp;</i></a>',
 										'Last Activity' => '');
 		$i++;
