@@ -158,7 +158,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
-       	  '#suffix' => '</div>',
+      '#suffix' => '</div>',
       '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['value'] : ''   
 		);
 
