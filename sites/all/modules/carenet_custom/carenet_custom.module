@@ -679,7 +679,29 @@ function carenet_custom_get_data(){
 			$discuss_nid = $record->entity_id;
 		}
 
-		$node_discuss = node_load($discuss_nid);
+		$satus = 'New';
+		$activity = '';
+		if($discuss_nid > 0){
+			$node_discuss = node_load($discuss_nid);
+			if(!empty($node_discuss->field_dc_status[LANGUAGE_NONE][0]['tid'])){
+				$term = taxonomy_term_load($node_discuss->field_dc_status['und'][0]['tid']);
+				$status = $term->name;
+			}
+
+			if(!empty($node_discuss->field_dc_date[LANGUAGE_NONE][0]['value'])){
+				$date = strtotime($node_discuss->field_dc_date['und'][0]['value']);
+
+				$activity .='Date :'. date('m/d/Y H:i',$date).'<br />';
+			}
+
+			if(!empty($node_discuss->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
+				$activity .='Comment :'. $node_discuss->field_dc_reason_comment[LANGUAGE_NONE][0]['value'].'<br />';
+			}
+		}
+		
+
+		
+		
 
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $key,
@@ -687,9 +709,9 @@ function carenet_custom_get_data(){
 										'Provider' => count($provider),
 										'City' => count($city),
 										'County' => count($county),
-										'Status' => '<i class="fa fa-phone">&nbsp;</i>',
+										'Status' => $status,
 										'View' => '<a title="Discusss with providers" href="/provider/discuss/'.$key.'"><i class="fa fa-tasks">&nbsp;</i></a>',
-										'Last Activity' => '');
+										'Last Activity' => $activity);
 		$i++;
 	}
 
