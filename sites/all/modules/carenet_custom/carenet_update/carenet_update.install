@@ -26,4 +26,5 @@ function carenet_update_update_7003(&$sandbox) {
 function carenet_update_update_7004(&$sandbox) {
   //Enable module
   module_enable(array('mimemail'));
+  features_revert_module('carenet_variables');
 }
