@@ -7,10 +7,6 @@ jQuery(document).ready(function($) {
 	
 	function hide_all(){
 		$('#carenet-custom-provider-action .form-item-reason').hide();
-		$('#carenet-custom-provider-action .form-item-person').hide();
-		$('#carenet-custom-provider-action .form-item-email').hide();
-		$('#carenet-custom-provider-action .form-item-phone').hide();
-		$('#carenet-custom-provider-action .form-item-designation').hide();
 		$('#carenet-custom-provider-action .form-item-date-time').hide();
 		$('#carenet-custom-provider-action .form-item-comment').hide();
 		$('#carenet-custom-provider-action .form-item-email-sent').hide();

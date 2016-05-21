@@ -78,27 +78,30 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	if(!empty($data['nodes'])){
 
 		$doctor = array();
+
+	  $header = array(
+	    'name' => t('Name'),
+	    'state' => t('State'),
+	    'city' => t('City'),
+	    'county' => t('County'),
+	  );
+	  
+	  $options = array();
 		foreach($data['nodes'] as $item){
-			$doctor_tb_info = '
-														<tr>
-															<td>'.$item['node']['name'].'</td>
-															<td>'.$item['node']['npi'].'</td>
-															<td>'.$item['node']['state'].'</td>
-														</tr>';
-			$doctor[$item['node']['nid']] = $doctor_tb_info;
+			$options[$item['node']['nid']] = array(
+	      'name' => $item['node']['name'],
+	      'state' => $item['node']['state'],
+	      'city' => $item['node']['city'],
+	      'county' => $item['node']['county']
+	    );
 		}
 
 		$form['list_doctor'] = array(
-		  '#type' => 'checkboxes',
-		  '#options' => $doctor,
-		  '#prefix' => '<div class="provider"><table>
-														<tr>
-															<td>Name</td>
-															<td>NPI</td>
-															<td>State</td>
-														</tr>',
-		  '#suffix' => '</table></div>', 
-  	);
+	    '#type' => 'tableselect',
+	    '#header' => $header,
+	    '#options' => $options,
+	    '#empty' => t('No provider found'),
+	  );
 
 		
 		$form['action'] = array(
@@ -230,6 +233,26 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 
 	if($list_check_doctor == 0){
 		form_set_error('list_doctor', 'Please choose one option');
+	}
+
+	if(empty($data['person'])){
+		form_set_error('person', 'Please enter person');
+	}
+
+	if(empty($data['email'])){
+		form_set_error('email', 'Please enter email');
+	}
+
+	if(empty($data['phone'])){
+		form_set_error('phone', 'Please enter phone');
+	}
+
+	if(empty($data['designation'])){
+		form_set_error('designation', 'Please enter designation');
+	}
+
+	if(!valid_email_address($data['email'])){
+		form_set_error('email_sent', 'Email wrong');
 	}
 
 	switch ($data['status']) {
