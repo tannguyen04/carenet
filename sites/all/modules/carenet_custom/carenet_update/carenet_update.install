@@ -18,3 +18,12 @@ function carenet_update_update_7003(&$sandbox) {
   //Enable module
   module_enable(array('carenet_field_base_and_taxonomies', 'carenet_content_types'));
 }
+
+/**
+ * Implements hook_update_N()
+ * Enable mimemail module
+ */
+function carenet_update_update_7004(&$sandbox) {
+  //Enable module
+  module_enable(array('mimemail'));
+}

@@ -41,6 +41,10 @@ function carenet_provider_active_mail($key, &$message, $params) {
   $variables = array('user' => $params['account']);
   $message['subject'] = _carenet_provider_active_mail_text($key . '_subject', $language, $variables);
   $message['body'][] = _carenet_provider_active_mail_text($key . '_body', $language, $variables);
+  //Attachment file
+  if (isset($params['attachment'])) {
+    $message['params']['attachments'][] = $params['attachment'];
+  }
 }
 
 /**
@@ -87,8 +91,11 @@ password: Your password
  * Send mail
  */
 
-function _carenet_provider_active_mail_notify($key, $account, $language = NULL) {
+function _carenet_provider_active_mail_notify($key, $account, $attachment = NULL, $language = NULL) {
   $params['account'] = $account;
+  if ($attachment) {
+    $params['attachment'] = $attachment;
+  }
   $language = $language ? $language : user_preferred_language($account);
   $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
   return empty($mail) ? NULL : $mail['result'];

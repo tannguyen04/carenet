@@ -14,3 +14,4 @@ features[variable][] = email_provider_accept_body
 features[variable][] = email_provider_accept_subject
 features[variable][] = email_provider_ask_question_body
 features[variable][] = email_provider_ask_question_subject
+features[variable][] = mimemail_format

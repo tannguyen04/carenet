@@ -100,5 +100,12 @@ Provider just ask question for you:
   $strongarm->value = 'Provider jus ask question';
   $export['email_provider_ask_question_subject'] = $strongarm;
 
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'mimemail_format';
+  $strongarm->value = 'full_html';
+  $export['mimemail_format'] = $strongarm;
+
   return $export;
 }

@@ -251,7 +251,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   if ($uid) {
     //Send mail
     $new_username = user_load($uid);
-    $sent = _carenet_provider_active_mail_notify('email_provider_accept', $new_username);
+    //Attachment file
+    $attachment = file_load(83);
+    $sent = _carenet_provider_active_mail_notify('email_provider_accept', $new_username, $attachment);
     if ($sent) {
       drupal_set_message(t('A welcome message with further instructions has been sent to your e-mail address.'));
     }
