@@ -259,7 +259,7 @@ function carenet_custom_provider_action_submit($form, &$form_state, $telephone){
 						  }
 
 						  if(!empty($data['reason']) && $data['reason'] !='All'){
-						  	$node->->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
 						  }
 
 						  if(!empty($data['person'])){
