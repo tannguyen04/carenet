@@ -224,9 +224,9 @@ function carenet_custom_provider_action_validate($form, &$form_state, $telephone
 	}
 
 	if($list_check_doctor){
-		form_error('list_doctor', 'Please choose one option');
+		form_set_error('list_doctor', 'Please choose one option');
 	}else{
-		form_error('list_doctor', 'test');
+		form_set_error('list_doctor', 'test');
 	}
 	
 }
