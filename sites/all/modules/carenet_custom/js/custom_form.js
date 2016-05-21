@@ -13,6 +13,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-card-rate').hide();
 		$('#carenet-custom-provider-action .form-item-method-contact').hide();
 		$('#carenet-custom-provider-action .form-item-fax').hide();
+		$('#carenet-custom-provider-action .form-item-custom-price').hide();
 		
 	}
 
@@ -106,6 +107,17 @@ jQuery(document).ready(function($) {
 	if(method_contact == 'fax'){
 		$('#carenet-custom-provider-action .form-item-email-sent').hide();
 		$('#carenet-custom-provider-action .form-item-fax').show();
+	}
+
+	$('#carenet-custom-provider-action .form-item-card-rate select').change(function(event) {
+		if($(this).val() == 'custom'){
+			$('#carenet-custom-provider-action .form-item-custom-price').show();
+		}
+	});
+
+	var card_rate = $('#carenet-custom-provider-action .form-item-card-rate select').val();
+	if(card_rate == 'custom'){
+		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	}
 
 });
