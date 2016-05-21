@@ -76,12 +76,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
 	$data = drupal_json_decode(file_get_contents($url));
 	if(!empty($data['nodes'])){
-		$form['providers'] = array(
-		  '#type' => 'fieldset', 
-		  '#title' => t('Providers'), 
-		  '#collapsible' => TRUE, 
-		  '#collapsed' => FALSE,
-		);
+
 		$doctor = array();
 		foreach($data['nodes'] as $item){
 			$doctor_tb_info = '<table>
@@ -99,17 +94,18 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$doctor[$item['node']['nid']] = $doctor_tb_info;
 		}
 
-		$form['providers']['list_doctor'] = array(
+		$form['list_doctor'] = array(
 		  '#type' => 'checkboxes',
-		  '#options' => $doctor
+		  '#options' => $doctor,
+		  '#prefix' => '<div class="provider">',
+		  '#suffix' => '</div>', 
   	);
 
-		$form['action-doctor'] = array(
-		  '#type' => 'fieldset', 
-		  '#title' => t('Actions'), 
-		  '#collapsible' => TRUE, 
-		  '#collapsed' => FALSE,
+		
+		$form['action'] = array(
+		  '#markup' => '<div class="action">',
 		);
+
 
 		$status = array('All' => ' - Any - ');
 		$data_status = taxonomy_get_tree(13);
@@ -207,6 +203,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Email sent'),  
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		);
+
+		$form['action_end'] = array(
+		  '#markup' => '</div>',
 		);
 
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
