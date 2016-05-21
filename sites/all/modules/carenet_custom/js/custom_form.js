@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		
 	}
-	
+
 	var status_id = $('.form-item-status select').val();
 	if(status_id == 4848){
 		hide_all();
@@ -68,6 +68,8 @@ jQuery(document).ready(function($) {
 
 	});
 
+	
+
 	$('#carenet-custom-provider-action .form-item-reason select').change(function(event) {
 		if($(this).val() == 4918){
 			hide_all();
@@ -78,6 +80,12 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-reason').show();
 		}
 	});
+
+	var reason = $('#carenet-custom-provider-action .form-item-reason select').val();
+	if(reason == 4918){
+			$('#carenet-custom-provider-action .form-item-reason').show();
+			$('#carenet-custom-provider-action .form-item-comment').show();	
+	}
 
 	$('#carenet-custom-provider-action .form-item-method-contact select').change(function(event) {
 		if($(this).val() == 'fax'){
@@ -92,5 +100,11 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-email-sent').show();
 		}
 	});
+
+	var method_contact = $('#carenet-custom-provider-action .form-item-method-contact select').val();
+	if(method_contact == 'fax'){
+		$('#carenet-custom-provider-action .form-item-email-sent').hide();
+		$('#carenet-custom-provider-action .form-item-fax').show();
+	}
 
 });

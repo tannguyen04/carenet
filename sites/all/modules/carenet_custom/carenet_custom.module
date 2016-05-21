@@ -187,7 +187,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $method_contact,
    	);
 
-   	$fax_status = array(0 => 'Not sent yet',1 => 'Fax sent');
+   	$fax_status = array('not_sent_yet' => 'Not sent yet','fax_sent' => 'Fax sent');
    	$form['action-doctor']['fax'] = array(
        '#type' => 'select',
        '#title' => t('Fax status'),
@@ -415,12 +415,44 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 							drupal_set_message('Discuss update success');
 						}
+
+						switch ($data['method_contact']) {
+							case 'mail':
+
+								$mail_sent = $data['email_sent'];
+								$params = array('mail_to' => $mail_sent,
+																'subject' => 'test',
+																'body' => '213'
+															 );
+								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+								drupal_set_message('Sent mail to doctor success');
+								break;
+							case 'fax':
+								$mail_sent = 'haibqit@gmail.com';
+								$params = array('mail_to' => $mail_sent,
+																'subject' => 'test',
+																'body' => '213'
+															 );
+								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+								drupal_set_message('Sent mail to Admin success');
+								break;
+						}
 						//End create node disscus for provider
 				}
 				//End check node isset
 			}
 		}
 	}
+}
+
+function carenet_custom_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'carenet_custom_mail':
+      $message['to'] = $params['mail_to'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      break;
+  }
 }
 
 function carenet_custom_get_data_county(){
