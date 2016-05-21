@@ -62,7 +62,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/custom.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
-	
+
 	$form = array();
 	//Get Doctor
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
@@ -215,6 +215,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 	//validate doctor
 	$list_check_doctor = false;
 	$data = $form_state['values'];
+	print_r($data);die();
 	foreach($data['list_doctor'] as $key => $doctor){
 		if($doctor > 0){
 			$list_check_doctor = true;
