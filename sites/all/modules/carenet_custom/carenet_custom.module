@@ -210,10 +210,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Custom Price'), 
 		  '#size' => 30, 
 		  '#maxlength' => 128,
-		  '#prefix' => '$',
 		);
-
-
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['action-doctor']['method_contact'] = array(
