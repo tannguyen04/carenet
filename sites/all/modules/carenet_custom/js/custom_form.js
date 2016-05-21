@@ -101,7 +101,7 @@ jQuery(document).ready(function($) {
 	}
 
 	$('#carenet-custom-provider-action .form-item-card-rate select').change(function(event) {
-		var price = $('#card_rate_price_'+$(this).val()).val();
+		var price = $('#card_rate_price_'+$(this).val()+' input').val();
 		$('#carenet-custom-provider-action .form-item-custom-price').val(price);
 		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	});
@@ -109,7 +109,7 @@ jQuery(document).ready(function($) {
 
 	var card_rate = $('#carenet-custom-provider-action .form-item-card-rate select').val();
 	if(card_rate != 'All'){
-		var price = $('#card_rate_price_'+$(this).val()).val();
+		var price = $('#card_rate_price_'+$(this).val()+' input').val();
 		$('#carenet-custom-provider-action .form-item-custom-price').val(price);
 		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	}
