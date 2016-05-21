@@ -1,8 +1,10 @@
 jQuery(document).ready(function($) {
 
+	var today = new Date(today.getTime());
 	$('#edit-date-time').datetimepicker({
 		 mask:true,
 		 format:'m/d/Y H:i',
+		 startDate:today
 	});
 	
 	function hide_all(){
