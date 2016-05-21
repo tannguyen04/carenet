@@ -128,7 +128,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	$form['action-doctor']['person'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Person'), 
-		  '#default_value' => 'Person', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -136,7 +135,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['email'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email'), 
-		  '#default_value' => 'email', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -144,7 +142,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['phone'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Phone'), 
-		  '#default_value' => 'phone', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -152,7 +149,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
-		  '#default_value' => 'designation', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -254,6 +250,10 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('date_time', 'Please enter date time');
 			}
 
+			if(!valid_email_address($data['email'])){
+				form_set_error('email_sent', 'Email wrong');
+			}
+
 			break;
 		case 4848:
 			if(empty($data['reason']) || $data['reason'] == 'All'){
@@ -277,6 +277,10 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 
 			if($data['method_contact'] == 'mail' && empty($data['email_sent'])){
 				form_set_error('email_sent', 'Please enter mail sent');
+			}
+
+			if(!valid_email_address($data['email_sent'])){
+				form_set_error('email_sent', 'Email wrong');
 			}
 			break;
 
