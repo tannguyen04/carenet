@@ -100,7 +100,7 @@ jQuery(document).ready(function($) {
 	}
 
 	$('#carenet-custom-provider-action .form-item-card-rate select').change(function(event) {
-		if(card_rate != 'All'){
+		if($(this).val() != 'All'){
 			var price = $('#card_rate_price_'+$(this).val()+' input').val();
 			$('#carenet-custom-provider-action .form-item-custom-price').val(price);
 			$('#carenet-custom-provider-action .form-item-custom-price').show();
