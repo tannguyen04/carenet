@@ -54,6 +54,7 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-comment').show();	
 		}else{
 			hide_all();
+			$('#carenet-custom-provider-action .form-item-reason').show();
 		}
 	});
 
