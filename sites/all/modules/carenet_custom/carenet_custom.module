@@ -279,7 +279,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('email_sent', 'Please enter mail sent');
 			}
 
-			if(!valid_email_address($data['email_sent'])){
+			if($data['method_contact'] == 'mail' && !valid_email_address($data['email_sent'])){
 				form_set_error('email_sent', 'Email wrong');
 			}
 			break;
