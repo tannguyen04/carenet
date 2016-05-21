@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		
 	}
-	
+
 	hide_all();
 
 	$('.form-item-status select').change(function(event) {
@@ -40,17 +40,34 @@ jQuery(document).ready(function($) {
 			hide_all();
 			$('#carenet-custom-provider-action .form-item-card-rate').show();
 			$('#carenet-custom-provider-action .form-item-method-contact').show();
+			$('#carenet-custom-provider-action .form-item-email-sent').show();
 		}else{
 			hide_all();
 		}
 
 	});
 
-	$('#carenet-custom-provider-action .form-item-reason').change(function(event) {
+	$('#carenet-custom-provider-action .form-item-reason select').change(function(event) {
 		if($(this).val() == 4918){
+			hide_all();
+			$('#carenet-custom-provider-action .form-item-reason').show();
 			$('#carenet-custom-provider-action .form-item-comment').show();	
 		}else{
-			$('#carenet-custom-provider-action .form-item-comment').hide();
+			hide_all();
+		}
+	});
+
+	$('#carenet-custom-provider-action .form-item-method-contact select').change(function(event) {
+		if($(this).val() == 'fax'){
+			hide_all();
+			$('#carenet-custom-provider-action .form-item-card-rate').show();
+			$('#carenet-custom-provider-action .form-item-method-contact').show();
+			$('#carenet-custom-provider-action .form-item-fax').show();
+		}else{
+			hide_all();
+			$('#carenet-custom-provider-action .form-item-card-rate').show();
+			$('#carenet-custom-provider-action .form-item-method-contact').show();
+			$('#carenet-custom-provider-action .form-item-email-sent').show();
 		}
 	});
 
