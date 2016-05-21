@@ -83,7 +83,6 @@
     }
 
     $('#date_tick').datetimepicker({
-       mask:true,
        format:'m/d/Y H:i',
        minDate:'-1970/01/02'
     });
