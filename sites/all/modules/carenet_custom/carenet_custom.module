@@ -101,11 +101,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	    '#header' => $header,
 	    '#options' => $options,
 	    '#empty' => t('No provider found'),
+	    '#attributes' => array('class' => array('table table-hover table-bordered')),
+	    '#prefix' => '<h2>Providers</h2>'
 	  );
 
 		
 		$form['action'] = array(
-		  '#markup' => '<div class="action">',
+		  '#markup' => '<div class="action row">',
 		);
 
 
@@ -119,6 +121,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
+       '#prefix' => 'div class="row">',
+       '#attributes' => array('class' => array('col-md-6'))
    	);
 
    	$reason = array('All' => ' - Any - ');
@@ -131,6 +135,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Reason'),
        '#options' => $reason,
+       '#attributes' => array('class' => array('col-md-6')),
+       '#suffix' => '</div>'
    	);
 
    	$form['action-doctor']['person'] = array(
@@ -138,6 +144,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Person'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		  '#prefix' => 'div class="row">',
+       	  '#attributes' => array('class' => array('col-md-6'))
 		);
 
 		$form['action-doctor']['email'] = array(
@@ -145,6 +153,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Email'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		  '#attributes' => array('class' => array('col-md-6')),
+       	  '#suffix' => '</div>'
 		);
 
 		$form['action-doctor']['phone'] = array(
@@ -152,13 +162,17 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#title' => t('Phone'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
+		  '#prefix' => 'div class="row">',
+       	  '#attributes' => array('class' => array('col-md-6'))
 		);
 
 		$form['action-doctor']['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
 		  '#size' => 60, 
-		  '#maxlength' => 128, 
+		  '#maxlength' => 128,
+		  '#attributes' => array('class' => array('col-md-6')),
+       	  '#suffix' => '</div>'
 		);
 
 		$form['action-doctor']['date_time'] = array(
