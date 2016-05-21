@@ -111,12 +111,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
-     //   '#states' => array(
-			  //   'visible' => array(
-			  //     ':select[name="reason"]' => array('value' => 4848),
-			  //     ':textarea[name="comment"]' => array('value' => 4848),
-			  //   ),
-			  // ),
    	);
 
    	$reason = array('All' => ' - Any - ');
@@ -175,6 +169,31 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			'#type' => 'textarea',
 			'#default_value' => '',
 		);
+
+		$form['action-doctor']['comment'] = array(
+			'#title' => t('Comment'),
+			'#type' => 'textarea',
+			'#default_value' => '',
+		);
+
+		$card_rate = array();
+		$result = db_query('SELECT nid,title FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
+		foreach($result as $record){
+			$card_rate[$record->nid] =  $record->title;
+		}
+
+		$form['action-doctor']['card_rate'] = array(
+       '#type' => 'select',
+       '#title' => t('Card Rate'),
+       '#options' => $card_rate,
+   	);
+
+		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
+   	$form['action-doctor']['method_contact'] = array(
+       '#type' => 'select',
+       '#title' => t('Method contact'),
+       '#options' => $method_contact,
+   	);
 
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
