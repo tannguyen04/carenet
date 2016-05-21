@@ -88,29 +88,24 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-comment').show();	
 	}
 
-	$('#carenet-custom-provider-action .form-item-method-contact select').change(function(event) {
-		if($(this).val() == 'fax'){
-			hide_all();
-			$('#carenet-custom-provider-action .form-item-card-rate').show();
-			$('#carenet-custom-provider-action .form-item-method-contact').show();
-			$('#carenet-custom-provider-action .form-item-fax').show();
-		}else{
-			hide_all();
-			$('#carenet-custom-provider-action .form-item-card-rate').show();
-			$('#carenet-custom-provider-action .form-item-method-contact').show();
-			$('#carenet-custom-provider-action .form-item-email-sent').show();
-		}
+
+	$('#carenet-custom-provider-action .form-item-method-contact input').click(function() {
+	   if($('#edit-method-contact-fax').is(':checked')) { 
+	   		$('#carenet-custom-provider-action .form-item-fax').show();
+	   }else{
+	   		$('#carenet-custom-provider-action .form-item-fax').hide();
+	   }
 	});
 
-	var method_contact = $('#carenet-custom-provider-action .form-item-method-contact select').val();
-	if(method_contact == 'fax'){
-		$('#carenet-custom-provider-action .form-item-email-sent').hide();
+	if($('#edit-method-contact-fax').is(':checked')) { 
 		$('#carenet-custom-provider-action .form-item-fax').show();
 	}
 
 	$('#carenet-custom-provider-action .form-item-card-rate select').change(function(event) {
 		if($(this).val() == 'custom'){
 			$('#carenet-custom-provider-action .form-item-custom-price').show();
+		}else{
+			$('#carenet-custom-provider-action .form-item-custom-price').hide();
 		}
 	});
 
