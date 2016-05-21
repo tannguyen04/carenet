@@ -68,6 +68,11 @@
       return data;
     }
 
+    $('#date_tick').datetimepicker({
+       mask:true,
+       format:'m/d/Y H:i',
+    });
+
   });
 }(jQuery));
 

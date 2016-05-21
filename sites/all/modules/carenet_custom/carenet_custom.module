@@ -65,8 +65,7 @@ function carenet_custom_permission() {
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
 	global $base_url;
-
-	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 
@@ -77,40 +76,38 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
 	$data = drupal_json_decode(file_get_contents($url));
 	if(!empty($data['nodes'])){
-		$form['providers'] = array(
-		  '#type' => 'fieldset', 
-		  '#title' => t('Providers'), 
-		  '#collapsible' => TRUE, 
-		  '#collapsed' => FALSE,
-		);
+
 		$doctor = array();
+
+	  $header = array(
+	    'name' => t('Name'),
+	    'state' => t('State'),
+	    'city' => t('City'),
+	    'county' => t('County'),
+	  );
+
+	  $options = array();
 		foreach($data['nodes'] as $item){
-			$doctor_tb_info = '<table>
-														<tr>
-															<td>Name</td>
-															<td>NPI</td>
-															<td>State</td>
-														</tr>
-														<tr>
-															<td>'.$item['node']['name'].'</td>
-															<td>'.$item['node']['npi'].'</td>
-															<td>'.$item['node']['state'].'</td>
-														</tr>
-													</table>';
-			$doctor[$item['node']['nid']] = $doctor_tb_info;
+			$options[$item['node']['nid']] = array(
+	      'name' => $item['node']['name'],
+	      'state' => $item['node']['state'],
+	      'city' => $item['node']['city'],
+	      'county' => $item['node']['county']
+	    );
 		}
 
-		$form['providers']['list_doctor'] = array(
-		  '#type' => 'checkboxes',
-		  '#options' => $doctor
-  	);
+		$form['list_doctor'] = array(
+	    '#type' => 'tableselect',
+	    '#header' => $header,
+	    '#options' => $options,
+	    '#empty' => t('No provider found'),
+	  );
 
-		$form['action-doctor'] = array(
-		  '#type' => 'fieldset', 
-		  '#title' => t('Actions'), 
-		  '#collapsible' => TRUE, 
-		  '#collapsed' => FALSE,
+		
+		$form['action'] = array(
+		  '#markup' => '<div class="action">',
 		);
+
 
 		$status = array('All' => ' - Any - ');
 		$data_status = taxonomy_get_tree(13);
@@ -210,6 +207,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		);
 
+		$form['action_end'] = array(
+		  '#markup' => '</div>',
+		);
+
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
 	}else{
@@ -232,6 +233,26 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 
 	if($list_check_doctor == 0){
 		form_set_error('list_doctor', 'Please choose one option');
+	}
+
+	if(empty($data['person'])){
+		form_set_error('person', 'Please enter person');
+	}
+
+	if(empty($data['email'])){
+		form_set_error('email', 'Please enter email');
+	}
+
+	if(empty($data['phone'])){
+		form_set_error('phone', 'Please enter phone');
+	}
+
+	if(empty($data['designation'])){
+		form_set_error('designation', 'Please enter designation');
+	}
+
+	if(!valid_email_address($data['email'])){
+		form_set_error('email_sent', 'Email wrong');
 	}
 
 	switch ($data['status']) {
@@ -338,7 +359,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 						  }
 
 						  if(!empty($data['date_time'])){
-						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 						  }
 
 						  if(!empty($data['comment'])){
@@ -393,7 +414,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 						  }
 
 						  if(!empty($data['date_time'])){
-						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 						  }
 
 						  if(!empty($data['comment'])){
@@ -526,6 +547,8 @@ function carenet_custom_get_data_city(){
 
 function carenet_custom_list_data(){
 	//drupal_add_js(drupal_get_path('module', 'wb_project').'/js/jquery-1.12.0.min.js', 'file');
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.dataTables.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/dataTables.select.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom.js', 'file');
@@ -581,6 +604,8 @@ function carenet_custom_list_data(){
 	$status .='</select>';
 
 	$output .= '<div class="filter_status" style="display: inline-block;margin-right: 20px;"><label>Status</label>'.$status.'</div>';
+
+	$output .= '<div class="filter_date" style="display: none;margin-right: 20px;"><label>Date</label><input type="text" id="date_tick" name="date"></div>';
 
 	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
