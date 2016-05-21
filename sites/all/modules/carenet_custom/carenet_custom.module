@@ -61,6 +61,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/custom.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+
 	$form = array();
 	//Get Doctor
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
@@ -111,12 +113,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
-       '#states' => array(
-			    'visible' => array(
-			      ':select[name="reason"]' => array('value' => 4848),
-			      ':textarea[name="comment"]' => array('value' => 4848),
-			    ),
-			  ),
    	);
 
    	$reason = array('All' => ' - Any - ');
@@ -134,7 +130,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	$form['action-doctor']['person'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Person'), 
-		  '#default_value' => 'Person', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -142,7 +137,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['email'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email'), 
-		  '#default_value' => 'email', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -150,7 +144,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['phone'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Phone'), 
-		  '#default_value' => 'phone', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -158,7 +151,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['action-doctor']['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
-		  '#default_value' => 'designation', 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		);
@@ -176,6 +168,39 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			'#default_value' => '',
 		);
 
+		$card_rate = array('All' => ' - Any - ');
+		$result = db_query('SELECT nid,title FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
+		foreach($result as $record){
+			$card_rate[$record->nid] =  $record->title;
+		}
+
+		$form['action-doctor']['card_rate'] = array(
+       '#type' => 'select',
+       '#title' => t('Card Rate'),
+       '#options' => $card_rate,
+   	);
+
+		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
+   	$form['action-doctor']['method_contact'] = array(
+       '#type' => 'select',
+       '#title' => t('Method contact'),
+       '#options' => $method_contact,
+   	);
+
+   	$fax_status = array('notsend' => 'Not sent yet','send' => 'Fax sent');
+   	$form['action-doctor']['fax'] = array(
+       '#type' => 'select',
+       '#title' => t('Fax status'),
+       '#options' => $fax_status,
+   	);
+
+   	$form['action-doctor']['email_sent'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Email sent'),  
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		);
+
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
 	}else{
@@ -184,6 +209,250 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	}
 	
 	return $form;
+}
+
+function carenet_custom_provider_action_validate($form, &$form_state){
+	//validate doctor
+	$list_check_doctor = 0;
+	$data = $form_state['values'];
+	foreach($data['list_doctor'] as $key => $doctor){
+		if($doctor > 0){
+			$list_check_doctor = 1;
+		}
+	}
+
+	if($list_check_doctor == 0){
+		form_set_error('list_doctor', 'Please choose one option');
+	}
+
+	switch ($data['status']) {
+		case 'All':
+			form_set_error('status', 'Please choose one option status');
+			break;
+		case 4851:
+			if(empty($data['person'])){
+				form_set_error('person', 'Please enter person');
+			}
+
+			if(empty($data['email'])){
+				form_set_error('email', 'Please enter email');
+			}
+
+			if(empty($data['phone'])){
+				form_set_error('phone', 'Please enter phone');
+			}
+
+			if(empty($data['designation'])){
+				form_set_error('designation', 'Please enter designation');
+			}
+
+			if(empty($data['date_time'])){
+				form_set_error('date_time', 'Please enter date time');
+			}
+
+			if(!valid_email_address($data['email'])){
+				form_set_error('email_sent', 'Email wrong');
+			}
+
+			break;
+		case 4848:
+			if(empty($data['reason']) || $data['reason'] == 'All'){
+				form_set_error('reason', 'Please choose one option reason');
+			}
+
+			if($data['reason'] == 4918 && empty($data['comment'])){
+				form_set_error('comment', 'Please choose one option reason');
+			}
+
+			break;
+		case 4850:
+			if(empty($data['date_time'])){
+				form_set_error('date_time', 'Please enter date time');
+			}
+			break;
+		case 4919:
+			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
+				form_set_error('card_rate', 'Please choose one option card rate');
+			}
+
+			if($data['method_contact'] == 'mail' && empty($data['email_sent'])){
+				form_set_error('email_sent', 'Please enter mail sent');
+			}
+
+			if($data['method_contact'] == 'mail' && !valid_email_address($data['email_sent'])){
+				form_set_error('email_sent', 'Email wrong');
+			}
+			break;
+	}
+	
+}
+
+function carenet_custom_provider_action_submit($form, &$form_state){
+	global $user;
+	if(!empty($form_state['values']['list_doctor'])){
+		$data = $form_state['values'];
+		$list_doctor = $data['list_doctor'];
+		foreach($list_doctor as $key => $doctor){
+			if($doctor > 0){
+				$node_doctor = node_load($doctor);
+				
+				if(!empty($node_doctor->nid)){
+						//check doctor discuss
+						if(!empty($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id'])){
+							$node_revision = node_load($node_doctor->field_discuss_reference[LANGUAGE_NONE][0]['target_id']);
+
+							$node_revision->revision = 1;
+  						$node_revision->log = t('Update Discuss');
+
+							if(!empty($data['status']) && $data['status'] != 'All'){
+						  	$node_revision->field_revision_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['reason']) && $data['reason'] !='All'){
+						  	$node_revision->field_revision_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['person'])){
+						  	$node_revision->field_revision_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
+						  }
+
+						  if(!empty($data['email'])){
+						  	$node_revision->field_revision_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
+						  }
+
+						  if(!empty($data['phone'])){
+						  	$node_revision->field_revision_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
+						  }
+
+						  if(!empty($data['designation'])){
+						  	$node_revision->field_revision_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
+						  }
+
+						  if(!empty($data['date_time'])){
+						  	$node_revision->field_revision_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  }
+
+						  if(!empty($data['comment'])){
+						  	$node_revision->field_revision_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+						  }
+
+						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
+						  	$node_revision->field_revision_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
+						  }
+
+						  if(!empty($data['fax'])){
+						  	$node_revision->field_revision_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
+						  }
+
+						  if(!empty($data['email_sent'])){
+						  	$node->field_revision_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
+						  }
+						  node_save($node_revision);
+						  drupal_set_message('Discuss update success');
+						}else{
+							$node = new stdClass();
+						  $node->title = $node_doctor->field_pv_og_name[LANGUAGE_NONE][0]['value'];
+						  $node->type = 'discuss';
+						  node_object_prepare($node);
+						  $node->language = LANGUAGE_NONE;
+						  $node->uid = $user->uid; 
+						  $node->status = 1; //(1 or 0): published or not
+						  $node->promote = 0; 
+
+						  if(!empty($data['status']) && $data['status'] != 'All'){
+						  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['reason']) && $data['reason'] !='All'){
+						  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						  }
+
+						  if(!empty($data['person'])){
+						  	$node->field_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
+						  }
+
+						  if(!empty($data['email'])){
+						  	$node->field_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
+						  }
+
+						  if(!empty($data['phone'])){
+						  	$node->field_dc_phone[LANGUAGE_NONE][0]['value'] = $data['phone'];
+						  }
+
+						  if(!empty($data['designation'])){
+						  	$node->field_dc_designation[LANGUAGE_NONE][0]['value'] = $data['designation'];
+						  }
+
+						  if(!empty($data['date_time'])){
+						  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = $data['date_time'];
+						  }
+
+						  if(!empty($data['comment'])){
+						  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+						  }
+
+						  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
+						  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
+						  }
+
+						  if(!empty($data['fax'])){
+						  	$node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] = $data['fax'];
+						  }
+
+						  if(!empty($data['email_sent'])){
+						  	$node->field_pv_callback_email[LANGUAGE_NONE][0]['value'] = $data['email_sent'];
+						  }
+
+						  $node = node_submit($node);
+						  node_save($node);
+
+						  //Save field references
+						  $field = new stdClass();
+							$field->type = $node_doctor->type;
+							$field->nid = $node_doctor->nid;
+							$field->field_discuss_reference[LANGUAGE_NONE][0]['target_id'] = $node->nid;
+							field_attach_update('node', $field);
+
+							drupal_set_message('Discuss update success');
+						}
+
+						switch ($data['method_contact']) {
+							case 'mail':
+
+								$mail_sent = $data['email_sent'];
+								$params = array('mail_to' => $mail_sent,
+																'subject' => 'test',
+																'body' => '213'
+															 );
+								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+								drupal_set_message('Sent mail to doctor success');
+								break;
+							case 'fax':
+								$mail_sent = 'haibqit@gmail.com';
+								$params = array('mail_to' => $mail_sent,
+																'subject' => 'test',
+																'body' => '213'
+															 );
+								drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+								drupal_set_message('Sent mail to Admin success');
+								break;
+						}
+						//End create node disscus for provider
+				}
+				//End check node isset
+			}
+		}
+	}
+}
+
+function carenet_custom_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'carenet_custom_mail':
+      $message['to'] = $params['mail_to'];
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      break;
+  }
 }
 
 function carenet_custom_get_data_county(){
@@ -383,4 +652,94 @@ function carenet_custom_get_data(){
   $data_listing['recordsTotal'] = $data['pager']['count'];
   $data_listing['recordsFiltered'] = $data['pager']['count'];
   return drupal_json_output($data_listing);
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function carenet_custom_libraries_info() {
+  $libraries = array();
+  $libraries['fpdf'] = array(
+    'name' => 'FPDF',
+    'vendor url' => 'http://www.fpdf.org/',
+    'download url' => 'http://www.fpdf.org/',
+    'files' => array(
+      'php' => array(
+        'fpdf.php',
+      ),
+    ),
+    'version arguments' => array(
+      'file' => 'fpdf.php',
+      'pattern' => '/((\d+).(\d+))/',
+      'lines' => 6,
+    ),
+  );
+
+  $libraries['fpdi'] = array(
+    'name' => 'FPDI',
+    'vendor url' => 'http://www.setasign.com/products/fpdi/about/',
+    'download url' => 'http://www.setasign.com/products/fpdi/downloads/',
+    'files' => array(
+      'php' => array(
+        'fpdi.php',
+        'fpdf_tpl.php',
+      ),
+    ),
+    'dependencies' => array('fpdf'),
+    'version arguments' => array(
+      'file' => 'fpdi.php',
+      'pattern' => '/((\d+)\.(\d+)\.(\d+))/',
+      'lines' => 6,
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_requirements()
+ */
+function carenet_custom_requirements($phase) {
+  $requirements = array();
+  if ($phase == 'runtime') {
+    $t = get_t();
+    if ($path = libraries_get_path('fpdf')) {
+      if (file_exists($path . '/fpdf.php')) {
+        $requirements['fpdf'] = array(
+          'title' => $t('FPDF'),
+          'value' => $t('fpdf.php found under !path', array('!path' => $path . '/fpdf.php')),
+          'severity' => REQUIREMENT_OK,
+        );
+      }
+    }else {
+      $requirements['fpdf'] = array(
+        'title' => $t('FPDF'),
+        'value' => $t('FPDF library was not found. !download the library and place in under sites/all/libraries/fpdf, so that the library can be found at sites/all/libraries/fpdf/fpdf.php.', array('!download' => l(t('Download'), 'http://www.fpdf.org/'))),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+
+    if ($path = libraries_get_path('fpdi')) {
+      if (file_exists($path . '/fpdi.php') && file_exists($path . '/fpdf_tpl.php')) {
+        $requirements['fpdi'] = array(
+          'title' => $t('FPDI'),
+          'value' => $t('fpdi.php and fpdf_tpl.php found under !path', array('!path' => $path)),
+          'severity' => REQUIREMENT_OK,
+        );
+      }
+      else if (!file_exists($path . '/fpdi.php')) {
+        $requirements['fpdi'] = array(
+          'title' => $t('FPDI'),
+          'value' => $t('fpdi.php not found under !path. View README.txt for further instructions.', array('!path' => $path)),
+          'severity' => REQUIREMENT_ERROR,
+        );
+      }
+    }else {
+      $requirements['fpdi'] = array(
+        'title' => $t('FPDI'),
+        'value' => $t('fpdf_tpl.php not found under !path. View README.txt for further instructions.', array('!path' => $path)),
+        'severity' => REQUIREMENT_ERROR,
+      );
+    }
+  }
+  return $requirements;
 }

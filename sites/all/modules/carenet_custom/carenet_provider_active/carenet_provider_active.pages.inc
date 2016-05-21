@@ -148,7 +148,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#attributes' => array(
       'class' => array('element-invisible', 'signature-execute-ask-question'),
     ),
-    //'#after_build' => array('_after_build_signature_execute_ask_question'),
+    '#after_build' => array('_after_build_signature_execute_ask_question'),
   );
   $form['signature_execute']['ask_question']['question'] = array(
     '#type' => 'textarea',
