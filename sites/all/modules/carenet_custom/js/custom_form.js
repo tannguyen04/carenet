@@ -53,16 +53,13 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-date-time').show();
 		}else if($(this).val() == 4851){
 			hide_all();
-			$('#carenet-custom-provider-action .form-item-person').show();
-			$('#carenet-custom-provider-action .form-item-email').show();
-			$('#carenet-custom-provider-action .form-item-phone').show();
-			$('#carenet-custom-provider-action .form-item-designation').show();
 			$('#carenet-custom-provider-action .form-item-date-time').show();
 		}else if($(this).val() == 4919){
 			hide_all();
 			$('#carenet-custom-provider-action .form-item-card-rate').show();
 			$('#carenet-custom-provider-action .form-item-method-contact').show();
-			$('#carenet-custom-provider-action .form-item-comment').show();
+		}else if($(this).val() == 4920){
+			$('#carenet-custom-provider-action .form-item-date-time').show();
 		}else{
 			hide_all();
 		}
