@@ -107,13 +107,22 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	    );
 		}
 
+		$nid_default = array();
+
+		if(!empty($node->field_list_provider[LANGUAGE_NONE][0])){
+			foreach($node->field_list_provider[LANGUAGE_NONE] as $item){
+				$nid_default[$item['target_id']] = TRUE;
+			}
+		}
+
 		$form['list_doctor'] = array(
 	    '#type' => 'tableselect',
 	    '#header' => $header,
 	    '#options' => $options,
 	    '#empty' => t('No provider found'),
 	    '#attributes' => array('class' => array('table table-hover table-bordered')),
-	    '#prefix' => '<h2>Providers ('.$telephone.')</h2>'
+	    '#prefix' => '<h2>Providers ('.$telephone.')</h2>',
+	    '#default_value' => $nid_default
 	  );
 
 		
