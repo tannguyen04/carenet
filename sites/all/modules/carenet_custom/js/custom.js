@@ -83,8 +83,9 @@
     }
 
     $('#date_tick').datetimepicker({
-       format:'m/d/Y H:i',
-       minDate:'-1970/01/02'
+       format:'m/d/Y',
+       minDate:'-1970/01/02',
+       timepicker:false,
     });
 
   });

@@ -405,7 +405,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['date_time'])){
-		  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+		  	$node->field_dc_date[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d', 'UTC');
 		  }
 
 		  if(!empty($data['comment'])){
@@ -437,7 +437,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 					$referDoc = node_load($doctor);
 
 					if(!empty($data['date_time'])){
-				  	$referDoc->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+				  	$referDoc->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d', 'UTC');
 				  }
 				  
 				  if(!empty($data['status']) && $data['status'] != 'All'){
