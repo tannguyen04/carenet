@@ -680,11 +680,8 @@ function carenet_custom_get_data(){
 		foreach($data_telephone[$key] as $item){
 			$provider[] = $item['nid'];
 			$city[] = $item['city'];
-<<<<<<< HEAD
 			$type = $item['type'];
-=======
 			$county[] = $item['county'];
->>>>>>> 11cd687d3ae8666d2475db2ffeee27bc683055c6
 		}
 
 		$provider = array_unique($provider);
