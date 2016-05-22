@@ -330,6 +330,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     if ($sent) {
       drupal_set_message(t('A welcome message with further instructions has been sent to your e-mail address.'));
     }
+    //Update again status discussion
+    $discussion_wrapper->field_dc_status->set(4921); //Accpeted
+    $discussion_wrapper->save();
     $form_state['redirect'] = '<front>';
   }
 }
