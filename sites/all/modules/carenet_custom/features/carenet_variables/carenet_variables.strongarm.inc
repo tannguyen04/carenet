@@ -57,6 +57,54 @@ function carenet_variables_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'content_access_card_rate';
+  $strongarm->value = array(
+    'view_own' => array(
+      0 => 4,
+      1 => 3,
+    ),
+    'view' => array(
+      0 => 4,
+      1 => 3,
+    ),
+  );
+  $export['content_access_card_rate'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'content_access_discuss';
+  $strongarm->value = array(
+    'view_own' => array(
+      0 => 4,
+      1 => 3,
+    ),
+    'view' => array(
+      0 => 4,
+      1 => 3,
+    ),
+  );
+  $export['content_access_discuss'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'content_access_provider';
+  $strongarm->value = array(
+    'view_own' => array(
+      0 => 4,
+      1 => 3,
+    ),
+    'view' => array(
+      0 => 4,
+      1 => 3,
+    ),
+  );
+  $export['content_access_provider'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'email_provider_accept_body';
   $strongarm->value = '[user:name],
 
