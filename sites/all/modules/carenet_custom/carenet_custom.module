@@ -186,7 +186,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
        	  '#suffix' => '</div>',
-		  '#require' => TRUE,
 		  '#default_value' => (!empty($node->field_dc_email[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_email[LANGUAGE_NONE][0]['value'] : '',
 		);
 
@@ -309,13 +308,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 		form_set_error('list_doctor', 'Please choose one option');
 	}
 
-	if(empty($data['email'])){
-		form_set_error('email', 'Please enter email');
-	}
-
-	if(!valid_email_address($data['email'])){
-		form_set_error('email_sent', 'Email wrong');
-	}
+	
 
 	switch ($data['status']) {
 		case 'All':
@@ -331,14 +324,28 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			}
 
 			break;
+			
 		case 4850:
 			if(empty($data['date_time'])){
 				form_set_error('date_time', 'Please enter date time');
 			}
 			break;
+		case 4851:
+			if(empty($data['date_time'])){
+				form_set_error('date_time', 'Please enter date time');
+			}
+			break;
+			
 		case 4919:
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('card_rate', 'Please choose one option card rate');
+			}
+			if(empty($data['email'])){
+				form_set_error('email', 'Please enter email');
+			}
+
+			if(!valid_email_address($data['email'])){
+				form_set_error('email_sent', 'Email wrong');
 			}
 			break;
 	}
