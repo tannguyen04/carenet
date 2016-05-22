@@ -71,6 +71,13 @@
 
     });
 
+    var status_show = $('#status').val();
+    if(status_show == 4851 || status_show == 4850 || status_show == 4920){
+      $('.filter_date').css('display','inline-block');
+    }else{
+      $('.filter_date').css('display','none');
+    }
+
     function get_value_all(){
       var data = [];
       data['priority'] = $('#priority').val();
