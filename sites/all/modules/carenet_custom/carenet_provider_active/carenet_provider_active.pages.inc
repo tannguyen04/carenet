@@ -282,7 +282,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $username = $values['name'];
   $pass = user_hash_password(trim($pass));
   $mail = $values['mail'];
-  $roles = array();
+  $roles = array(5); //Provider role
 
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
