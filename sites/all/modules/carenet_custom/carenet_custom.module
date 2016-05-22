@@ -380,7 +380,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 	  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
 	  		
 	  	}
-	  	
+
 	  	if($data['status'] == 4919){
 	  		$link_active = l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
 	  	}
@@ -661,10 +661,11 @@ function carenet_custom_get_data(){
 	if(!empty($_POST['start']) && !empty($_POST['length'])){
 		$parameter['page'] = $_POST['start']/$_POST['length'];
 	}
+	
 	$date = '';
-	if(!empty($_GET['date'])){
+	if(!empty($_GET['date']) && $_GET['date'] !='undefined'){
 		$time = strtotime($_GET['date']);
-		$date = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
+		$date = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d', 'UTC');
 	}
 
 	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
