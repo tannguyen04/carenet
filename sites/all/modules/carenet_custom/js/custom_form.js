@@ -110,9 +110,8 @@ jQuery(document).ready(function($) {
 		}
 	});
 
-	$('#carenet-custom-provider-action .form-item-custom-price').hide();
 	var card_rate = $('#carenet-custom-provider-action .form-item-card-rate select').val();
-	if(card_rate != 'All'){
+	if(card_rate != 'All' && status_id == 4919){
 		var price = $('#card_rate_price_'+$(this).val()+' input').val();
 		$('#carenet-custom-provider-action .form-item-custom-price').val(price);
 		$('#carenet-custom-provider-action .form-item-custom-price').show();
