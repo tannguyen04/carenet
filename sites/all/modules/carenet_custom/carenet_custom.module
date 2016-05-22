@@ -395,7 +395,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		}
 
 		  if(!empty($data['reason']) && $data['reason'] !='All'){
-		  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['status'];
+		  	$node->field_dc_reason[LANGUAGE_NONE][0]['tid'] = $data['reason'];
 		  }
 
 		  if(!empty($data['person'])){
@@ -465,7 +465,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  $node = node_submit($node);
 		  node_save($node);
 
-		  drupal_set_message('Discuss create success');
+		  drupal_set_message('The discussion has been updated');
 		  //send mail
 		 if($data['status'] == 4919){
 		 	switch ($data['method_contact']) {

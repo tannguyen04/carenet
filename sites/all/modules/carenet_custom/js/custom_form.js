@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
 	if(status_id == 4848){
 		hide_all();
 		$('#carenet-custom-provider-action .form-item-reason').show();
-	}else if(status_id == 4850){
+	}else if(status_id == 4850 || status_id == 4920){
 		hide_all();
 		$('#carenet-custom-provider-action .form-item-date-time').show();
 	}else if(status_id == 4851){
