@@ -111,6 +111,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $text) {
 
 
 function carenet_provider_active_form_signature_execute($form, &$form_state) {
+  $discussion_wrapper = entity_metadata_wrapper('node', $form['#discussion']);
   $form = array(
     '#type' => 'container',
     '#attached' => array(
@@ -154,7 +155,14 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#maxlength' => EMAIL_MAX_LENGTH,
     '#description' => t('A valid e-mail address. All e-mails from the system will be sent to this address. The e-mail address is not made public and will only be used if you wish to receive a new password or wish to receive certain news or notifications by e-mail.'),
     '#required' => TRUE,
-    '#default_value' => !empty($form_state['values']['mail']) ? $form_state['values']['mail'] : '',
+    '#default_value' => !empty($form_state['values']['mail']) ? $form_state['values']['mail'] : $discussion_wrapper->field_pv_callback_email->value(),
+  );
+  $form['signature_execute']['accept']['full_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Full Name'),
+    '#attributes' => array('class' => array('full-name')),
+    '#required' => TRUE,
+    '#default_value' =>  !empty($form_state['values']['full_name']) ? $form_state['values']['full_name'] : $discussion_wrapper->field_dc_person->value(),
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
@@ -165,6 +173,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#limit_validation_errors' => array(
       array('mail'), //Only validate email and username when click submit
       array('name'),
+      array('full_name'),
     ),
   );
 
@@ -267,7 +276,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $document = $card_rate_wrapper->field_document->value()['uri'];
     $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
     $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
-    carenet_provider_active_pdf_generate($source, $dest, 'This is doctor\'s signature!');
+    $sign_name = t('@fullname, Signed on @time_sign', array('@full_name' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
+    carenet_provider_active_pdf_generate($source, $dest, $sign_name);
 
     // We have complete file path.
     $file = new stdClass;
@@ -346,7 +356,7 @@ function carenet_provider_active_form($form, &$form_state, $token) {
   //Get discussion
   $discussion = _carenet_provider_active_get_discussion_by_token($token);
   if (!$discussion) {
-    drupal_set_message(t('Sorry, token invalid'));
+    drupal_set_message(t('Sorry, token invalid'), 'error');
     drupal_goto('<front>');
   }
   $form['#discussion'] = ($discussion) ? $discussion : NULL;

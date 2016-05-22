@@ -216,9 +216,9 @@ if (!defined('PANTHEON_ENVIRONMENT')) {
     array (
       'default' =>
       array (
-        'database' => 'carenet',
+        'database' => 'project_carenet',
         'username' => 'root',
-        'password' => '',
+        'password' => '123',
         'host' => 'localhost',
         'port' => '',
         'driver' => 'mysql',
