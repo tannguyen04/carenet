@@ -1,10 +1,13 @@
 (function ($) {
   $( document ).ready(function() {
+
+    var data = get_value_all();
+    var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
   	var fields = JSON.parse(Drupal.settings.carenet_custom_list_data_fields);
   	var datatable = $('#carenet_custom_list_data').DataTable( {
         dom: "Bfrtip",
         ajax: {
-            url: "/provider-get-data",
+            url: url,
             type: "POST"
         },
         serverSide: true,
@@ -14,9 +17,8 @@
         
     } );
 
-    var data = get_value_all();
-    var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status'];
-    datatable.ajax.url(url).load();
+    
+    //datatable.ajax.url(url).load();
      
     $('#priority').change(function(event) {
       var data = get_value_all();
