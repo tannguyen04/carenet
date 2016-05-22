@@ -276,7 +276,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $document = $card_rate_wrapper->field_document->value()['uri'];
     $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
     $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
-    $sign_name = t('@fullname, Signed on @time_sign', array('@full_name' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
+    $sign_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
     carenet_provider_active_pdf_generate($source, $dest, $sign_name);
 
     // We have complete file path.
