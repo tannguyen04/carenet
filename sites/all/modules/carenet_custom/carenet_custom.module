@@ -461,7 +461,6 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 	switch ($data['method_contact']) {
 		 		case 'mail':
 		 			$mail_sent = $data['email'];
-		 			$mail_sent = 'haibqit@gmail.com';
 		 			$params = array('mail_to' => $mail_sent,
 		 											'subject' => 'Carenet activation',
 		 											'body' => 'Click here to active your account: '.$link_active
