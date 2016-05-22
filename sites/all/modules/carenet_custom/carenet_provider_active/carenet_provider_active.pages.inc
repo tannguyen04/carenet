@@ -83,6 +83,33 @@ function carenet_provider_active_form_contract($form, &$form_state) {
   return $form;
 }
 
+function carenet_provider_active_pdf_generate($source, $destination, $text) {
+  $pdffile = file_create_url('public://doc.pdf');
+  require_once(libraries_get_path('fpdf').'/fpdf.php');
+  require_once(libraries_get_path('fpdi').'/fpdi.php');
+
+  // initiate FPDI
+  $pdf = new FPDI();
+  // add a page
+  $pdf->AddPage();
+  // set the source file
+  $pdf->setSourceFile($source);
+  // import page 1
+  $tplIdx = $pdf->importPage(1);
+  // use the imported page and place it at position 10,10 with a width of 100 mm
+  $pdf->useTemplate($tplIdx, 10, 10, 100);
+
+  // now write some text above the imported page
+  $pdf->SetFont('Helvetica');
+  $pdf->SetTextColor(255, 0, 0);
+  $pdf->SetXY(100, 100);
+  $pdf->Write(0, $text);
+
+  $pdf->Output($destination, 'F');
+  return $destination;
+}
+
+
 function carenet_provider_active_form_signature_execute($form, &$form_state) {
   $form = array(
     '#type' => 'container',
@@ -232,6 +259,41 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $mail = $values['mail'];
   $roles = array();
 
+  $discussion = $form['#discussion'];
+  $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
+  $card_rate = $discussion_wrapper->field_card_rate_ref->value();
+  $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
+  if (isset($card_rate_wrapper->field_document->value()['uri'])) {
+    $document = $card_rate_wrapper->field_document->value()['uri'];
+    $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
+    $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
+    carenet_provider_active_pdf_generate($source, $dest, 'This is doctor\'s signature!');
+
+    // We have complete file path.
+    $file = new stdClass;
+    $file->uid = 1;
+    $file->filename = pathinfo($dest, PATHINFO_BASENAME);
+    $file->uri = str_replace(DRUPAL_ROOT . '/'.variable_get('file_private_path').'/', 'private://', $dest);
+    $file->filemime = file_get_mimetype($dest);
+    $file->display = 1;
+    // Make it permanent, otherwise it will get deleted later.
+    $file->status = FILE_STATUS_PERMANENT;
+
+    // Save file object to make it a 'managed file'.
+    file_save($file);
+
+    // We will save file under this location.
+    $destination = 'private://contract_signed/';
+
+    // Make sure destination directory exists before moving files to that path.
+    // This will create directory if it does not exists.
+    file_prepare_directory($destination, FILE_CREATE_DIRECTORY);
+    //print_r($file);
+    //die;
+
+  }
+
+
   //Create user
   $new_username = entity_create('user', array());
   $new_username->name = $username;
@@ -241,6 +303,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $new_username->mail = $mail;
   $new_username->pass = $pass;
   $new_username->timezone = date_default_timezone();
+  $new_username->field_contract['und'][0] = (array) $file;
+
   $new_username = entity_metadata_wrapper('user', $new_username);
   $new_username->save();
   if (!$new_username) {
@@ -279,7 +343,6 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
  * Form provider active
  */
 function carenet_provider_active_form($form, &$form_state, $token) {
-
   //Get discussion
   $discussion = _carenet_provider_active_get_discussion_by_token($token);
   if (!$discussion) {
