@@ -133,7 +133,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		
 		$form['action'] = array(
-		  '#markup' => '<div class="action row">',
+		  '#markup' => '<div id="action-container" class="action row">',
 		);
 
 
@@ -279,7 +279,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$form['button_cancel'] = array(
-		  '#markup' => '<a href="/providers">Cancel</a>',
+		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" href="/providers">Cancel</a>',
 		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
@@ -454,28 +454,28 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  drupal_set_message('The discussion has been updated.');
 
 		  //send mail
-		 //  if($data['status'] == 4919){
-			// 	switch ($data['method_contact']) {
-			// 		case 'mail':
-			// 			$mail_sent = $data['email'];
-			// 			$params = array('mail_to' => $mail_sent,
-			// 											'subject' => 'test',
-			// 											'body' => '213'
-			// 										 );
-			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-			// 			drupal_set_message('Sent mail to doctor success');
-			// 			break;
-			// 		case 'fax':
-			// 			$mail_sent = 'haibqit@gmail.com';
-			// 			$params = array('mail_to' => $mail_sent,
-			// 											'subject' => 'test',
-			// 											'body' => '213'
-			// 										 );
-			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-			// 			drupal_set_message('Sent mail to Admin success');
-			// 			break;
-			// 	}
-			// }
+		 /*if($data['status'] == 4919){
+		 	switch ($data['method_contact']) {
+		 		case 'mail':
+		 			$mail_sent = $data['email'];
+		 			$params = array('mail_to' => $mail_sent,
+		 											'subject' => 'test',
+		 											'body' => '213'
+		 										 );
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+		 			drupal_set_message('Sent mail to doctor success');
+		 			break;
+		 		case 'fax':
+		 			$mail_sent = 'haibqit@gmail.com';
+		 			$params = array('mail_to' => $mail_sent,
+		 											'subject' => 'test',
+		 											'body' => '213'
+		 										 );
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+		 			drupal_set_message('Sent mail to Admin success');
+		 			break;
+		 	}
+		}*/
 	}
 }
 
