@@ -155,7 +155,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#maxlength' => EMAIL_MAX_LENGTH,
     '#description' => t('A valid e-mail address. All e-mails from the system will be sent to this address. The e-mail address is not made public and will only be used if you wish to receive a new password or wish to receive certain news or notifications by e-mail.'),
     '#required' => TRUE,
-    '#default_value' => !empty($form_state['values']['mail']) ? $form_state['values']['mail'] : $discussion_wrapper->field_pv_callback_email->value(),
+    '#default_value' => !empty($form_state['values']['mail']) ? $form_state['values']['mail'] : $discussion_wrapper->field_dc_email->value(),
   );
   $form['signature_execute']['accept']['full_name'] = array(
     '#type' => 'textfield',
