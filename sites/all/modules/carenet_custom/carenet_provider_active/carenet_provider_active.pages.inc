@@ -112,12 +112,12 @@ function carenet_provider_active_pdf_generate($source, $destination, $text) {
       $pdf->SetFont('Arial');
       $pdf->SetTextColor(255, 0, 0);
       $pdf->SetXY(40, 243);
-      $pdf->Write(0, 'Sanjesh Rao');
+      $pdf->Write(0, $text);
 
-      $pdf->SetFont('Arial');
-      $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(40, 239);
-      $pdf->Write(0, 'CTO');
+//      $pdf->SetFont('Arial');
+//      $pdf->SetTextColor(255, 0, 0);
+//      $pdf->SetXY(40, 239);
+//      $pdf->Write(0, 'CTO');
     }
   }
 
