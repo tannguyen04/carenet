@@ -665,7 +665,7 @@ function carenet_custom_get_data(){
 	$date = '';
 	if(!empty($_GET['date']) && $_GET['date'] !='undefined'){
 		$time = strtotime($_GET['date']);
-		$date = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d', 'UTC');
+		$date = format_date(strtotime($_GET['date']), 'custom', 'Y-m-d', 'UTC');
 	}
 
 	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
