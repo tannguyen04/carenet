@@ -681,7 +681,9 @@ function carenet_custom_get_data(){
 	$data_telephone = array();
 
 	foreach ($data['nodes'] as $response_data) {
-	  $data_telephone[$response_data['node']['telephone']][] = $response_data['node'];
+		if(!empty($response_data['node']['telephone'])){
+			$data_telephone[$response_data['node']['telephone']][] = $response_data['node'];
+		}
 	}
 
 	$rows = array();
