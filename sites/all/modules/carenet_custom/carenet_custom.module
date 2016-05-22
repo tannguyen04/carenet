@@ -466,7 +466,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 											'subject' => 'Carenet activation',
 		 											'body' => 'Click here to active your account: '.$link_active
 		 										 );
-		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, NULL, TRUE);
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
 		 			drupal_set_message('Sent mail to doctor success');
 		 			break;
 		 		case 'fax':
@@ -475,7 +475,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 											'subject' => 'Carenet Fax',
 		 											'body' => 'account fax'
 		 										 );
-		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, NULL, TRUE);
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
 		 			drupal_set_message('Sent mail to Admin success');
 		 			break;
 		 	}
