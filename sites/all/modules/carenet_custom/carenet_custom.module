@@ -320,7 +320,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			}
 
 			if($data['reason'] == 4918 && empty($data['comment'])){
-				form_set_error('comment', 'Please choose one option reason');
+				form_set_error('comment', 'Please enter the reason into the comment box');
 			}
 
 			break;
