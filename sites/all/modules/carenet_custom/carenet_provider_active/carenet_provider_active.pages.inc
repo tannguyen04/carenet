@@ -349,7 +349,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //Update again status discussion
     $discussion_wrapper->field_dc_status->set(4921); //Accpeted
     $discussion_wrapper->save();
-    $form_state['redirect'] = '<front>';
+    $form_state['redirect'] = 'node/1100';
   }
 }
 
