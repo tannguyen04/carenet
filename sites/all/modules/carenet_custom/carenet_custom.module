@@ -370,18 +370,21 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		if(!empty($data['status']) && $data['status'] != 'All'){
 	  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 
-  		if(($data['status'] == '4919') && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
+  		if(($data['status'] == 4919) && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
 	  		$token = md5(uniqid(rand(), true));
 	  		$node->field_token[LANGUAGE_NONE][0]['value'] = $token;
 	  	}
 
-	  	if(($data['status'] == '4919') && isset($node->field_token[LANGUAGE_NONE][0]['value'])) {
+	  	if(($data['status'] == 4919) && isset($node->field_token[LANGUAGE_NONE][0]['value'])) {
 	  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
 	  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
 	  		
 	  	}
-
-	  	$link_active = l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
+	  	
+	  	if($data['status'] == 4919){
+	  		$link_active = l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
+	  	}
+	  	
 		}
 
 		  if(!empty($data['reason']) && $data['reason'] !='All'){
