@@ -368,11 +368,13 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  	if(($data['status'] == '4919') && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
 		  		$token = md5(uniqid(rand(), true));
 		  		$node->field_token[LANGUAGE_NONE][0]['value'] = $token;
-		  	} else {
-		  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
 		  	}
 
-		  	drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
+		  	if(($data['status'] == '4919') && isset($node->field_token[LANGUAGE_NONE][0]['value'])) {
+		  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
+		  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
+		  	}
+		  	
 		  }
 
 		  if(!empty($data['reason']) && $data['reason'] !='All'){
@@ -432,13 +434,11 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  	$field->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 				  	field_attach_update('node', $field);
 				  }
-					
+				  
 				  if(!empty($data['status']) && $data['status'] != 'All'){
-				  	$field = new stdClass();
-						$field->type = 'provider';
-						$field->nid = $doctor;
-						$field->field_pv_status[LANGUAGE_NONE][0]['target_id'] = $data['status'];
-						field_attach_update('node', $field);
+				  		$referDoc = node_load($doctor);
+						$referDoc->field_pv_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						node_save($referDoc);
 				  }
 					
 				}
@@ -500,7 +500,7 @@ function carenet_custom_get_data_county(){
 			}
 			print $county;
 		}else{
-			$url = $base_url.'/get_county_by_city?city='.$_GET['city'];
+			$url = $base_url.'/get-county-by-city?city='.$_GET['city'];
 			$data = drupal_json_decode(file_get_contents($url));
 
 			$list_data = array();
@@ -561,7 +561,7 @@ function carenet_custom_list_data(){
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.dataTables.min.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	
 
-	$fieldsArr = array('Phone #','Type','Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
+	$fieldsArr = array('Phone #','Provider', 'City', 'County', 'Status', 'View', 'Last Activity');
 
 	$projects_fields = array();
 
@@ -676,12 +676,10 @@ function carenet_custom_get_data(){
 		$provider = array();
 		$city = array();
 		$county = array();
-		$type = '';
 		foreach($data_telephone[$key] as $item){
 			$provider[] = $item['nid'];
 			$city[] = $item['city'];
 			$county[] = $item['county'];
-			$type = $item['type'];
 		}
 
 		$provider = array_unique($provider);
@@ -720,7 +718,6 @@ function carenet_custom_get_data(){
 
 		$rows[] = array('DT_RowId' => $i,
 										'Phone #' => $key,
-										'Type' => $type,
 										'Provider' => count($provider),
 										'City' => count($city),
 										'County' => count($county),
