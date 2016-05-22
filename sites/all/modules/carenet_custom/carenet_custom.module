@@ -7,14 +7,14 @@ function carenet_custom_menu() {
   $items['providers'] = array(
     'title' => 'Provider Listing',
     'page callback' => 'carenet_custom_list_data',
-    'access arguments' => array('access content'),
+    'access arguments' => array('administer providers'),
     'type' => MENU_CALLBACK,
   );
 
   $items['provider-get-data'] = array(
     'title' => 'Provider Listing',
     'page callback' => 'carenet_custom_get_data',
-    'access arguments' => array('access content'),
+    'access arguments' => array('administer providers'),
     'type' => MENU_CALLBACK,
   );
 
@@ -36,7 +36,7 @@ function carenet_custom_menu() {
     'title' => 'Provider Discussion',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('carenet_custom_provider_action', 2),
-    'access arguments' => array('access content'),
+    'access arguments' => array('administer providers'),
     'type' => MENU_CALLBACK,
   );
 
@@ -135,7 +135,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		
 		$form['action'] = array(
-		  '#markup' => '<div class="action row">',
+		  '#markup' => '<div id="action-container" class="action row">',
 		);
 
 
@@ -281,7 +281,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$form['button_cancel'] = array(
-		  '#markup' => '<a href="/providers">Cancel</a>',
+		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" href="/providers">Cancel</a>',
 		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
@@ -367,6 +367,19 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		if(!empty($data['status']) && $data['status'] != 'All'){
 		  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+<<<<<<< HEAD
+=======
+		  	if(($data['status'] == '4919') && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
+		  		$token = md5(uniqid(rand(), true));
+		  		$node->field_token[LANGUAGE_NONE][0]['value'] = $token;
+		  	}
+
+		  	if(($data['status'] == '4919') && isset($node->field_token[LANGUAGE_NONE][0]['value'])) {
+		  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
+		  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
+		  	}
+		  	
+>>>>>>> 11cd687d3ae8666d2475db2ffeee27bc683055c6
 		  }
 
 		  if(!empty($data['reason']) && $data['reason'] !='All'){
@@ -426,13 +439,11 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  	$field->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 				  	field_attach_update('node', $field);
 				  }
-					
+				  
 				  if(!empty($data['status']) && $data['status'] != 'All'){
-				  	$field = new stdClass();
-						$field->type = 'provider';
-						$field->nid = $doctor;
-						$field->field_pv_status[LANGUAGE_NONE][0]['target_id'] = $data['status'];
-						field_attach_update('node', $field);
+				  		$referDoc = node_load($doctor);
+						$referDoc->field_pv_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
+						node_save($referDoc);
 				  }
 					
 				}
@@ -447,28 +458,28 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		  drupal_set_message('Discuss create success');
 		  //send mail
-		 //  if($data['status'] == 4919){
-			// 	switch ($data['method_contact']) {
-			// 		case 'mail':
-			// 			$mail_sent = $data['email'];
-			// 			$params = array('mail_to' => $mail_sent,
-			// 											'subject' => 'test',
-			// 											'body' => '213'
-			// 										 );
-			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-			// 			drupal_set_message('Sent mail to doctor success');
-			// 			break;
-			// 		case 'fax':
-			// 			$mail_sent = 'haibqit@gmail.com';
-			// 			$params = array('mail_to' => $mail_sent,
-			// 											'subject' => 'test',
-			// 											'body' => '213'
-			// 										 );
-			// 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
-			// 			drupal_set_message('Sent mail to Admin success');
-			// 			break;
-			// 	}
-			// }
+		 /*if($data['status'] == 4919){
+		 	switch ($data['method_contact']) {
+		 		case 'mail':
+		 			$mail_sent = $data['email'];
+		 			$params = array('mail_to' => $mail_sent,
+		 											'subject' => 'test',
+		 											'body' => '213'
+		 										 );
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+		 			drupal_set_message('Sent mail to doctor success');
+		 			break;
+		 		case 'fax':
+		 			$mail_sent = 'haibqit@gmail.com';
+		 			$params = array('mail_to' => $mail_sent,
+		 											'subject' => 'test',
+		 											'body' => '213'
+		 										 );
+		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
+		 			drupal_set_message('Sent mail to Admin success');
+		 			break;
+		 	}
+		}*/
 	}
 }
 
@@ -493,7 +504,7 @@ function carenet_custom_get_data_county(){
 			}
 			print $county;
 		}else{
-			$url = $base_url.'/get_county_by_city?city='.$_GET['city'];
+			$url = $base_url.'/get-county-by-city?city='.$_GET['city'];
 			$data = drupal_json_decode(file_get_contents($url));
 
 			$list_data = array();
@@ -672,7 +683,11 @@ function carenet_custom_get_data(){
 		foreach($data_telephone[$key] as $item){
 			$provider[] = $item['nid'];
 			$city[] = $item['city'];
+<<<<<<< HEAD
 			$type = $item['type'];
+=======
+			$county[] = $item['county'];
+>>>>>>> 11cd687d3ae8666d2475db2ffeee27bc683055c6
 		}
 
 		$provider = array_unique($provider);

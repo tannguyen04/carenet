@@ -28,3 +28,13 @@ function carenet_update_update_7004(&$sandbox) {
   module_enable(array('mimemail'));
   features_revert_module('carenet_variables');
 }
+
+/**
+ * Implements hook_update_N()
+ * Enable content_access, features_override
+ */
+function carenet_update_update_7005(&$sandbox) {
+  //Enable module
+  module_enable(array('mimemail', 'features_override', 'content_access'));
+  features_revert_module('carenet_variables');
+}

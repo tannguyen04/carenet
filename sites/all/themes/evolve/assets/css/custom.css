@@ -30,3 +30,17 @@
 #carenet-custom-provider-action{
 	margin-bottom: 30px;
 }
+
+#carenet-custom-provider-action .form-item-method-contact{
+	clear: both;
+}
+
+#carenet-custom-provider-action .cancel_button{
+	margin-right: 20px;
+}
+
+#carenet-custom-provider-action #action-container{
+	border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 20px;
+}

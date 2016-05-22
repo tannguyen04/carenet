@@ -90,20 +90,36 @@ function carenet_provider_active_pdf_generate($source, $destination, $text) {
 
   // initiate FPDI
   $pdf = new FPDI();
-  // add a page
-  $pdf->AddPage();
-  // set the source file
-  $pdf->setSourceFile($source);
-  // import page 1
-  $tplIdx = $pdf->importPage(1);
-  // use the imported page and place it at position 10,10 with a width of 100 mm
-  $pdf->useTemplate($tplIdx, 10, 10, 100);
+  // get the page count
+  $pageCount = $pdf->setSourceFile($source);
+  // iterate through all pages
+  for ($pageNo = 1; $pageNo <= $pageCount; $pageNo++) {
+    // import a page
+    $templateId = $pdf->importPage($pageNo);
+    // get the size of the imported page
+    $size = $pdf->getTemplateSize($templateId);
 
-  // now write some text above the imported page
-  $pdf->SetFont('Helvetica');
-  $pdf->SetTextColor(255, 0, 0);
-  $pdf->SetXY(100, 100);
-  $pdf->Write(0, $text);
+    // create a page (landscape or portrait depending on the imported page size)
+    if ($size['w'] > $size['h']) {
+      $pdf->AddPage('L', array($size['w'], $size['h']));
+    } else {
+      $pdf->AddPage('P', array($size['w'], $size['h']));
+    }
+    // use the imported page
+    $pdf->useTemplate($templateId);
+    if($pageNo == $pageCount) {
+      // now write some text above the imported page
+      $pdf->SetFont('Arial');
+      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetXY(40, 243);
+      $pdf->Write(0, $text);
+
+//      $pdf->SetFont('Arial');
+//      $pdf->SetTextColor(255, 0, 0);
+//      $pdf->SetXY(40, 239);
+//      $pdf->Write(0, 'CTO');
+    }
+  }
 
   $pdf->Output($destination, 'F');
   return $destination;
@@ -266,7 +282,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $username = $values['name'];
   $pass = user_hash_password(trim($pass));
   $mail = $values['mail'];
-  $roles = array();
+  $roles = array(5); //Provider role
 
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
@@ -333,7 +349,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //Update again status discussion
     $discussion_wrapper->field_dc_status->set(4921); //Accpeted
     $discussion_wrapper->save();
-    $form_state['redirect'] = '<front>';
+    $form_state['redirect'] = 'node/1100';
   }
 }
 
@@ -346,7 +362,7 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
   $admin_load->ask_question = $form_state['values']['question'];
   $sent = _carenet_provider_active_mail_notify('email_provider_ask_question', $admin_load);
   if ($sent) {
-    drupal_set_message(t('A message with further instructions has been sent to ADMIN e-mail address.'));
+    drupal_set_message(t('Your question has been sent, we will review and get back to you as soon as possible.'));
   }
 }
 
