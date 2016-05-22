@@ -362,7 +362,7 @@ function carenet_provider_active_form_signature_execute_ask_question_submit($for
   $admin_load->ask_question = $form_state['values']['question'];
   $sent = _carenet_provider_active_mail_notify('email_provider_ask_question', $admin_load);
   if ($sent) {
-    drupal_set_message(t('A message with further instructions has been sent to ADMIN e-mail address.'));
+    drupal_set_message(t('Your question has been sent, we will review and get back to you as soon as possible.'));
   }
 }
 
