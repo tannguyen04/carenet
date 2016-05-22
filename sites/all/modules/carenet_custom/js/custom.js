@@ -26,12 +26,6 @@
       datatable.ajax.url(url).load();
     });
 
-    $('#date_pick').keyup(function(event) {
-      var data = get_value_all();
-      var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];
-      datatable.ajax.url(url).load();
-    });
-
     $('#city').change(function(event) {
       var data = get_value_all();
       var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date'];

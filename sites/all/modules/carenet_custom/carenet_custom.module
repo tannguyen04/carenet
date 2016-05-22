@@ -661,11 +661,11 @@ function carenet_custom_get_data(){
 	if(!empty($_POST['start']) && !empty($_POST['length'])){
 		$parameter['page'] = $_POST['start']/$_POST['length'];
 	}
-	
+
 	$date = '';
 	if(!empty($_GET['date']) && $_GET['date'] !='undefined'){
-		$time = strtotime($_GET['date']);
-		$date = format_date(strtotime($_GET['date']), 'custom', 'Y-m-d', 'UTC');
+		$time = explode('/',$_GET['date']);
+		$date = $time[2].'-'.$time['0'].'-'.$time[1];
 	}
 
 	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
