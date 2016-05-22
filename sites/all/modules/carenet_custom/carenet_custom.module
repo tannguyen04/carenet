@@ -335,7 +335,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('date_time', 'Please enter date time');
 			}
 			break;
-			
+
 		case 4919:
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('card_rate', 'Please choose one option card rate');
@@ -741,6 +741,28 @@ function carenet_custom_get_data(){
 										'Last Activity' => $activity);
 		$i++;
 	}
+
+	// if(!empty($_POST['order'][0]['dir'])) {
+    	
+	//    	$fields = explode('|', variable_get('wb_project_fields', ''));
+
+	// 	   	$orderColumn = trim($fields[$_POST['order'][0]['column']]);
+	// 	   	$orderDir = strtoupper($_POST['order'][0]['dir']);
+		   	
+	// 	   	// Obtain a list of columns
+	// 		foreach ($rows as $key => $row) {
+	// 		    $sort[$key]  = $row[$orderColumn];
+	// 		}
+
+	// 			// Sort the data with volume descending, edition ascending
+	// 		// Add $data as the last parameter, to sort by the common key
+			
+	// 		if($orderDir == 'DESC') {
+	// 			array_multisort($sort, SORT_DESC, $rows);
+	// 		} else {
+	// 			array_multisort($sort, SORT_ASC, $rows);
+	// 		}
+ //  }
 
 	$data_listing['data'] = $rows;
   $data_listing['options'] = '';
