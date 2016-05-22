@@ -65,8 +65,10 @@
 
       if($(this).val() == 4851 || $(this).val() == 4850 || $(this).val() == 4920){
         $('.filter_date').css('display','inline-block');
+        $('#date_pick').val('');
       }else{
         $('.filter_date').css('display','none');
+        $('#date_pick').val('');
       }
 
     });
@@ -74,8 +76,10 @@
     var status_show = $('#status').val();
     if(status_show == 4851 || status_show == 4850 || status_show == 4920){
       $('.filter_date').css('display','inline-block');
+      $('#date_pick').val('');
     }else{
       $('.filter_date').css('display','none');
+      $('#date_pick').val('');
     }
 
     function get_value_all(){
