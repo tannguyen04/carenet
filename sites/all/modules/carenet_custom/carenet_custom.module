@@ -365,6 +365,8 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  $node->promote = 0; 
 		}
 
+		$link_active = '';
+
 		if(!empty($data['status']) && $data['status'] != 'All'){
 	  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 
@@ -376,6 +378,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 	  	if(($data['status'] == '4919') && isset($node->field_token[LANGUAGE_NONE][0]['value'])) {
 	  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
 	  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
+	  		$link_active = l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
 	  	}
 		}
 
@@ -429,19 +432,16 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				if($doctor > 0){
 					$list_doctor_save[]['target_id'] = $doctor;
 
+					$referDoc = node_load($doctor);
+
 					if(!empty($data['date_time'])){
-						$field = new stdClass();
-						$field->type = 'provider';
-						$field->nid = $doctor;
-				  	$field->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
-				  	field_attach_update('node', $field);
+				  	$referDoc->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d H:i:s', 'UTC');
 				  }
 				  
 				  if(!empty($data['status']) && $data['status'] != 'All'){
-				  		$referDoc = node_load($doctor);
 						$referDoc->field_pv_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
-						node_save($referDoc);
 				  }
+				  node_save($referDoc);
 					
 				}
 			}
@@ -455,13 +455,14 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		  drupal_set_message('Discuss create success');
 		  //send mail
-		 /*if($data['status'] == 4919){
+		 if($data['status'] == 4919){
 		 	switch ($data['method_contact']) {
 		 		case 'mail':
 		 			$mail_sent = $data['email'];
+		 			$mail_sent = 'haibqit@gmail.com';
 		 			$params = array('mail_to' => $mail_sent,
-		 											'subject' => 'test',
-		 											'body' => '213'
+		 											'subject' => 'Carenet activation',
+		 											'body' => 'Click here to active your account: '.$link_active
 		 										 );
 		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
 		 			drupal_set_message('Sent mail to doctor success');
@@ -469,14 +470,14 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 		case 'fax':
 		 			$mail_sent = 'haibqit@gmail.com';
 		 			$params = array('mail_to' => $mail_sent,
-		 											'subject' => 'test',
-		 											'body' => '213'
+		 											'subject' => 'Carenet Fax',
+		 											'body' => 'account fax'
 		 										 );
 		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params = array('username' => 'John Potato'), NULL, TRUE);
 		 			drupal_set_message('Sent mail to Admin success');
 		 			break;
 		 	}
-		}*/
+		}
 	}
 }
 
