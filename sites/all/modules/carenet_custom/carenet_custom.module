@@ -868,7 +868,7 @@ function carenet_custom_requirements($phase) {
 function carenet_custom_search_api_solr_documents_alter(array &$documents, SearchApiIndex $index, array $items) {
 	$boost = array(
 		'article' => 10,
-		'basic' => 3,
+		'page' => 3,
 	);
 
 	if ($index->item_type == 'node') {
