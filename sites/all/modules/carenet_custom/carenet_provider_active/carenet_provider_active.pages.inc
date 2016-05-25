@@ -134,7 +134,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $fid = variable_get('carenet_signature', '');
       if ($file = file_load($fid)) {
         $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 35,238);
+        $pdf->Image($signature_image_url, 200,  233, 100);
       }
 
 
