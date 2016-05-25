@@ -110,7 +110,7 @@ function _carenet_provider_active_get_discussion_by_token($token = 'abc') {
     ->entityCondition('bundle', 'discuss')
     ->propertyCondition('status', NODE_PUBLISHED)
     ->fieldCondition('field_token', 'value', $token, '=')
-    ->fieldCondition('field_dc_status', 'tid', '4919', '=')
+    //->fieldCondition('field_dc_status', 'tid', '4919', '=')
     ->addMetaData('account', user_load(1)); // Run the query as user 1.
   $result = $query->execute();
   if (isset($result['node'])) {

@@ -215,6 +215,8 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
       array('mail'), //Only validate email and username when click submit
       array('name'),
       array('full_name'),
+      array('organization_name'),
+      array('job_title'),
     ),
   );
 
