@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	$('#edit-date-time').datetimepicker({
 		 format:'m/d/Y',
 		 minDate:'-1970/01/02',
-		 timepicker:false,
+		 timepicker:true,
 	});
 	
 	function hide_all(){
