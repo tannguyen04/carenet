@@ -122,7 +122,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
 
       //Job title
       $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(20, 213);
+      $pdf->SetXY(20, 240);
       $pdf->Write(0, $job_title);
 
 //      $pdf->SetFont('Arial');
