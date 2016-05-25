@@ -90,12 +90,19 @@ function carenet_admin_provider_active_form($form, &$form_state) {
 
 function carenet_admin_provider_active_form_submit($form, $form_state) {
   $values = $form_state['values'];
-  
+
   if ($values['carenet_signature']) {
+    //Save new file
     $file = file_load($values['carenet_signature']);
     $file->status = FILE_STATUS_PERMANENT;
     file_save($file);
-    variable_set('carenet_signature', $file->fid);
+    if ($file) {
+      if ($old_file = file_load(variable_get('carenet_signature', 0))) {
+        file_delete($old_file);
+      }
+      variable_set('carenet_signature', $file->fid);
+    }
+
   }
 
   variable_set('carenet_provider_active_program_review', $values['carenet_provider_active_program_review']['value']);
