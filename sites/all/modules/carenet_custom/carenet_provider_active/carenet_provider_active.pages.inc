@@ -112,18 +112,23 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->SetFont('Arial');
       //Full name
       $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(40, 243);
+      $pdf->SetXY(35, 243);
       $pdf->Write(0, $full_name);
 
       //Organization name
       $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(20, 193);
+      $pdf->SetXY(35, 233);
       $pdf->Write(0, $organization_name);
 
       //Job title
       $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(20, 240);
+      $pdf->SetXY(35, 238);
       $pdf->Write(0, $job_title);
+
+      // Date
+      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetXY(35, 248);
+      $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
 
 //      $pdf->SetFont('Arial');
 //      $pdf->SetTextColor(255, 0, 0);
