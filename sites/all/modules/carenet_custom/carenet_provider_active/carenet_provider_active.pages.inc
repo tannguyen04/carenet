@@ -130,6 +130,14 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->SetXY(35, 248);
       $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
 
+      //Add image signature
+      $fid = variable_get('carenet_signature', '');
+      if ($file = file_load($fid)) {
+        $signature_image_url = file_create_url($file->uri);
+        $pdf->Image($signature_image_url, 35,238, 15, 10);
+      }
+
+
 //      $pdf->SetFont('Arial');
 //      $pdf->SetTextColor(255, 0, 0);
 //      $pdf->SetXY(40, 239);

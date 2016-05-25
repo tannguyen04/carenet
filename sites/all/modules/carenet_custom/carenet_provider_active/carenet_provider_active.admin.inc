@@ -4,6 +4,16 @@
  * Form admin provider active
  */
 function carenet_admin_provider_active_form($form, &$form_state) {
+  $form['carenet_signature'] = array(
+    '#type' => 'managed_file',
+    '#title' => t('Signature'),
+    '#description' => t('Allowed extensions: gif png jpg jpeg'),
+    '#default_value' => variable_get('carenet_signature', ''),
+    '#upload_location' => 'public://infinite_signature',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('gif png jpg jpeg'),
+    ),
+  );
   $form['carenet_provider_active_program_review'] = array(
     '#type' => 'text_format',
     '#title' => t('Program Review'),
@@ -80,6 +90,14 @@ function carenet_admin_provider_active_form($form, &$form_state) {
 
 function carenet_admin_provider_active_form_submit($form, $form_state) {
   $values = $form_state['values'];
+  
+  if ($values['carenet_signature']) {
+    $file = file_load($values['carenet_signature']);
+    $file->status = FILE_STATUS_PERMANENT;
+    file_save($file);
+    variable_set('carenet_signature', $file->fid);
+  }
+
   variable_set('carenet_provider_active_program_review', $values['carenet_provider_active_program_review']['value']);
   variable_set('carenet_provider_active_program_review_format', $values['carenet_provider_active_program_review']['format']);
   variable_set('carenet_provider_active_contract', $values['carenet_provider_active_contract']['value']);
