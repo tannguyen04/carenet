@@ -83,7 +83,7 @@ function carenet_provider_active_form_contract($form, &$form_state) {
   return $form;
 }
 
-function carenet_provider_active_pdf_generate($source, $destination, $text) {
+function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title) {
   $pdffile = file_create_url('public://doc.pdf');
   require_once(libraries_get_path('fpdf').'/fpdf.php');
   require_once(libraries_get_path('fpdi').'/fpdi.php');
@@ -110,9 +110,20 @@ function carenet_provider_active_pdf_generate($source, $destination, $text) {
     if($pageNo == $pageCount) {
       // now write some text above the imported page
       $pdf->SetFont('Arial');
+      //Full name
       $pdf->SetTextColor(255, 0, 0);
       $pdf->SetXY(40, 243);
-      $pdf->Write(0, $text);
+      $pdf->Write(0, $full_name);
+
+      //Organization name
+      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetXY(20, 193);
+      $pdf->Write(0, $organization_name);
+
+      //Job title
+      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetXY(20, 213);
+      $pdf->Write(0, $job_title);
 
 //      $pdf->SetFont('Arial');
 //      $pdf->SetTextColor(255, 0, 0);
@@ -179,6 +190,20 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#attributes' => array('class' => array('full-name')),
     '#required' => TRUE,
     '#default_value' =>  !empty($form_state['values']['full_name']) ? $form_state['values']['full_name'] : $discussion_wrapper->field_dc_person->value(),
+  );
+  $form['signature_execute']['accept']['organization_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Organization Name'),
+    '#attributes' => array('class' => array('organization-name')),
+    '#required' => TRUE,
+    '#default_value' =>  !empty($form_state['values']['organization_name']) ? $form_state['values']['organization_name'] : '',
+  );
+  $form['signature_execute']['accept']['job_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Job title'),
+    '#attributes' => array('class' => array('job-title')),
+    '#required' => TRUE,
+    '#default_value' =>  !empty($form_state['values']['job_title']) ? $form_state['values']['job_title'] : '',
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
@@ -292,8 +317,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $document = $card_rate_wrapper->field_document->value()['uri'];
     $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
     $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
-    $sign_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
-    carenet_provider_active_pdf_generate($source, $dest, $sign_name);
+    $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
+    carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title']);
 
     // We have complete file path.
     $file = new stdClass;
@@ -330,13 +355,17 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $new_username->timezone = date_default_timezone();
   $new_username->field_contract['und'][0] = (array) $file;
 
-  $new_username = entity_metadata_wrapper('user', $new_username);
-  $new_username->save();
+  $new_username_wrapper = entity_metadata_wrapper('user', $new_username);
+  $new_username_wrapper->field_full_name->set($values['full_name']);
+  $new_username_wrapper->field_pv_og_name->set($values['organization_name']);
+  $new_username_wrapper->field_job_title->set($values['job_title']);
+  $new_username_wrapper->save();
+
   if (!$new_username) {
     drupal_set_message(t("Error saving"), 'error');
     return;
   }
-  $uid = $new_username->getIdentifier();
+  $uid = $new_username_wrapper->getIdentifier();
   if ($uid) {
     //Send mail
     $new_username = user_load($uid);
