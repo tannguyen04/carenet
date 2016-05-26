@@ -92,16 +92,26 @@ function carenet_provider_active_form_contract($form, &$form_state) {
     '#markup' => variable_get('carenet_provider_active_contract', ''),
   );
   //FILE PDF contract
-  $pdf_render = field_view_field('node', $card_rate, 'field_document', array(
-    'label' => 'hidden',
-    'type' => 'pdf_default',
-    'settings' => array(
-      'keep_pdfjs' => TRUE,
-      'width' => '100%',
-      'height' => '600px',
-    ),
-  ));
-  $form['pdf_contract'] = $pdf_render;
+//  $pdf_render = field_view_field('node', $card_rate, 'field_document', array(
+//    'label' => 'hidden',
+//    'type' => 'pdf_default',
+//    'settings' => array(
+//      'keep_pdfjs' => TRUE,
+//      'width' => '100%',
+//      'height' => '600px',
+//    ),
+//  ));
+  $contract_file = file_load(variable_get('carenet_contract_file', 0));
+  if ($contract_file) {
+    $form['pdf_contract'] = array(
+      '#theme' => 'pdf_formatter_default',
+      '#file' => $contract_file,
+      '#keep_pdfjs' => TRUE,
+      '#width' => '100%',
+      '#height' => '600px',
+    );
+  }
+
 
   return $form;
 }

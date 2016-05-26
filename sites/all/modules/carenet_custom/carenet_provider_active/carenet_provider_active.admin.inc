@@ -14,6 +14,16 @@ function carenet_admin_provider_active_form($form, &$form_state) {
       'file_validate_extensions' => array('gif png jpg jpeg'),
     ),
   );
+  $form['carenet_contract_file'] = array(
+    '#type' => 'managed_file',
+    '#title' => t('Contract file'),
+    '#description' => t('Allowed extensions: pdf'),
+    '#default_value' => variable_get('carenet_contract_file', ''),
+    '#upload_location' => 'public://contract_pdf',
+    '#upload_validators' => array(
+      'file_validate_extensions' => array('pdf'),
+    ),
+  );
   $form['carenet_provider_active_program_review'] = array(
     '#type' => 'text_format',
     '#title' => t('Program Review'),
@@ -91,18 +101,44 @@ function carenet_admin_provider_active_form($form, &$form_state) {
 function carenet_admin_provider_active_form_submit($form, $form_state) {
   $values = $form_state['values'];
 
+  //Signature file
   if ($values['carenet_signature']) {
     //Save new file
     $file = file_load($values['carenet_signature']);
     $file->status = FILE_STATUS_PERMANENT;
     file_save($file);
+    file_usage_add($file, 'file', 'user', 1);
     if ($file) {
       if ($old_file = file_load(variable_get('carenet_signature', 0))) {
         file_delete($old_file);
       }
       variable_set('carenet_signature', $file->fid);
     }
+  }else {
+    if ($old_file = file_load(variable_get('carenet_signature', 0))) {
+      file_delete($old_file);
+    }
+    variable_set('carenet_signature', 0);
+  }
 
+  //Contract file
+  if ($values['carenet_contract_file']) {
+    //Save new file
+    $file = file_load($values['carenet_contract_file']);
+    $file->status = FILE_STATUS_PERMANENT;
+    file_save($file);
+    file_usage_add($file, 'file', 'user', 1);
+    if ($file) {
+      if ($old_file = file_load(variable_get('carenet_contract_file', 0))) {
+        file_delete($old_file);
+      }
+      variable_set('carenet_contract_file', $file->fid);
+    }
+  }else {
+    if ($old_file = file_load(variable_get('carenet_contract_file', 0))) {
+      file_delete($old_file);
+    }
+    variable_set('carenet_contract_file', 0);
   }
 
   variable_set('carenet_provider_active_program_review', $values['carenet_provider_active_program_review']['value']);
