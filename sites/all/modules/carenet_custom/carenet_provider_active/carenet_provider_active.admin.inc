@@ -19,7 +19,7 @@ function carenet_admin_provider_active_form($form, &$form_state) {
     '#title' => t('Contract file'),
     '#description' => t('Allowed extensions: pdf'),
     '#default_value' => variable_get('carenet_contract_file', ''),
-    '#upload_location' => 'public://contract_pdf',
+    '#upload_location' => 'public://infinite_contract',
     '#upload_validators' => array(
       'file_validate_extensions' => array('pdf'),
     ),
@@ -109,14 +109,19 @@ function carenet_admin_provider_active_form_submit($form, $form_state) {
     file_save($file);
     file_usage_add($file, 'file', 'user', 1);
     if ($file) {
-      if ($old_file = file_load(variable_get('carenet_signature', 0))) {
-        file_delete($old_file);
+      //Delete olfile
+      $fid_rm = variable_get('carenet_signature', 0);
+      $file_rm = file_load($fid_rm);
+      if ($file_rm && ($fid_rm != $file->fid)) {
+        file_delete($file_rm, TRUE);
       }
       variable_set('carenet_signature', $file->fid);
     }
   }else {
-    if ($old_file = file_load(variable_get('carenet_signature', 0))) {
-      file_delete($old_file);
+    $fid_rm = variable_get('carenet_signature', 0);
+    $file_rm = file_load($fid_rm);
+    if ($file_rm) {
+      file_delete($file_rm, TRUE);
     }
     variable_set('carenet_signature', 0);
   }
@@ -129,14 +134,20 @@ function carenet_admin_provider_active_form_submit($form, $form_state) {
     file_save($file);
     file_usage_add($file, 'file', 'user', 1);
     if ($file) {
-      if ($old_file = file_load(variable_get('carenet_contract_file', 0))) {
-        file_delete($old_file);
+      //Delete old file
+      $fid_rm = variable_get('carenet_contract_file', 0);
+      $file_rm = file_load($fid_rm);
+      if ($file_rm && ($fid_rm != $file->fid)) {
+        file_delete($file_rm, TRUE);
       }
       variable_set('carenet_contract_file', $file->fid);
     }
   }else {
-    if ($old_file = file_load(variable_get('carenet_contract_file', 0))) {
-      file_delete($old_file);
+    //Delete
+    $fid_rm = variable_get('carenet_contract_file', 0);
+    $file_rm = file_load($fid_rm);
+    if ($file_rm) {
+      file_delete($file_rm, TRUE);
     }
     variable_set('carenet_contract_file', 0);
   }
