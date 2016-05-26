@@ -42,44 +42,67 @@ function carenet_provider_active_form_rate_card($form, &$form_state) {
   $price_custom = $discussion_wrapper->field_dc_price->value();
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-
+  $header = array(
+    t('Line item'),
+    t('Description'),
+    t('Price (USD)'),
+  );
+  $rows = array();
   //Title card rate
-  $title_card = $card_rate_wrapper->title->value(array('sanitize' => TRUE));
-
-  //Price
-  $price = 0;
-  if (empty($price_custom)) {
-    if (!empty($card_rate)) {
-      $price = $card_rate_wrapper->field_card_rate_price->value();
-    }
-  }else {
-    $price = $price_custom;
-  }
-
+  $title = $card_rate_wrapper->title->value();
+  $rows[] = array('', array('data' => $title, 'class' => 'label-card-rate'), '');
   //Description card rate
-  $description_card = $card_rate_wrapper->body->value(array('decode' => TRUE));
-  $description_card_value = $description_card['value'];
-  $output = '<div> ' . $title_card . ' </div>';
-  $output .= '<div>'.$description_card_value.'</div>';
-  $output .= '<div>Price: $'.$price.'</div>';
+  $description = $card_rate_wrapper->body->value->value();
+  if (!empty($description)) {
+    $rows[] = array('', array('data' => $description, 'class' => 'description-card-rate'), '');
+  }
+  //Line item card rate
+  $line_items = $card_rate_wrapper->field_card_rate_item->value();
+  if (!empty($line_items)) {
+    foreach ($line_items as $key => $item) {
+      $collection_wrapper = entity_metadata_wrapper('field_collection_item', $item);
+      $label = $collection_wrapper->field_text_title->value();
+      $price = $collection_wrapper->field_price->value();
+      $rows[] = array(
+        $key+1,
+        $label,
+        '$ '. $price,
+      );
+    }
+  }
 
   $form = array(
     '#type' => 'container'
   );
   $form['rate_card'] = array(
-    '#markup' => $output,
-    '#type' => 'item',
+    '#theme' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
   );
   return $form;
 }
 
 function carenet_provider_active_form_contract($form, &$form_state) {
+  $card_rate = $form['#card_rate'];
+
   $form = array(
     '#type' => 'container'
   );
   $form['contract'] = array(
     '#markup' => variable_get('carenet_provider_active_contract', ''),
   );
+  //FILE PDF contract
+  $pdf_render = field_view_field('node', $card_rate, 'field_document', array(
+    'label' => 'hidden',
+    'type' => 'pdf_default',
+    'settings' => array(
+      'keep_pdfjs' => TRUE,
+      'width' => '100%',
+      'height' => '600px',
+    ),
+  ));
+  $form['pdf_contract'] = $pdf_render;
+
   return $form;
 }
 
@@ -422,6 +445,10 @@ function carenet_provider_active_form($form, &$form_state, $token) {
     drupal_goto('<front>');
   }
   $form['#discussion'] = ($discussion) ? $discussion : NULL;
+  $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
+  $price_custom = $discussion_wrapper->field_dc_price->value();
+  $card_rate = $discussion_wrapper->field_card_rate_ref->value();
+  $form['#card_rate'] = ($card_rate) ? $card_rate : NULL;
 
   //Init step
   if (empty($form_state['step'])) {

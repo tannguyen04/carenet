@@ -10,6 +10,82 @@
 function carenet_content_types_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance:
+  // 'field_collection_item-field_card_rate_item-field_price'.
+  $field_instances['field_collection_item-field_card_rate_item-field_price'] = array(
+    'bundle' => 'field_card_rate_item',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_price',
+    'label' => 'Price',
+    'required' => 0,
+    'settings' => array(
+      'max' => '',
+      'min' => '',
+      'prefix' => '$',
+      'suffix' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'number',
+      'settings' => array(),
+      'type' => 'number',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_card_rate_item-field_text_title'.
+  $field_instances['field_collection_item-field_card_rate_item-field_text_title'] = array(
+    'bundle' => 'field_card_rate_item',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_text_title',
+    'label' => 'Label',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
+    ),
+  );
+
   // Exported field_instance: 'node-card_rate-body'.
   $field_instances['node-card_rate-body'] = array(
     'bundle' => 'card_rate',
@@ -81,7 +157,83 @@ function carenet_content_types_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 31,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'node-card_rate-field_card_rate_item'.
+  $field_instances['node-card_rate-field_card_rate_item'] = array(
+    'bundle' => 'card_rate',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'field_collection_table',
+        'settings' => array(
+          'add' => '',
+          'cssfield' => 0,
+          'cssrowcol' => 0,
+          'delete' => '',
+          'description' => 1,
+          'edit' => '',
+          'empty' => 1,
+          'view_mode' => 'full',
+        ),
+        'type' => 'field_collection_table_view',
+        'weight' => 4,
+      ),
+      'dexp_portfolio' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'index_blog' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'large_image' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'slider' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'time_line' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_card_rate_item',
+    'label' => 'Line item',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'field_collection',
+      'settings' => array(),
+      'type' => 'field_collection_embed',
+      'weight' => 3,
     ),
   );
 
@@ -157,7 +309,78 @@ function carenet_content_types_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 32,
+      'weight' => 5,
+    ),
+  );
+
+  // Exported field_instance: 'node-card_rate-field_card_rate_type'.
+  $field_instances['node-card_rate-field_card_rate_type'] = array(
+    'bundle' => 'card_rate',
+    'default_value' => array(
+      0 => array(
+        'value' => 'master',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 5,
+      ),
+      'dexp_portfolio' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'index_blog' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'large_image' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'slider' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'time_line' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_card_rate_type',
+    'label' => 'Type',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 4,
     ),
   );
 
@@ -169,9 +392,13 @@ function carenet_content_types_field_default_field_instances() {
     'display' => array(
       'default' => array(
         'label' => 'above',
-        'module' => 'file',
-        'settings' => array(),
-        'type' => 'file_default',
+        'module' => 'pdf',
+        'settings' => array(
+          'height' => '600px',
+          'keep_pdfjs' => TRUE,
+          'width' => '100%',
+        ),
+        'type' => 'pdf_default',
         'weight' => 3,
       ),
       'dexp_portfolio' => array(
@@ -236,7 +463,7 @@ function carenet_content_types_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'media_generic',
-      'weight' => 34,
+      'weight' => 7,
     ),
   );
 
@@ -310,7 +537,7 @@ function carenet_content_types_field_default_field_instances() {
       'module' => 'options',
       'settings' => array(),
       'type' => 'options_select',
-      'weight' => 33,
+      'weight' => 6,
     ),
   );
 
@@ -3064,6 +3291,8 @@ function carenet_content_types_field_default_field_instances() {
   t('Gender');
   t('Healthcare Provider');
   t('Healthcare Provider Taxonomy');
+  t('Label');
+  t('Line item');
   t('List Provider');
   t('Mailing Address');
   t('Mailing Fax Number');
