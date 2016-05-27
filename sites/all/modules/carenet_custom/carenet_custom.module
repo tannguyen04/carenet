@@ -238,14 +238,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$result = db_query('SELECT n.nid FROM {node} as n
 												INNER JOIN {field_data_field_card_type} as c ON c.entity_id = n.nid 
 												WHERE n.type = :type AND c.field_card_type_value = :field_card_type_value AND n.status = 1',array(':type' => 'card_rate', ':field_card_type_value' => 'master'));
-		
+
 		foreach($result as $record){
 			$node_card = node_load($record->nid);
-			$card_rate[$node_card->nid] =  $node_card->title
-			$form['card_rate_price_'.$node_card->nid] = array('#type' => 'hidden', 
-				'#value' => $node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'],
-				'#prefix' => '<div id="card_rate_price_'.$node_card->nid.'">',
-				'#suffix' => '</div>',);
+			$card_rate[$node_card->nid] =  $node_card->title;
 		}
 
 		$form['action-doctor']['card_rate'] = array(
