@@ -413,6 +413,10 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  	$node->field_dc_person[LANGUAGE_NONE][0]['value'] = $data['person'];
 		  }
 
+		  if(!empty($data['title'])){
+		  	$node->field_title_discuss[LANGUAGE_NONE][0]['value'] = $data['title'];
+		  }
+
 		  if(!empty($data['email'])){
 		  	$node->field_dc_email[LANGUAGE_NONE][0]['value'] = $data['email'];
 		  }
