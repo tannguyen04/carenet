@@ -179,6 +179,15 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_person[LANGUAGE_NONE][0]['value'] : $authorized_official,  
 		);
 
+		$form['action-doctor']['title'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Title'), 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#prefix' => '<div class="col-md-6">',
+      '#suffix' => '</div>',
+		);
+
 		$form['action-doctor']['email'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email'), 
@@ -226,7 +235,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		
 
 		$card_rate = array('All' => ' - Any - ');
-		$result = db_query('SELECT nid FROM {node} WHERE type = :type AND status = 1',array(':type' => 'card_rate'));
+		$result = db_query('SELECT n.nid FROM {node} as n
+												INNER JOIN {field_data_field_card_type} as c ON c.entity_id = n.nid 
+												WHERE n.type = :type AND c.field_card_type_value = :field_card_type_value AND n.status = 1',array(':type' => 'card_rate', ':field_card_type_value' => 'master'));
 
 		foreach($result as $record){
 			$node_card = node_load($record->nid);

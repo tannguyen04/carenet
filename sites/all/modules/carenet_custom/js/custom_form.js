@@ -35,6 +35,9 @@ jQuery(document).ready(function($) {
 		hide_all();
 		$('#carenet-custom-provider-action .form-item-card-rate').show();
 		$('#carenet-custom-provider-action .form-item-method-contact').show();
+	}else if(status_id == 4921){
+		hide_all();
+		$('#carenet-custom-provider-action .form-item-comment').show();
 	}else{
 		hide_all();
 	}
