@@ -78,6 +78,9 @@ function carenet_provider_active_form_rate_card($form, &$form_state) {
     '#theme' => 'table',
     '#header' => $header,
     '#rows' => $rows,
+    '#attributes' => array(
+      'class' => array('table table-hover table-bordered')
+    ),
   );
   return $form;
 }
