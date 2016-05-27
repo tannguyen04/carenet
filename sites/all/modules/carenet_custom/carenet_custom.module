@@ -325,38 +325,61 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 		case 'All':
 			form_set_error('status', 'Please choose one option status');
 			break;
-		case 4848:
+
+		//Accepted
+		case 4921:
+			if(empty($data['person'])){
+				form_set_error('person', 'Please enter Person Name');
+			}
+
+			if(empty($data['phone'])){
+				form_set_error('phone', 'Please enter Person Name');
+			}
+			break;
+
+		//Callback
+		case 4851:
+			if(empty($data['person'])){
+				form_set_error('person', 'Please enter Person Name');
+			}
+			if(empty($data['phone'])){
+				form_set_error('phone', 'Please enter Person Name');
+			}
+			if(empty($data['comment'])){
+				form_set_error('comment', 'Please enter the reason into the comment box');
+			}
+			if(empty($data['date_time'])){
+				form_set_error('date_time', 'Please enter date time');
+			}
+			break;
+		//Follow up
+		case 4920:
+			if(empty($data['date_time'])){
+				form_set_error('date_time', 'Please enter date time');
+			}
+			break;
+		//Interested
+		case 4919:
+			break;
+			if(empty($data['person'])){
+				form_set_error('person', 'Please enter Person Name');
+			}
+			if(empty($data['phone'])){
+				form_set_error('phone', 'Please enter Person Name');
+			}
+		//Rejected
+		case 4849:
 			if(empty($data['reason']) || $data['reason'] == 'All'){
 				form_set_error('reason', 'Please choose one option reason');
 			}
-
 			if($data['reason'] == 4918 && empty($data['comment'])){
 				form_set_error('comment', 'Please enter the reason into the comment box');
 			}
-
 			break;
-			
+		//No Response / Voice Message
 		case 4850:
 			if(empty($data['date_time'])){
 				form_set_error('date_time', 'Please enter date time');
-			}
-			break;
-		case 4851:
-			if(empty($data['date_time'])){
-				form_set_error('date_time', 'Please enter date time');
-			}
-			break;
-
-		case 4919:
-			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
-				form_set_error('card_rate', 'Please choose one option card rate');
-			}
-			if(empty($data['email'])){
-				form_set_error('email', 'Please enter email');
-			}
-
-			if(!valid_email_address($data['email'])){
-				form_set_error('email_sent', 'Email wrong');
 			}
 			break;
 	}
