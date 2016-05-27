@@ -1,0 +1,15 @@
+name = Carenet views
+core = 7.x
+package = Features
+dependencies[] = views
+dependencies[] = views_json
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = card_rate
+features[views_view][] = get_city_by_state
+features[views_view][] = get_county_by_city
+features[views_view][] = list_provider_by_telephone
+features[views_view][] = listing_multi_provider
+features[views_view][] = provider_listing
+features[views_view][] = provider_manager
+features_exclude[dependencies][ctools] = ctools

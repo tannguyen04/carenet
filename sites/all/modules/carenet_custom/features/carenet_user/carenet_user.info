@@ -1,12 +1,16 @@
 name = Carenet user
 core = 7.x
 package = Features
+dependencies[] = admin_menu
 dependencies[] = carenet_field_base_and_taxonomies
 dependencies[] = features
 dependencies[] = file
+dependencies[] = system
 dependencies[] = text
 features[features_api][] = api:2
 features[field_instance][] = user-user-field_contract
 features[field_instance][] = user-user-field_full_name
 features[field_instance][] = user-user-field_job_title
 features[field_instance][] = user-user-field_pv_og_name
+features[user_permission][] = access administration menu
+features[user_permission][] = view the administration theme

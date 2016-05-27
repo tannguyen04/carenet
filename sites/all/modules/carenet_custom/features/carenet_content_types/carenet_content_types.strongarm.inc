@@ -35,7 +35,7 @@ function carenet_content_types_strongarm() {
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
   $strongarm->name = 'comment_card_rate';
-  $strongarm->value = '2';
+  $strongarm->value = '1';
   $export['comment_card_rate'] = $strongarm;
 
   $strongarm = new stdClass();
@@ -308,7 +308,7 @@ function carenet_content_types_strongarm() {
   $strongarm->name = 'node_options_card_rate';
   $strongarm->value = array(
     0 => 'status',
-    1 => 'promote',
+    1 => 'revision',
   );
   $export['node_options_card_rate'] = $strongarm;
 

@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Carenet views feature.
+ */
+
+include_once 'carenet_views.features.inc';
