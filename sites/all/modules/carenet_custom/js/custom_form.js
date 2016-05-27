@@ -23,11 +23,6 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-reason').show();
 	}else if(status_id == 4850 || status_id == 4920){
 		hide_all();
-		$('#carenet-custom-provider-action .form-item-person').hide();
-		$('#carenet-custom-provider-action .form-item-email').hide();
-		$('#carenet-custom-provider-action .form-item-phone').hide();
-		$('#carenet-custom-provider-action .form-item-designation').hide();
-
 		$('#carenet-custom-provider-action .form-item-date-time').show();
 	}else if(status_id == 4851){
 		hide_all();
@@ -125,6 +120,14 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-custom-price').show();
 	}else{
 		$('#carenet-custom-provider-action .form-item-custom-price').hide();
+	}
+
+	if(status_id == 4850){
+		$('#carenet-custom-provider-action .form-item-person').hide();
+		$('#carenet-custom-provider-action .form-item-email').hide();
+		$('#carenet-custom-provider-action .form-item-phone').hide();
+		$('#carenet-custom-provider-action .form-item-designation').hide();
+		$('#carenet-custom-provider-action .form-item-title').hide();
 	}
 
 });
