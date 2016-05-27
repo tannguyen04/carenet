@@ -453,7 +453,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['comment'])){
-		  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+		  	$node->field_dc_reason_comment[LANGUAGE_NONE][]['value'] = $data['comment'];
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
