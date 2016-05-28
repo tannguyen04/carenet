@@ -258,7 +258,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#options' => $card_rate,
        '#default_value' => $default_card_rate,
        '#ajax' => array(
-			    'effect' => 'fade',
+			    'event' => 'change',
 			    'wrapper' => 'card_rate_item_wrapper',
 			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
 			    'method' => 'replace',
