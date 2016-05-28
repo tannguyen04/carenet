@@ -587,44 +587,46 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
 		  	
-		  	$node_card = node_load($data['card_rate']);
+		  	if($data['status'] == 4919){
+		  		$node_card = node_load($data['card_rate']);
 
-		  	// Check custom field
-		  	$check_custom = FALSE;
-		  	foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
-		  		//custom_price_'.$nid.'_'.$item_d['value']
-		  		$field_data = field_collection_item_load($item['value']);
-		  		if($form_state['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
-		  			$check_custom = TRUE;
-		  		}
-		  	}
-		  	//
-
-
-		  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
-		  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
-		  			node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
-		  		}
-		  		unset($node_card->nid);
-		  		unset($node_card->vid);
-		  		$node_card->field_card_type['und'][0]['value'] = 'custom';
-		  		node_save($node_card);
-		  	}
-
-		  	if($check_custom){
-		  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
+			  	// Check custom field
+			  	$check_custom = FALSE;
+			  	foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
+			  		//custom_price_'.$nid.'_'.$item_d['value']
 			  		$field_data = field_collection_item_load($item['value']);
 			  		if($form_state['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
-
-			  			$field_collection_value = entity_load('field_collection_item', array($item['value']));
-
-			  			$field_collection_value->field_price[LANGUAGE_NONE][0]['value'] = $form_state['custom_price_'.$data['card_rate'].'_'.$item['value']];
-			  			$field_collection_value->save();
+			  			$check_custom = TRUE;
 			  		}
 			  	}
-		  	}
+			  	//
 
-		  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card->nid;
+
+			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
+			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+			  			node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+			  		}
+			  		unset($node_card->nid);
+			  		unset($node_card->vid);
+			  		$node_card->field_card_type['und'][0]['value'] = 'custom';
+			  		node_save($node_card);
+			  	}
+
+			  	if($check_custom){
+			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
+				  		$field_data = field_collection_item_load($item['value']);
+				  		if($form_state['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
+
+				  			$field_collection_value = entity_load('field_collection_item', array($item['value']));
+
+				  			$field_collection_value->field_price[LANGUAGE_NONE][0]['value'] = $form_state['custom_price_'.$data['card_rate'].'_'.$item['value']];
+				  			$field_collection_value->save();
+				  		}
+				  	}
+			  	}
+
+			  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card->nid;
+		  	}
 		  }
 
 		  if(!empty($data['method_contact'])){
