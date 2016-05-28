@@ -261,13 +261,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div class="card_rate_item_wrapper">', '#suffix' => '</div>');
 
 
-   	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
-			$nid = $form_state['values']['card_rate'];
-			$node = node_load($nid);
+   	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+			$nid = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
+			$node_card = node_load($nid);
 
 			$list_item = array();
-			if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
-				foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
+				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 					$field_data = field_collection_item_load($item_d['value']);
 					$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 					  '#type' => 'textfield', 
