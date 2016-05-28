@@ -608,14 +608,23 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  		
 
-			  		$node_card_new = $node_card;
-			  		unset($node_card_new->nid);
-			  		unset($node_card_new->vid);
-			  		$node_card_new->title = $node_card_new->title.'_'.$data['telephone'];
-			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
-			  		
+			  		$node_card_new = new stdClass();
+					  $node_card_new->title = $node_card->title.'_'.$data['telephone'];
+					  $node_card_new->type = 'card_rate';
+					  node_object_prepare($node_card_new);
+					  $node_card_new->language = LANGUAGE_NONE;
+					  $node_card_new->uid = $user->uid; 
+					  $node_card_new->status = 1; //(1 or 0): published or not
+					  $node_card_new->promote = 0; 
 
-			  		foreach($node_card_new->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
+					  $node_card_new->body = $node_card->body;
+					  $node_card_new->field_healthcare_provider = $node_card->field_healthcare_provider;
+					  $node_card_new->field_document = $node_card->field_document;
+			  		
+			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
+			  		$node_card_new->field_healthcare_provider
+
+			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
 			  			$field_data = field_collection_item_load($item['value']);
 
 			  			$field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_card_rate_item'));
@@ -629,7 +638,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  		$node_card_new = node_submit($node_card_new);
 			  		node_save($node_card_new);
 			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card_new->nid;
-			  		
+
 			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] != 'master'){
 			  			$node_data_check = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
 			  			if($node_data_check->field_card_type['und'][0]['value'] != 'master'){
