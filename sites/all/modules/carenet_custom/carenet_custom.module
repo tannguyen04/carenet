@@ -486,6 +486,10 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if(empty($data['phone'])){
 				form_set_error('phone', 'Please enter Person Name');
 			}
+
+			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
+				form_set_error('phone', 'Please enter Person Name');
+			}
 		//Rejected
 		case 4849:
 			if(empty($data['reason']) || $data['reason'] == 'All'){
@@ -602,7 +606,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 
 			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
-			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] != 'master'){
 			  			node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
 			  		}
 			  		unset($node_card->nid);
@@ -620,7 +624,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 								$collection = entity_metadata_wrapper('field_collection_item', array('field_card_rate_item'));
 				  			$collection->field_price[LANGUAGE_NONE][0]['value'] = $form_state['custom_price_'.$data['card_rate'].'_'.$item['value']];
 				  			$collection->save();
-				  			
+
 				  		}
 				  	}
 			  	}
