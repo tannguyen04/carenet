@@ -285,7 +285,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					$form['card_rate_item_wrapper']['card_rate_item_top_'.$item_d['value']] = array(
 			        '#prefix' => '<tr>',
 			    );
-			    $form['card_rate_item_wrapper'] = array(
+			    $form['card_rate_item_wrapper']['card_rate_item_label_'.$item_d['value']] = array(
 			        '#prefix' => '<td>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</td>',
 			    );
 
