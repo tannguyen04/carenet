@@ -617,14 +617,15 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  	}
 
 			  	if($check_custom){
-			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
+			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
 				  		$field_data = field_collection_item_load($item['value']);
 				  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
 
-
-				  			$field_collection_item = entity_load('field_collection_item', array($item['value']));
-								$field_collection_item->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
-								$field_collection_item->save();
+								$node_card_update = entity_metadata_wrapper('node', $node_card);
+								$raw_collection = $node_card_update->field_card_rate_item[$key]->value();
+								$collection = entity_metadata_wrapper('field_collection_item', $raw_collection);
+								$collection->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
+								$collection->save();
 
 				  		}
 				  	}
