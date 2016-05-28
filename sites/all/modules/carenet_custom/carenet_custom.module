@@ -251,6 +251,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$default_card_rate = (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All';
 		}
 
+		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+			if(!array_key_exists($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'],$card_rate)){
+				$node_exists = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+				$card_rate[$node_exists->nid] = $node_exists->title.'_'.$telephone;
+			}
+		}
+
 		$form['#tree'] = TRUE;
 		$form['card_rate'] = array(
        '#type' => 'select',
