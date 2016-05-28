@@ -20,6 +20,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-fax').hide();
 		$('#carenet-custom-provider-action .form-item-comment').hide();
 		$('#carenet-custom-provider-action .form-item-reason').hide();
+		$('#carenet-custom-provider-action #card_rate_item_wrapper').hide();
 		
 	}
 
@@ -57,6 +58,7 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-phone').show();
 			$('#carenet-custom-provider-action .form-item-method-contact').show();
 			$('#carenet-custom-provider-action .form-item-card-rate').show();
+			$('#carenet-custom-provider-action #card_rate_item_wrapper').show();
 		//Rejected
 		}else if(status == 4849){
 			hide_all();

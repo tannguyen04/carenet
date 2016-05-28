@@ -262,12 +262,14 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
 			    'method' => 'replace',
 			  ),
+       '#prefix' => '<div class="col-md-12">',
+          '#suffix' => '</div>',
    	);
 
 
 		$form['card_rate_item_wrapper'] = array(
         '#type' => 'fieldset',
-        '#title' => t('myfieldset'),
+        '#title' => t('Rate Details'),
         '#prefix' => '<div id="card_rate_item_wrapper">',
         '#suffix' => '</table></div>',
     );
