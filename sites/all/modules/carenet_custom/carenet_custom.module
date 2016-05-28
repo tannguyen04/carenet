@@ -266,7 +266,12 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	);
 
    	
-
+		$form['card_rate_item_wrapper'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('myfieldset'),
+        '#prefix' => '<div id="card_rate_item_wrapper">',
+        '#suffix' => '</div>',
+    );
    	
    	if (empty($form_state['card_rate'])) {
 		   if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
