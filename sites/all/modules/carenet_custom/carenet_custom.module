@@ -586,7 +586,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-		  	
+		  	print_r($data);die();
 		  	if($data['status'] == 4919){
 		  		$node_card = node_load($data['card_rate']);
 
