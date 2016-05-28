@@ -250,6 +250,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		}else{
 			$default_card_rate = (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All';
 		}
+
 		$form['#tree'] = TRUE;
 		$form['card_rate'] = array(
        '#type' => 'select',
@@ -275,7 +276,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
 			$data_nid_card_item = $form_state['values']['card_rate'];
 		}else if($default_card_rate != 'All'){
-			$data_nid_card_item = $form_state['values']['card_rate'];
+			$data_nid_card_item = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
 		}else{
 			$data_nid_card_item = '';
 		}
