@@ -414,7 +414,7 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 
 
 
-  return $form['action-doctor']['card_rate_item_wrapper'];
+  return $form;
 }
 
 function carenet_custom_provider_action_validate($form, &$form_state){
