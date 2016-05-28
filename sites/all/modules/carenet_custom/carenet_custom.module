@@ -270,7 +270,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['card_rate_item_wrapper'] = array(
         '#type' => 'fieldset',
         '#title' => t('Rate Details'),
-        '#prefix' => '<div id="card_rate_item_wrapper">',
+        '#prefix' => '<div id="card_rate_item_wrapper" class="col-md-12">',
         '#suffix' => '</table></div>',
     );
 
