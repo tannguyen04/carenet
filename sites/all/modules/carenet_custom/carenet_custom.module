@@ -305,12 +305,17 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			        								<td></td>
 			        							</tr>',
 			  );
-
+			  $i = 1;
 				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 					$form['card_rate_item_wrapper']['card_rate_item_top_'.$item_d['value']] = array(
 			        '#prefix' => '<tr>',
 			    );
+			    
 					$field_data = field_collection_item_load($item_d['value']);
+
+					$form['card_rate_item_wrapper']['card_rate_item_number_'.$item_d['value']] = array(
+			        '#prefix' => '<td>'.$i.'</td>',
+			    );
 
 					$form['card_rate_item_wrapper']['card_rate_item_label_'.$item_d['value']] = array(
 			        '#prefix' => '<td>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</td>',
@@ -328,6 +333,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					$form['card_rate_item_wrapper']['card_rate_item_bottom_'.$item_d['value']] = array(
 			        '#prefix' => '</tr>',
 			    );
+			    $i++;
 				}
 
 				$form['card_rate_item_wrapper']['card_rate_item_bottom'] = array(
