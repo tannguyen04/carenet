@@ -339,7 +339,33 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 }
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
+	
+	$form = array();
 	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+
+		$card_rate = array('All' => ' - Any - ');
+		$result = db_query('SELECT n.nid FROM {node} as n
+												INNER JOIN {field_data_field_card_type} as c ON c.entity_id = n.nid 
+												WHERE n.type = :type AND c.field_card_type_value = :field_card_type_value AND n.status = 1',array(':type' => 'card_rate', ':field_card_type_value' => 'master'));
+
+		foreach($result as $record){
+			$node_card = node_load($record->nid);
+			$card_rate[$node_card->nid] =  $node_card->title;
+		}
+
+		$form['action-doctor']['card_rate'] = array(
+	     '#type' => 'select',
+	     '#title' => t('Card Rate'),
+	     '#options' => $card_rate,
+	     '#default_value' => $form_state['values']['card_rate'],
+	     '#ajax' => array(
+			    'event' => 'change',
+			    'wrapper' => 'card_rate_item_wrapper',
+			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
+			    'method' => 'replace',
+			  ),
+	 	);
+
 		$nid = $form_state['values']['card_rate'];
 		$node = node_load($nid);
 
@@ -359,7 +385,7 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 	}else{
 		$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
 	}
-  return $form['action-doctor']['card_rate_item_wrapper'];
+  return $form;
 }
 
 function carenet_custom_provider_action_validate($form, &$form_state){
