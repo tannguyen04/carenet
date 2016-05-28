@@ -18,7 +18,7 @@ jQuery(document).ready(function($) {
 	}
 
 	var status_id = $('.form-item-status select').val();
-	if(status_id == 4848){
+	if(status_id == 4849){
 		hide_all();
 		$('#carenet-custom-provider-action .form-item-reason').show();
 	}else if(status_id == 4850 || status_id == 4920){
@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
 
 	$('.form-item-status select').change(function(event) {
 		/* Act on the event */
-		if($(this).val() == 4848){
+		if($(this).val() == 4849){
 			show_all();
 			hide_all();
 
