@@ -258,7 +258,28 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			  ),
    	);
 
-   	$form['card_rate_item_wrapper'] = array('#prefix' => '<div class="card_rate_item_wrapper">', '#suffix' => '</div>');
+   	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div class="card_rate_item_wrapper">', '#suffix' => '</div>');
+
+
+   	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+			$nid = $form_state['values']['card_rate'];
+			$node = node_load($nid);
+
+			$list_item = array();
+			if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
+				foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+					$field_data = field_collection_item_load($item_d['value']);
+					$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+					  '#type' => 'textfield', 
+					  '#title' => t('Price'), 
+					  '#size' => 30, 
+					  '#maxlength' => 128,
+					  '#prefix' => '<label>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</label>',
+					  '#default_value' => (!empty($field_data->field_price[LANGUAGE_NONE][0]['value'])) ? $field_data->field_price[LANGUAGE_NONE][0]['value'] : ''
+					);
+				}
+			}
+		}
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['action-doctor']['method_contact'] = array(
