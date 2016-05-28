@@ -258,7 +258,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			  ),
    	);
 
-   	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div class="card_rate_item_wrapper">', '#suffix' => '</div>');
+   	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
 
 
    	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
