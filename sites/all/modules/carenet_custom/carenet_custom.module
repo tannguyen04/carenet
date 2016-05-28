@@ -271,12 +271,22 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
         '#suffix' => '</table></div>',
     );
 
-    if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
-			$nid = $form_state['values']['card_rate'];
+
+		if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+			$data_nid_card_item = $form_state['values']['card_rate'];
+		}else if($default_card_rate != 'All'){
+			$data_nid_card_item = $form_state['values']['card_rate'];
+		}else{
+			$data_nid_card_item = '';
+		}
+
+
+    if(!empty($data_nid_card_item)){
+
+			$nid = $data_nid_card_item;
 			$node_card = node_load($nid);
 
 			$list_item = array();
-
 			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
 				$form['card_rate_item_wrapper']['card_rate_item_top'] = array(
 			        '#prefix' => '<table>',
@@ -341,29 +351,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			    );
 			}
 		}
-   
-		
-
-		
-
-  //  	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
-		// 	$nid = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
-		// 	$node_card = node_load($nid);
-
-		// 	$list_item = array();
-		// 	if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
-		// 		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
-		// 			$field_data = field_collection_item_load($item_d['value']);
-		// 			$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
-		// 			  '#type' => 'textfield', 
-		// 			  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
-		// 			  '#size' => 30, 
-		// 			  '#maxlength' => 128,
-		// 			  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
-		// 			);
-		// 		}
-		// 	}
-		// }
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['method_contact'] = array(
