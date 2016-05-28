@@ -267,6 +267,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
    	$form['action-doctor']['card_rate_item_wrapper'] = array(
 		  '#type' => 'fieldset', 
+		  '#title' => t('myfieldset'),
 		  '#collapsible' => TRUE, 
 		  '#collapsed' => FALSE,
 		  '#prefix' => '<div id="card_rate_item_wrapper">', 
