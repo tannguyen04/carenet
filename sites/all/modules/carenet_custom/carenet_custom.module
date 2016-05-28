@@ -462,7 +462,12 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['comment'])){
-		  	$node->field_dc_reason_comment[LANGUAGE_NONE][]['value'] = $data['comment'];
+		  	$field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_comment_list'));
+				$field_collection_item->setHostEntity('node', $node);
+				$field_collection_item->field_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+				$field_collection_item->field_date[LANGUAGE_NONE][0]['value'] = format_date(time(), 'custom', 'Y-m-d H:i', 'UTC');
+				$field_collection_item->save();
+				$node->field_comment_list[LANGUAGE_NONE][]['value'] = $field_collection_item->item_id;
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
