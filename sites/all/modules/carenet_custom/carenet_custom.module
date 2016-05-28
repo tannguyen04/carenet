@@ -277,7 +277,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
-   	$list_comment = '<ul>';
+   	$list_comment = '<h3>List comment</h3><ul>';
    	if(!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
    		foreach($node->field_dc_reason_comment[LANGUAGE_NONE] as $item){
    			$list_comment .= '<li>'.$item['value'].'</li>';
