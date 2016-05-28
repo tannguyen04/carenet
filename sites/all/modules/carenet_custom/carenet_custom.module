@@ -254,8 +254,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			}
 			$form['action-doctor']['card_rate_item_'.$node_card->nid] = array(
        '#type' => 'select',
-       '#title' => t('Card Rate'),
-       '#options' => $card_rate,
+       '#title' => t('List option'),
+       '#options' => $list_item,
    		);
 		}
 
