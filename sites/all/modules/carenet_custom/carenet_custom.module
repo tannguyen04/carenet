@@ -146,7 +146,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$status[$value->tid] = $value->name;
 		}
 
-		$form['action-doctor']['status'] = array(
+		$form['status'] = array(
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
@@ -161,7 +161,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$reason[$value->tid] = $value->name;
 		}
 
-		$form['action-doctor']['reason'] = array(
+		$form['reason'] = array(
        '#type' => 'select',
        '#title' => t('Reason'),
        '#options' => $reason,
@@ -170,7 +170,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_dc_reason[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['tid'] : 'All',
    	);
 
-   	$form['action-doctor']['person'] = array(
+   	$form['person'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Person'), 
 		  '#size' => 60, 
@@ -180,7 +180,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_person[LANGUAGE_NONE][0]['value'] : $authorized_official,  
 		);
 
-		$form['action-doctor']['title'] = array(
+		$form['title'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Title'), 
 		  '#size' => 60, 
@@ -190,7 +190,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_title_discuss[LANGUAGE_NONE][0]['value'])) ? $node->field_title_discuss[LANGUAGE_NONE][0]['value'] : '',
 		);
 
-		$form['action-doctor']['email'] = array(
+		$form['email'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email'), 
 		  '#size' => 60, 
@@ -200,7 +200,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => (!empty($node->field_dc_email[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_email[LANGUAGE_NONE][0]['value'] : '',
 		);
 
-		$form['action-doctor']['phone'] = array(
+		$form['phone'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Phone'), 
 		  '#size' => 60, 
@@ -210,7 +210,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : $official_telephone
 		);
 
-		$form['action-doctor']['designation'] = array(
+		$form['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
 		  '#size' => 60, 
@@ -226,7 +226,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$date_default = date('m/d/Y H:i',$time);
 		}
 
-		$form['action-doctor']['date_time'] = array(
+		$form['date_time'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Date Time Callback'), 
 		  '#size' => 60, 
@@ -252,7 +252,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$default_card_rate = (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All';
 		}
 		$form['#tree'] = TRUE;
-		$form['action-doctor']['card_rate'] = array(
+		$form['card_rate'] = array(
        '#type' => 'select',
        '#title' => t('Card Rate'),
        '#options' => $card_rate,
@@ -277,7 +277,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
 						foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 							$field_data = field_collection_item_load($item_d['value']);
-							$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+							$form['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 							  '#type' => 'textfield', 
 							  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
 							  '#size' => 30, 
@@ -297,7 +297,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
 						foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 							$field_data = field_collection_item_load($item_d['value']);
-							$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+							$form['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 							  '#type' => 'textfield', 
 							  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
 							  '#size' => 30, 
@@ -334,7 +334,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		// }
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
-   	$form['action-doctor']['method_contact'] = array(
+   	$form['method_contact'] = array(
        '#type' => 'radios',
        '#title' => t('Method contact'),
        '#options' => $method_contact,
@@ -342,7 +342,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	);
 
    	$fax_status = array('notsend' => 'Not sent yet','send' => 'Fax sent');
-   	$form['action-doctor']['fax'] = array(
+   	$form['fax'] = array(
        '#type' => 'select',
        '#title' => t('Fax status'),
        '#options' => $fax_status,
@@ -366,7 +366,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    		$list_comment .= '</ul>';
    	}
    	
-   	$form['action-doctor']['comment'] = array(
+   	$form['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
 			'#prefix' => '<div class="list-comment">'.$list_comment.'</div>',
