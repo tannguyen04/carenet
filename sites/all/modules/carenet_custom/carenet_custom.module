@@ -254,7 +254,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
 			if(!array_key_exists($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'],$card_rate)){
 				$node_exists = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
-				$card_rate[$node_exists->nid] = $node_exists->title.'_'.$telephone;
+				$card_rate[$node_exists->nid] = $node_exists->title;
 			}
 		}
 
@@ -608,6 +608,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  		}
 			  		unset($node_card->nid);
 			  		unset($node_card->vid);
+			  		$node_card->title = $node->title.'_'.$data['telephone'];
 			  		$node_card->field_card_type['und'][0]['value'] = 'custom';
 			  		node_save($node_card);
 			  	}
