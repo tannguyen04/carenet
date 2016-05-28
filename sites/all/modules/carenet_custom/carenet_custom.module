@@ -623,7 +623,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 
 				  			$field_collection_item = entity_load('field_collection_item', array($item['value']));
-								$field_collection_item->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']]
+								$field_collection_item->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
 								$field_collection_item->save();
 
 				  		}
