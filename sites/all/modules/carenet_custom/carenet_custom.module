@@ -267,8 +267,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$form['card_rate_item_wrapper'] = array(
         '#type' => 'fieldset',
         '#title' => t('myfieldset'),
-        '#prefix' => '<div id="card_rate_item_wrapper">',
-        '#suffix' => '</div>',
+        '#prefix' => '<div id="card_rate_item_wrapper"><table>',
+        '#suffix' => '</table></div>',
     );
 
     if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
@@ -278,14 +278,26 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$list_item = array();
 			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
 				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+					$form['card_rate_item_wrapper']['card_rate_item_top_'.$item_d['value']] = array(
+			        '#prefix' => '<tr>',
+			    );
+			    $form['card_rate_item_wrapper'] = array(
+			        '#prefix' => '<td>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</td>',
+			    );
+
 					$field_data = field_collection_item_load($item_d['value']);
 					$form['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 					  '#type' => 'textfield', 
-					  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
 					  '#size' => 30, 
 					  '#maxlength' => 128,
+					  '#prefix' => '<td>',
+					  '#suffix' => '</td>',
 					  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
 					);
+
+					$form['card_rate_item_wrapper']['card_rate_item_bottom_'.$item_d['value']] = array(
+			        '#prefix' => '</tr>',
+			    );
 				}
 			}
 		}
