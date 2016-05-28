@@ -622,7 +622,6 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 					  $node_card_new->field_document = $node_card->field_document;
 			  		
 			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
-			  		$node_card_new->field_healthcare_provider
 
 			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
 			  			$field_data = field_collection_item_load($item['value']);
