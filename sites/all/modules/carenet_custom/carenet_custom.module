@@ -281,15 +281,41 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 				$form['card_rate_item_wrapper']['card_rate_item_top'] = array(
 			        '#prefix' => '<table>',
 			    );
+
+				$form['card_rate_item_wrapper']['card_rate_item_desc'] = array(
+			        '#prefix' => '<tr>
+			        								<td>Line Item</td>
+			        								<td>Description</td>
+			        								<td>Price (USD)</td>
+			        							</tr>',
+			  );
+
+			  $form['card_rate_item_wrapper']['card_rate_item_desc_1'] = array(
+			        '#prefix' => '<tr>
+			        								<td></td>
+			        								<td>General Medical Examination</td>
+			        								<td></td>
+			        							</tr>',
+			  );
+
+			  $form['card_rate_item_wrapper']['card_rate_item_desc_2'] = array(
+			        '#prefix' => '<tr>
+			        								<td></td>
+			        								<td>'.$node_card->body['und'][0]['value'].'</td>
+			        								<td></td>
+			        							</tr>',
+			  );
+
 				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 					$form['card_rate_item_wrapper']['card_rate_item_top_'.$item_d['value']] = array(
 			        '#prefix' => '<tr>',
 			    );
-			    $form['card_rate_item_wrapper']['card_rate_item_label_'.$item_d['value']] = array(
+					$field_data = field_collection_item_load($item_d['value']);
+
+					$form['card_rate_item_wrapper']['card_rate_item_label_'.$item_d['value']] = array(
 			        '#prefix' => '<td>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</td>',
 			    );
 
-					$field_data = field_collection_item_load($item_d['value']);
 					$form['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 					  '#type' => 'textfield', 
 					  '#size' => 30, 
