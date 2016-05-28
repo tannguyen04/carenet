@@ -617,10 +617,10 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  		$field_data = field_collection_item_load($item['value']);
 				  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
 
-				  			$field_collection_value = entity_load('field_collection_item', array($item['value']));
-
-				  			$field_collection_value->field_price[LANGUAGE_NONE][0]['value'] = $form_state['custom_price_'.$data['card_rate'].'_'.$item['value']];
-				  			$field_collection_value->save();
+								$collection = entity_metadata_wrapper('field_collection_item', array('field_card_rate_item'));
+				  			$collection->field_price[LANGUAGE_NONE][0]['value'] = $form_state['custom_price_'.$data['card_rate'].'_'.$item['value']];
+				  			$collection->save();
+				  			
 				  		}
 				  	}
 			  	}
