@@ -264,7 +264,14 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			  ),
    	);
 
-   	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
+		$form['action-doctor']['card_rate_item_wrapper'] = array(
+		  '#type' => 'fieldset', 
+		  '#weight' => 5, 
+		  '#collapsible' => TRUE, 
+		  '#collapsed' => FALSE,
+		  '#prefix' => '<div id="card_rate_item_wrapper">', 
+		  '#suffix' => '</div>'
+		);
 
 
    	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
@@ -346,7 +353,14 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 	
-	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
+	$form['action-doctor']['card_rate_item_wrapper'] = array(
+	  '#type' => 'fieldset', 
+	  '#weight' => 5, 
+	  '#collapsible' => TRUE, 
+	  '#collapsed' => FALSE,
+	  '#prefix' => '<div id="card_rate_item_wrapper">', 
+	  '#suffix' => '</div>'
+	);
 
 	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
 
