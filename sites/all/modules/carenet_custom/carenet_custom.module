@@ -292,7 +292,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$list_item = array();
 			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
 				$form['card_rate_item_wrapper']['card_rate_item_top'] = array(
-			        '#prefix' => '<table>',
+			        '#prefix' => '<table class="table table-hover table-bordered sticky-enabled table-select-processed tableheader-processed">',
 			    );
 
 				$form['card_rate_item_wrapper']['card_rate_item_desc'] = array(
