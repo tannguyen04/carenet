@@ -64,7 +64,6 @@ function carenet_custom_permission() {
 }
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
-	$form_state['rebuild'] = TRUE;
 	global $base_url;
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
