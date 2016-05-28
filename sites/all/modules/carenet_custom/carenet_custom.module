@@ -467,7 +467,8 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				$field_collection_item->field_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
 				$field_collection_item->field_date[LANGUAGE_NONE][0]['value'] = format_date(time(), 'custom', 'Y-m-d H:i', 'UTC');
 				$field_collection_item->save();
-				$node->field_comment_list[LANGUAGE_NONE][]['value'] = $field_collection_item->item_id;
+				$key_data = count($node->field_comment_list[LANGUAGE_NONE]);
+				$node->field_comment_list[LANGUAGE_NONE][$key_data]['value'] = $field_collection_item->item_id;
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
