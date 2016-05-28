@@ -661,12 +661,6 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card->nid;
 			  	}	
-
-			  	
-			  	
-
-			  	
-			  	die();
 		  	}
 		  }
 
