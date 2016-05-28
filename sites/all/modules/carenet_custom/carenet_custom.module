@@ -607,27 +607,29 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  		
+
 			  		$node_card_new = $node_card;
 			  		unset($node_card_new->nid);
 			  		unset($node_card_new->vid);
 			  		$node_card_new->title = $node_card_new->title.'_'.$data['telephone'];
 			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
+			  		
+
+			  		foreach($node_card_new->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
+			  			$field_data = field_collection_item_load($item['value']);
+
+			  			$field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_card_rate_item'));
+							$field_collection_item->setHostEntity('node', $node_card_new);
+							$field_collection_item->field_text_title[LANGUAGE_NONE][0]['value'] = $field_data->field_text_title[LANGUAGE_NONE][0]['value'];
+							$field_collection_item->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
+							$field_collection_item->save();
+							$node_card_new->field_card_rate_item[LANGUAGE_NONE][$key]['value'] = $field_collection_item->item_id;
+			  		}
+
+			  		$node_card_new = node_submit($node_card_new);
 			  		node_save($node_card_new);
-
 			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card_new->nid;
-			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
-				  		$field_data = field_collection_item_load($item['value']);
-				  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
-
-								$field_collection_item = entity_load('field_collection_item', array($item['value']));
-								$field_collection_item[$item['value']]->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
-								$field_collection_item[$item['value']]->save();
-
-				  		}
-				  	}
-
-
-
+			  		
 			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] != 'master'){
 			  			$node_data_check = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
 			  			if($node_data_check->field_card_type['und'][0]['value'] != 'master'){
