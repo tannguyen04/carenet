@@ -348,7 +348,7 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 		if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
 			foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
 				$field_data = field_collection_item_load($item_d['value']);
-				$form['action-doctor']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+				$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
 				  '#type' => 'textfield', 
 				  '#title' => t('Price'), 
 				  '#size' => 30, 
