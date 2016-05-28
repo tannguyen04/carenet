@@ -319,6 +319,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 }
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
+	print_r($form_state);die();
 	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
 		$nid = $form_state['values']['card_rate'];
 		$node = node_load($nid);
