@@ -352,7 +352,6 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 
 		$nid = $form_state['values']['card_rate'];
 		$node = node_load($nid);
-		print_r($nid);die();
 		$list_item = array();
 		if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
 			foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
