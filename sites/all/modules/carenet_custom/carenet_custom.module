@@ -607,10 +607,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  		
-			  		unset($node_card->nid);
-			  		unset($node_card->vid);
-			  		$node_card->title = $node_card->title.'_'.$data['telephone'];
-			  		$node_card->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
+			  		
 			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
 				  		$field_data = field_collection_item_load($item['value']);
 				  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
@@ -621,12 +618,17 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 				  		}
 				  	}
+
+				  	unset($node_card->nid);
+			  		unset($node_card->vid);
+			  		$node_card->title = $node_card->title.'_'.$data['telephone'];
+			  		$node_card->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
 			  		node_save($node_card);
 
 			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] != 'master'){
 			  			node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
 			  		}
-			  		
+
 			  	}else{
 			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  			node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
