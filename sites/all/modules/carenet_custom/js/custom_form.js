@@ -87,9 +87,4 @@ jQuery(document).ready(function($) {
 		status_getshow(status);
 	});
 
-	
-
-	
-
-
 });

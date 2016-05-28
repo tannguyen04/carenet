@@ -186,6 +186,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
       '#suffix' => '</div>',
+      '#default_value' => (!empty($node->field_title_discuss[LANGUAGE_NONE][0]['value'])) ? $node->field_title_discuss[LANGUAGE_NONE][0]['value'] : '',
 		);
 
 		$form['action-doctor']['email'] = array(
@@ -276,10 +277,18 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
+   	$list_comment = '<ul>';
+   	if(!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
+   		foreach($node->field_dc_reason_comment[LANGUAGE_NONE] as $item){
+   			$list_comment .= '<li>'.$item['value'].'</li>';
+   		}
+   	}
+   	$list_comment .= '</ul>';
+
    	$form['action-doctor']['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
-			'#default_value' => (!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] : '',
+			'#prefix' => '<div class="list-comment">'.$list_comment.'</div>',
 		);
 
 		$form['action_end'] = array(
