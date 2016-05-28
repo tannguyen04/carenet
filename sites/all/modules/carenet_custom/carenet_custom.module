@@ -243,37 +243,22 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		foreach($result as $record){
 			$node_card = node_load($record->nid);
 			$card_rate[$node_card->nid] =  $node_card->title;
-
-			$list_item = array();
-
-			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
-				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
-					$field_data = field_collection_item_load($item_d['value']);
-					$list_item[$item_d['value']] = $field_data->field_text_title[LANGUAGE_NONE][0]['value'].' - '.$field_data->field_price[LANGUAGE_NONE][0]['value'];
-				}
-			}
-			$form['action-doctor']['card_rate_item_'.$node_card->nid] = array(
-       '#type' => 'select',
-       '#title' => t('List option'),
-       '#options' => $list_item,
-   		);
 		}
 
 		$form['action-doctor']['card_rate'] = array(
        '#type' => 'select',
        '#title' => t('Card Rate'),
        '#options' => $card_rate,
-       '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All'
+       '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All',
+       '#ajax' => array(
+			    'event' => 'change',
+			    'wrapper' => 'card_rate_item_wrapper',
+			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
+			    'method' => 'replace',
+			  ),
    	);
 
-
-   	$form['action-doctor']['custom_price'] = array(
-		  '#type' => 'textfield', 
-		  '#title' => t('Price'), 
-		  '#size' => 30, 
-		  '#maxlength' => 128,
-		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_price[LANGUAGE_NONE][0]['value'] : ''
-		);
+   	$form['card_rate_item_wrapper'] = array('#prefix' => '<div class="card_rate_item_wrapper">', '#suffix' => '</div>');
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['action-doctor']['method_contact'] = array(
@@ -331,6 +316,29 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	}
 	
 	return $form;
+}
+
+function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
+	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+		$nid = $form_state['values']['card_rate'];
+		$node = node_load($nid);
+
+		$list_item = array();
+		if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
+			foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+				$field_data = field_collection_item_load($item_d['value']);
+				$form['action-doctor']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+				  '#type' => 'textfield', 
+				  '#title' => t('Price'), 
+				  '#size' => 30, 
+				  '#maxlength' => 128,
+				  '#prefix' => '<label>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</label>',
+				  '#default_value' => (!empty($field_data->field_price[LANGUAGE_NONE][0]['value'])) ? $field_data->field_price[LANGUAGE_NONE][0]['value'] : ''
+				);
+			}
+		}
+	}
+  return $form;
 }
 
 function carenet_custom_provider_action_validate($form, &$form_state){
