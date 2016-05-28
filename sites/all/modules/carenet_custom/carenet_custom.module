@@ -352,7 +352,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 }
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
-	
+	$form_state['rebuild'] = TRUE;
 	$form['action-doctor']['card_rate_item_wrapper'] = array(
 	  '#type' => 'fieldset', 
 	  '#weight' => 5, 
