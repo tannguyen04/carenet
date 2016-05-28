@@ -243,6 +243,20 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		foreach($result as $record){
 			$node_card = node_load($record->nid);
 			$card_rate[$node_card->nid] =  $node_card->title;
+
+			$list_item = array();
+
+			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
+				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+					$field_data = field_collection_item_load($item_d['value']);
+					$list_item[$item_d['value']] = $field_data->field_text_title[LANGUAGE_NONE][0]['value'].' - '.$field_data->field_price[LANGUAGE_NONE][0]['value'];
+				}
+			}
+			$form['action-doctor']['card_rate_item_'.$node_card->nid] = array(
+       '#type' => 'select',
+       '#title' => t('Card Rate'),
+       '#options' => $card_rate,
+   		);
 		}
 
 		$form['action-doctor']['card_rate'] = array(
