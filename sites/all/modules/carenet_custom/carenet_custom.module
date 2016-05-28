@@ -222,7 +222,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
 			$time = strtotime($node->field_dc_date['und'][0]['value']);
-			$date_default = date('m/d/Y H:i');
+			$date_default = date('m/d/Y H:i',$time);
 		}
 
 		$form['action-doctor']['date_time'] = array(
@@ -277,14 +277,23 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
-   	$list_comment = '<h3>List comment</h3><ul>';
-   	if(!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
+   	$list_comment = '';
+   	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
+   		$list_comment .= '<h3>List comment</h3><ul>';
+   		$data_list_cm = array();
    		foreach($node->field_dc_reason_comment[LANGUAGE_NONE] as $item){
-   			$list_comment .= '<li>'.$item['value'].'</li>';
+   			$data_list_cm[$item['value']] = $item['value'];
    		}
-   	}
-   	$list_comment .= '</ul>';
 
+   		foreach($data_list_cm as $item){
+   			$field_data = field_collection_item_load($item);
+   			$time = strtotime($field_data->field_dc_date[LANGUAGE_NONE][0]['value']);
+   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
+   		}
+   		
+   		$list_comment .= '</ul>';
+   	}
+   	
    	$form['action-doctor']['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
