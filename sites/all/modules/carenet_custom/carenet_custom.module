@@ -339,7 +339,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 }
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
-	$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
 	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
 		$nid = $form_state['values']['card_rate'];
 		$node = node_load($nid);
@@ -353,10 +352,12 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 				  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
 				  '#size' => 30, 
 				  '#maxlength' => 128,
-				  '#default_value' => (!empty($field_data->field_price[LANGUAGE_NONE][0]['value'])) ? $field_data->field_price[LANGUAGE_NONE][0]['value'] : ''
+				  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
 				);
 			}
 		}
+	}else{
+		$form['action-doctor']['card_rate_item_wrapper'] = array('#prefix' => '<div id="card_rate_item_wrapper">', '#suffix' => '</div>');
 	}
   return $form['action-doctor']['card_rate_item_wrapper'];
 }
