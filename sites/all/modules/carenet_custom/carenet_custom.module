@@ -252,7 +252,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All',
        '#ajax' => array(
 			    'event' => 'change',
-			    'wrapper' => 'card_rate_item_wrapper',
+			    'wrapper' => 'carenet-custom-provider-action',
 			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
 			    'method' => 'replace',
 			  ),
