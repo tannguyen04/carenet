@@ -274,7 +274,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
 					  '#size' => 30, 
 					  '#maxlength' => 128,
-					  '#default_value' => (!empty($field_data->field_price[LANGUAGE_NONE][0]['value'])) ? $field_data->field_price[LANGUAGE_NONE][0]['value'] : ''
+					  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
 					);
 				}
 			}
