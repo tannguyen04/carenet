@@ -586,7 +586,6 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-		  	print_r($data);die();
 		  	if($data['status'] == 4919){
 		  		$node_card = node_load($data['card_rate']);
 
@@ -595,7 +594,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  	foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
 			  		//custom_price_'.$nid.'_'.$item_d['value']
 			  		$field_data = field_collection_item_load($item['value']);
-			  		if($data['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
+			  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
 			  			$check_custom = TRUE;
 			  		}
 			  	}
@@ -616,7 +615,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  	if($check_custom){
 			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
 				  		$field_data = field_collection_item_load($item['value']);
-				  		if($data['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
+				  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
 
 				  			$field_collection_value = entity_load('field_collection_item', array($item['value']));
 
