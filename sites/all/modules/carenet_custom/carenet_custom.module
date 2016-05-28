@@ -64,6 +64,7 @@ function carenet_custom_permission() {
 }
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
+	$form_state['rebuild'] = TRUE;
 	global $base_url;
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
@@ -273,9 +274,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#suffix' => '</div>'
 		);
 
-
-   	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
-			$nid = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
+		if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+			$nid = $form_state['values']['card_rate'];
 			$node_card = node_load($nid);
 
 			$list_item = array();
@@ -291,7 +291,29 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 					);
 				}
 			}
+		}else{
+			if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+				$nid = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
+				$node_card = node_load($nid);
+
+				$list_item = array();
+				if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
+					foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+						$field_data = field_collection_item_load($item_d['value']);
+						$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+						  '#type' => 'textfield', 
+						  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
+						  '#size' => 30, 
+						  '#maxlength' => 128,
+						  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
+						);
+					}
+				}
+			}
 		}
+
+
+   	
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
    	$form['action-doctor']['method_contact'] = array(
@@ -352,43 +374,43 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 }
 
 function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
-	$form_state['rebuild'] = TRUE;
-	$form['action-doctor']['card_rate_item_wrapper'] = array(
-	  '#type' => 'fieldset', 
-	  '#weight' => 5, 
-	  '#collapsible' => TRUE, 
-	  '#collapsed' => FALSE,
-	  '#prefix' => '<div id="card_rate_item_wrapper">', 
-	  '#suffix' => '</div>'
-	);
+	
+	// $form['action-doctor']['card_rate_item_wrapper'] = array(
+	//   '#type' => 'fieldset', 
+	//   '#weight' => 5, 
+	//   '#collapsible' => TRUE, 
+	//   '#collapsed' => FALSE,
+	//   '#prefix' => '<div id="card_rate_item_wrapper">', 
+	//   '#suffix' => '</div>'
+	// );
 
-	if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+	// if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
 
-		// $nid = $form_state['values']['card_rate'];
-		// $node_card = node_load($nid);
+	// 	// $nid = $form_state['values']['card_rate'];
+	// 	// $node_card = node_load($nid);
 
-		// if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
-		// 	foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
-		// 		$field_data = field_collection_item_load($item_d['value']);
-		// 		$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
-		// 		  '#type' => 'textfield', 
-		// 		  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
-		// 		  '#size' => 30, 
-		// 		  '#maxlength' => 128,
-		// 		  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
-		// 		);
-		// 	}
-		// }
+	// 	// if(!empty($node->field_card_rate_item[LANGUAGE_NONE][0])){
+	// 	// 	foreach($node->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+	// 	// 		$field_data = field_collection_item_load($item_d['value']);
+	// 	// 		$form['action-doctor']['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+	// 	// 		  '#type' => 'textfield', 
+	// 	// 		  '#title' => $field_data->field_text_title[LANGUAGE_NONE][0]['value'], 
+	// 	// 		  '#size' => 30, 
+	// 	// 		  '#maxlength' => 128,
+	// 	// 		  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
+	// 	// 		);
+	// 	// 	}
+	// 	// }
 
 
-		$form['action-doctor']['card_rate_item_wrapper']['haibui_123'] = array(
-				  '#type' => 'textfield', 
-				  '#title' => '23123', 
-				  '#size' => 30, 
-				  '#maxlength' => 128,
-				  '#default_value' => '123123123213s'
-				);
-	}
+	// 	$form['action-doctor']['card_rate_item_wrapper']['haibui_123'] = array(
+	// 			  '#type' => 'textfield', 
+	// 			  '#title' => '23123', 
+	// 			  '#size' => 30, 
+	// 			  '#maxlength' => 128,
+	// 			  '#default_value' => '123123123213s'
+	// 			);
+	// }
 
 
 
