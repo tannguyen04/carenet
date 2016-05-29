@@ -203,13 +203,14 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     $pdf->addPage();
     $pdf->useTemplate($tplIdx, 0, 0, 0);
   }
-*/
+
   $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
   $tplIdx = $pdf->importPage(1, '/MediaBox');
   $pdf->addPage();
   $pdf->useTemplate($tplIdx, 0, 0, 0);
   //$pdf->Output();
   //$pdf->Output('F',$destination);
+*/
   file_unmanaged_delete($path_pdf_table_rate_tmp);
   return $destination;
 }
