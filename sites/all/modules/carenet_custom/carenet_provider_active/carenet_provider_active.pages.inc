@@ -119,7 +119,7 @@ function carenet_provider_active_form_contract($form, &$form_state) {
   return $form;
 }
 
-function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title) {
+function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title, $rows) {
   //$pdffile = file_create_url('public://doc.pdf');
   require_once(libraries_get_path('fpdf').'/fpdf.php');
   require_once(libraries_get_path('fpdi').'/fpdi.php');
@@ -214,7 +214,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
   }
   $pdf->SetFont('Arial','',14);
   $pdf->AddPage();
-  $pdf->FancyTable($header,$data);
+  $pdf->FancyTable($header,$rows);
 //$price = $pdf->Output();
   $pdf->Output('F', $path_pdf_table_rate_tmp);
 
@@ -417,6 +417,31 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   dpm($card_rate);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
   dpm($card_rate_wrapper);
+  //use card rate
+  $rows = array();
+  //Title card rate
+  $title = $card_rate_wrapper->title->value();
+  $rows[] = array('', array('data' => $title, 'class' => 'label-card-rate'), '');
+  //Description card rate
+  $description = $card_rate_wrapper->body->value->value();
+  if (!empty($description)) {
+    $rows[] = array('', array('data' => $description, 'class' => 'description-card-rate'), '');
+  }
+  //Line item card rate
+  $line_items = $card_rate_wrapper->field_card_rate_item->value();
+  if (!empty($line_items)) {
+    foreach ($line_items as $key => $item) {
+      $collection_wrapper = entity_metadata_wrapper('field_collection_item', $item);
+      $label = $collection_wrapper->field_text_title->value();
+      $price = $collection_wrapper->field_price->value();
+      $rows[] = array(
+          $key+1,
+          $label,
+          '$ '. $price,
+      );
+    }
+  }
+
   //if (isset($card_rate_wrapper->field_document->value()['uri'])) {
     //$document = $card_rate_wrapper->field_document->value()['uri'];
     //$source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
@@ -428,7 +453,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
     $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
-    carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title']);
+    carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title'],$rows);
 
     // We have complete file path.
     $file = new stdClass;
