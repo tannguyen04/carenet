@@ -410,7 +410,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $pass = user_hash_password(trim($pass));
   $mail = $values['mail'];
   $roles = array(5); //Provider role
-die('234');
+
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
