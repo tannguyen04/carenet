@@ -276,7 +276,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		$form['card_rate_item_wrapper'] = array(
         '#type' => 'fieldset',
-        '#title' => t('Rate Details'),
+        '#title' => t('Rate Detail'),
         '#prefix' => '<div id="card_rate_item_wrapper" class="col-md-12">',
         '#suffix' => '</table></div>',
     );
@@ -310,13 +310,13 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			        							</tr>',
 			  );
 
-			  $form['card_rate_item_wrapper']['card_rate_item_desc_1'] = array(
-			        '#prefix' => '<tr>
-			        								<td></td>
-			        								<td>General Medical Examination</td>
-			        								<td></td>
-			        							</tr>',
-			  );
+			  // $form['card_rate_item_wrapper']['card_rate_item_desc_1'] = array(
+			  //       '#prefix' => '<tr>
+			  //       								<td></td>
+			  //       								<td>General Medical Examination</td>
+			  //       								<td></td>
+			  //       							</tr>',
+			  // );
 
 			  $form['card_rate_item_wrapper']['card_rate_item_desc_2'] = array(
 			        '#prefix' => '<tr>
@@ -362,7 +362,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			}
 		}
 
-		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
+		$method_contact = array('mail' => 'Email','fax' => 'Fax');
    	$form['method_contact'] = array(
        '#type' => 'radios',
        '#title' => t('Method contact'),
@@ -493,7 +493,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			}
 
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
-				form_set_error('phone', 'Please enter Person Name');
+				form_set_error('card_rate', 'Please choose card rate');
 			}
 		//Rejected
 		case 4849:
