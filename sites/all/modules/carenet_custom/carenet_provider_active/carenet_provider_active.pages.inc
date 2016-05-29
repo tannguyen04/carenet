@@ -182,14 +182,13 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
 //      $pdf->Write(0, 'CTO');
     }
   }
-
-  $pdf->Output($destination, 'F');
-  $path_pdf_table_rate_tmp = drupal_realpath('public://table_rate_tmp_'. time(). '.pdf');
-  $pdf = new PDF();
   $time = time();
+  $pdf->Output($destination, 'F');
+  $path_pdf_table_rate_tmp = drupal_realpath('public://table_rate_tmp_'. $time. '.pdf');
+
   $template = 1;
   $pdf = new PDF();
-  $header = array('Line Item', 'Description', 'Price (USD)');
+  $header = array('Item', 'Description', 'Price');
   switch ($template) {
     case '1':
       $data = $pdf->LoadData($full_path.'/GeneralMedicine.txt');
@@ -418,8 +417,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
   //if (isset($card_rate_wrapper->field_document->value()['uri'])) {
     //$document = $card_rate_wrapper->field_document->value()['uri'];
-    $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
-    $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
+    //$source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
+    //$dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
 
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
