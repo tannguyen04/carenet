@@ -158,17 +158,17 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       // now write some text above the imported page
       $pdf->SetFont('Arial','',10);
       //Full name
-      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetTextColor(0);
       $pdf->SetXY(35, 243);
       $pdf->Write(0, $full_name);
 
       //Organization name
-      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetTextColor(0);
       $pdf->SetXY(35, 234);
       $pdf->Write(0, $organization_name);
 
       //Job title
-      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetTextColor(0);
       $pdf->SetXY(35, 239);
       $pdf->Write(0, $job_title);
 
@@ -425,7 +425,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
     $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
-    carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title'],$rows);
+    carenet_provider_active_pdf_generate($source, $dest, $$values['full_name'], $values['organization_name'], $values['job_title'],$rows);
 
     // We have complete file path.
     $file = new stdClass;
