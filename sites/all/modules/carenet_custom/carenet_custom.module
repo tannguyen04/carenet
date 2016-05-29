@@ -605,6 +605,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
 		  	if($data['status'] == 4919){
+
 		  		$node_card = node_load($data['card_rate']);
 
 			  	// Check custom field
@@ -687,6 +688,11 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card->nid;
 			  	}	
+
+			  	//fax number
+		  		if(!empty($data['fax_number'])){
+					  	$node->field_fax_number[LANGUAGE_NONE][0]['value'] = $data['fax_number'];
+		  		}
 		  	}
 		  }
 
