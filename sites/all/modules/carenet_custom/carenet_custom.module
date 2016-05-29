@@ -425,7 +425,11 @@ function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
 }
 
 function carenet_custom_provider_action_validate($form, &$form_state){
+	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
+
+	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/custom.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
 	//validate doctor
 	$list_check_doctor = 0;
 	$data = $form_state['values'];
