@@ -407,7 +407,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	$form['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
-			'#prefix' => '<div class="list-comment">'.$list_comment.'</div>',
+			'#prefix' => '<div class="list-comment col-md-12">'.$list_comment.'</div>',
 		);
 
 		$form['action_end'] = array(
