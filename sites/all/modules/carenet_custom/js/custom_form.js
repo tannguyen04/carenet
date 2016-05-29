@@ -21,6 +21,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-comment').hide();
 		$('#carenet-custom-provider-action .form-item-reason').hide();
 		$('#carenet-custom-provider-action #card_rate_item_wrapper').hide();
+		$('#carenet-custom-provider-action .form-item-fax-number').hide();
 		
 	}
 
@@ -59,6 +60,11 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-method-contact').show();
 			$('#carenet-custom-provider-action .form-item-card-rate').show();
 			$('#carenet-custom-provider-action #card_rate_item_wrapper').show();
+
+			if($('#edit-method-contact-fax').is(':checked')){
+				$('#carenet-custom-provider-action .form-item-fax').show();
+				$('#carenet-custom-provider-action .form-item-fax-number').show();
+			}
 		//Rejected
 		}else if(status == 4849){
 			hide_all();
@@ -90,5 +96,17 @@ jQuery(document).ready(function($) {
 	var status = $('#carenet-custom-provider-action .form-item-status select').val();
 	console.log(status);
 	status_getshow(status);
+
+	$('#edit-method-contact-fax').click(function(event) {
+		if($(this).is(':checked')){
+				$('#carenet-custom-provider-action .form-item-fax').show();
+				$('#carenet-custom-provider-action .form-item-fax-number').show();
+		}
+	});
+
+	$('#edit-method-contact-mail').click(function(event) {
+		$('#carenet-custom-provider-action .form-item-fax').hide();
+		$('#carenet-custom-provider-action .form-item-fax-number').hide();
+	});
 
 });
