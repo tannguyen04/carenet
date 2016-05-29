@@ -164,7 +164,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
 
       //Organization name
       $pdf->SetTextColor(255, 0, 0);
-      $pdf->SetXY(35, 235);
+      $pdf->SetXY(35, 234);
       $pdf->Write(0, $organization_name);
 
       //Job title
@@ -181,7 +181,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $fid = variable_get('carenet_signature', '');
       if ($file = file_load($fid)) {
         $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 110, 229, 20, 6);
+        $pdf->Image($signature_image_url, 125, 229, 20, 6);
       }
 
     }
