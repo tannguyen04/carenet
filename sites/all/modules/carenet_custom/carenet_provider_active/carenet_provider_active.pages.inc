@@ -125,6 +125,15 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
   require_once(libraries_get_path('fpdi').'/fpdi.php');
   $full_path = DRUPAL_ROOT. '/'.drupal_get_path('module', 'carenet_provider_active');
 
+  $time = time();
+  $path_pdf_table_rate_tmp = drupal_realpath('public://table_rate_tmp_'. $time. '.pdf');
+
+  $pdf = new PDF();
+  $header = array('Item', 'Description', 'Price');
+  $pdf->SetFont('Arial','',14);
+  $pdf->AddPage();
+  $pdf->FancyTable($header,$rows);
+  $pdf->Output('F', $path_pdf_table_rate_tmp);
 
   // initiate FPDI
   $pdf = new FPDI();
@@ -175,49 +184,17 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
         $pdf->Image($signature_image_url, 150, 230, 20, 6);
       }
 
-
-//      $pdf->SetFont('Arial');
-//      $pdf->SetTextColor(255, 0, 0);
-//      $pdf->SetXY(40, 239);
-//      $pdf->Write(0, 'CTO');
     }
   }
-  $time = time();
+  $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
+  $tplIdx = $pdf->importPage(1, '/MediaBox');
+  $pdf->addPage();
+  $pdf->useTemplate($tplIdx, 0, 0, 0);
+
   $pdf->Output($destination, 'F');
-  $path_pdf_table_rate_tmp = drupal_realpath('public://table_rate_tmp_'. $time. '.pdf');
 
-  $template = 1;
-  $pdf = new PDF();
-  $header = array('Item', 'Description', 'Price');
-  switch ($template) {
-    case '1':
-      $data = $pdf->LoadData($full_path.'/GeneralMedicine.txt');
-      break;
-    case 2:
-      $data = $pdf->LoadData($full_path.'/Opthalmology.txt');
-      break;
-    case 3:
-      $data = $pdf->LoadData($full_path.'/Audiology.txt');
-      break;
-    case 4:
-      $data = $pdf->LoadData($full_path.'/Neurology.txt');
-      break;
-    case 5:
-      $data = $pdf->LoadData($full_path.'/Pyschiatry.txt');
-      break;
-    case 6:
-      $data = $pdf->LoadData($full_path.'/Dentistry.txt');
-      break;
-    default:
-      # code...
-      break;
-  }
-  $pdf->SetFont('Arial','',14);
-  $pdf->AddPage();
-  $pdf->FancyTable($header,$rows);
-//$price = $pdf->Output();
-  $pdf->Output('F', $path_pdf_table_rate_tmp);
 
+/*
   //Merge table rate
   $pdf = new FPDI();
   $pageCount = $pdf->setSourceFile($destination);
@@ -226,12 +203,13 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     $pdf->addPage();
     $pdf->useTemplate($tplIdx, 0, 0, 0);
   }
+*/
   $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
   $tplIdx = $pdf->importPage(1, '/MediaBox');
   $pdf->addPage();
   $pdf->useTemplate($tplIdx, 0, 0, 0);
   //$pdf->Output();
-  $pdf->Output('F',$destination);
+  //$pdf->Output('F',$destination);
   file_unmanaged_delete($path_pdf_table_rate_tmp);
   return $destination;
 }
@@ -414,9 +392,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
-  dpm($card_rate);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  dpm($card_rate_wrapper);
   //use card rate
   $rows = array();
   //Title card rate
@@ -441,11 +417,6 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
       );
     }
   }
-
-  //if (isset($card_rate_wrapper->field_document->value()['uri'])) {
-    //$document = $card_rate_wrapper->field_document->value()['uri'];
-    //$source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
-    //$dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
 
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
