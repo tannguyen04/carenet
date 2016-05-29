@@ -56,10 +56,11 @@ class PDF extends FPDF
     // Colors, line width and bold font
     $this->SetFillColor(0,61,245);
     $this->SetTextColor(255);
-    $this->SetDrawColor(31,94,255);
-    //$this->SetLineWidth(.3);
+    $this->SetDrawColor(255);
+    //$this->SetLineWidth(.1);
     $this->SetLineWidth(.5);
     $this->SetFont('','B');
+    $this->SetFontSize(9);
     // Header
     $w = array(12, 170, 15);
     for($i=0;$i<count($header);$i++)
