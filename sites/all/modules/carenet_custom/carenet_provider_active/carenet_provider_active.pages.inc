@@ -156,7 +156,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     $pdf->useTemplate($templateId);
     if($pageNo == $pageCount) {
       // now write some text above the imported page
-      $pdf->SetFont('Arial');
+      $pdf->SetFont('Arial','',13);
       //Full name
       $pdf->SetTextColor(255, 0, 0);
       $pdf->SetXY(35, 243);
@@ -181,7 +181,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $fid = variable_get('carenet_signature', '');
       if ($file = file_load($fid)) {
         $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 150, 230, 20, 6);
+        $pdf->Image($signature_image_url, 155, 200, 20, 6);
       }
 
     }
