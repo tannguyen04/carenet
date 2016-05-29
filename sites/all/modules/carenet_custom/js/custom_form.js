@@ -64,6 +64,9 @@ jQuery(document).ready(function($) {
 			if($('#edit-method-contact-fax').is(':checked')){
 				$('#carenet-custom-provider-action .form-item-fax').show();
 				$('#carenet-custom-provider-action .form-item-fax-number').show();
+			}else{
+				$('#carenet-custom-provider-action .form-item-fax').hide();
+				$('#carenet-custom-provider-action .form-item-fax-number').hide();
 			}
 		//Rejected
 		}else if(status == 4849){
