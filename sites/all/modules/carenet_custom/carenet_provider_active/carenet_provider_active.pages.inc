@@ -416,7 +416,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
   dpm($card_rate);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  dpm($card_rate);
+  dpm($card_rate_wrapper);
   //if (isset($card_rate_wrapper->field_document->value()['uri'])) {
     //$document = $card_rate_wrapper->field_document->value()['uri'];
     //$source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
