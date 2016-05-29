@@ -504,7 +504,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('card_rate', 'Please choose card rate');
 			}
-			
+
 			break;
 		//Rejected
 		case 4849:
@@ -940,7 +940,7 @@ function carenet_custom_get_data(){
 	$date = '';
 	if(!empty($_GET['date']) && $_GET['date'] !='undefined'){
 		$time = explode('/',$_GET['date']);
-		$date = $time[2].'-'.$time['0'].'-'.$time[1];
+		$date = $time[2].'-'.$time[0].'-'.$time[1];
 	}
 
 	$url = $base_url.'/provide-listing-data?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&page='.$parameter['page'];
