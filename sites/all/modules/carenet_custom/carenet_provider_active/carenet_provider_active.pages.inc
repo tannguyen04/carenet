@@ -156,7 +156,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     $pdf->useTemplate($templateId);
     if($pageNo == $pageCount) {
       // now write some text above the imported page
-      $pdf->SetFont('Arial','',11);
+      $pdf->SetFont('Arial','',10);
       //Full name
       $pdf->SetTextColor(255, 0, 0);
       $pdf->SetXY(35, 243);
@@ -181,7 +181,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $fid = variable_get('carenet_signature', '');
       if ($file = file_load($fid)) {
         $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 125, 150, 20, 6);
+        $pdf->Image($signature_image_url, 155, 200, 20, 6);
       }
 
     }
@@ -419,13 +419,10 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     }
   }
 
-  $contract_file_fid = variable_get('carenet_contract_file', 0);
-  if ($contract_file_fid && $contract_file = file_load($contract_file_fid)){
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
-    $source = drupal_realpath($contract_file->uri);
 
     $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
     carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title'],$rows);
@@ -449,7 +446,10 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     // Make sure destination directory exists before moving files to that path.
     // This will create directory if it does not exists.
     file_prepare_directory($destination, FILE_CREATE_DIRECTORY);
-  }
+    //print_r($file);
+    //die;
+
+  //}
 
   //Create user
   $new_username = entity_create('user', array());
