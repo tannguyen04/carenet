@@ -1,0 +1,4 @@
+;Impairment of Auditory Acuity/Ear and Other Sense Organs;
+1;Hearing Loss and Tinnitus;$130 
+2;Ear Conditions;$130 
+3;Loss of Sense of Smell and/or Taste;$130 

@@ -1,0 +1,59 @@
+<?php
+
+/*
+ * Implements hook_shortcode_info()
+ */
+function carenet_shortcode_shortcode_info() {
+  // Example of quote Shortcode.
+  $shortcodes['carenet_flipbox'] = array(
+    'title' => t('Carenet flipbox'),
+    'description' => t('Carenet flipbox'),
+    'process callback' => 'carenet_shortcode_flipbox',
+    'tips callback' => 'carenet_shortcode_flipbox_tips',
+  );
+  return $shortcodes;
+}
+
+/*
+ * Implement hook_theme()
+ */
+
+function carenet_shortcode_theme($existing, $type, $theme, $path) {
+  $path = drupal_get_path('module', 'carenet_shortcode');
+  return array(
+    'carenet_shortcode_flipbox' => array(
+      'variables' => array(
+        'type' => '',
+        'icon' => '',
+        'image' => '',
+        'front_title' => '',
+        'back_title' => '',
+        'front_content' => '',
+        'back_content' => '',
+      ),
+      'template' => 'carenet-flipbox',
+      'path' => $path . '/templates',
+    ),
+  );
+}
+
+function carenet_shortcode_flipbox($attrs, $text) {
+  $attrs = shortcode_attrs(
+    array(
+      'type' => '',
+      'icon' => '',
+      'image' => '',
+      'front_title' => '',
+      'back_title' => '',
+      'front_content' => '',
+      'back_content' => ''
+    ),
+    $attrs
+  );
+  return theme('carenet_shortcode_flipbox', $attrs);
+}
+
+function carenet_shortcode_flipbox_tips($format, $long) {
+  $output = "[carenet_flipbox type='icon OR img' icon='FONT AWESOME CLASS or SS-GIZMO' image='' front_title='' back_title='' front_content='' back_content=''][/carenet_flipbox]";
+  return $output;
+}

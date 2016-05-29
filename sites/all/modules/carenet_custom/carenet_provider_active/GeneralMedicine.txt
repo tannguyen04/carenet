@@ -1,0 +1,8 @@
+;General Medical Examination;
+;General Medical - Compensation: \n Comprehensive General Medical Examination to include a complete base-line exam covering all body parts;
+1;Requiring 1-3 DBQs;$130 
+2;Requiring 4-5 DBQs;$170 
+3;Requiring 6-8 DBQs;$210 
+4;Requiring 9-10 DBQs;$250 
+5;Requiring 11 and above;$300 
+8;No Show;$35 

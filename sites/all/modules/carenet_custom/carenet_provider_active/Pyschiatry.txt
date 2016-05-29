@@ -1,0 +1,9 @@
+;Mental Disorders;
+1;Mental Disorders (other than PTSD);$130 
+2;Mental Disorders (other than PTSD) - Telehealth examination;$130 
+3;Initial Post Traumatic Stress Disorders (PTSD);$175 
+4;Initial Post Traumatic Stress Disorders (PTSD) - Telehealth examination;$175 
+5;Review Post Traumatic Stress Disorders (PTSD);$130 
+6;Review Post Traumatic Stress Disorders (PTSD) - Telehealth examination;$130 
+7;Eating Disorders;$130 
+8;Eating Disorders - Telehealth examination;$130 

@@ -1,0 +1,3 @@
+;Dental and Oral Conditions;
+1;Oral and Dental Conditions, including Mouth, Lips, and Tongue (other than Temporomandibular Joint Conditions);$130 
+2;Temporomandibular Joint (TMJ) Conditions;$130 
