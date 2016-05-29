@@ -493,7 +493,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			break;
 		//Interested
 		case 4919:
-			break;
+			
 			if(empty($data['person'])){
 				form_set_error('person', 'Please enter Person Name');
 			}
@@ -504,6 +504,8 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('card_rate', 'Please choose card rate');
 			}
+			
+			break;
 		//Rejected
 		case 4849:
 			if(empty($data['reason']) || $data['reason'] == 'All'){
