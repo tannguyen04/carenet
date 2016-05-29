@@ -416,7 +416,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  if (isset($card_rate_wrapper->field_document->value()['uri'])) {
+  //if (isset($card_rate_wrapper->field_document->value()['uri'])) {
     //$document = $card_rate_wrapper->field_document->value()['uri'];
     $source = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://', '', $document);
     $dest = DRUPAL_ROOT . '/'.variable_get('file_private_path').'/'.str_replace('private://documents/card_rate', 'contract_signed', str_replace('.pdf', '_'.time().'.pdf', $document));
@@ -450,7 +450,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //print_r($file);
     //die;
 
-  }
+  //}
 
   //Create user
   $new_username = entity_create('user', array());
