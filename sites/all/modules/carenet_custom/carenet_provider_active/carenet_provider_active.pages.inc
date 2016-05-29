@@ -421,11 +421,11 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $rows = array();
   //Title card rate
   $title = $card_rate_wrapper->title->value();
-  $rows[] = array('', array('data' => $title, 'class' => 'label-card-rate'), '');
+  $rows[] = array('', $title, '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
   if (!empty($description)) {
-    $rows[] = array('', array('data' => $description, 'class' => 'description-card-rate'), '');
+    $rows[] = array('', $description, '');
   }
   //Line item card rate
   $line_items = $card_rate_wrapper->field_card_rate_item->value();
