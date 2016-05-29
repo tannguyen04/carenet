@@ -15,6 +15,7 @@ jQuery(document).ready(function($) {
 		$('#carenet-custom-provider-action .form-item-designation').hide();
 		$('#carenet-custom-provider-action .form-item-date-time').hide();
 		$('#carenet-custom-provider-action .form-item-card-rate').hide();
+		$('#carenet-custom-provider-action #card_rate_item_wrapper').hide();
 		$('#carenet-custom-provider-action .form-item-custom-price').hide();
 		$('#carenet-custom-provider-action .form-item-method-contact').hide();
 		$('#carenet-custom-provider-action .form-item-fax').hide();
@@ -77,16 +78,17 @@ jQuery(document).ready(function($) {
 			hide_all();
 		}
 	}
-
 	hide_all();
 
-	var status = $('#carenet-custom-provider-action .form-item-status select').val();
-	status_getshow(status);
+	
 
 	$('#carenet-custom-provider-action .form-item-status select').change(function(event) {
 		var status = $(this).val();
 		//Accepted
 		status_getshow(status);
 	});
+
+	var status = $('#carenet-custom-provider-action .form-item-status select').val();
+	status_getshow(status);
 
 });
