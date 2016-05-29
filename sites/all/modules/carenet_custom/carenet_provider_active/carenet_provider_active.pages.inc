@@ -173,7 +173,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->Write(0, $job_title);
 
       // Date
-      $pdf->SetTextColor(255, 0, 0);
+      $pdf->SetTextColor(0);
       $pdf->SetXY(35, 247);
       $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
 
