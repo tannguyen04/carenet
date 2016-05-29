@@ -378,6 +378,15 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
+   	$form['fax_number'] = array(
+		  '#type' => 'textfield', 
+		  '#title' => t('Fax Number'), 
+		  '#size' => 60, 
+		  '#maxlength' => 128, 
+		  '#prefix' => '<div class="col-md-6">',
+       	  '#suffix' => '</div>',
+		);
+
    	$list_comment = '';
    	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
    		$list_comment .= '<h3>List comment</h3><ul>';
