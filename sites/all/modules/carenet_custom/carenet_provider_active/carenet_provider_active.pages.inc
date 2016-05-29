@@ -422,7 +422,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
 
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
-    $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
+    //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
+    $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
     $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
     carenet_provider_active_pdf_generate($source, $dest, $full_name, $values['organization_name'], $values['job_title']);
