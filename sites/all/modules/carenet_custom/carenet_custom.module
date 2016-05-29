@@ -385,7 +385,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
        	  '#suffix' => '</div>',
+       	'#default_value' => (!empty($node->field_fax_number[LANGUAGE_NONE][0]['value'])) ? $node->field_fax_number[LANGUAGE_NONE][0]['value'] : ''
 		);
+		
 
    	$list_comment = '';
    	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
@@ -407,7 +409,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	$form['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
-			'#prefix' => '<div class="list-comment col-md-12">'.$list_comment.'</div>',
+			'#prefix' => '<div class="list-comment col-md-12">'.$list_comment.'</div><div class="col-md-12">',
+			'#suffix' => '</div>',
 		);
 
 		$form['action_end'] = array(
