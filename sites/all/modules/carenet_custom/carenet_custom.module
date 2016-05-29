@@ -145,7 +145,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$status[$value->tid] = $value->name;
 		}
 
-		$form['action-doctor']['status'] = array(
+		$form['status'] = array(
        '#type' => 'select',
        '#title' => t('Status'),
        '#options' => $status,
@@ -160,7 +160,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$reason[$value->tid] = $value->name;
 		}
 
-		$form['action-doctor']['reason'] = array(
+		$form['reason'] = array(
        '#type' => 'select',
        '#title' => t('Reason'),
        '#options' => $reason,
@@ -169,7 +169,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
        '#default_value' => (!empty($node->field_dc_reason[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['tid'] : 'All',
    	);
 
-   	$form['action-doctor']['person'] = array(
+   	$form['person'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Person'), 
 		  '#size' => 60, 
@@ -179,16 +179,17 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_person[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_person[LANGUAGE_NONE][0]['value'] : $authorized_official,  
 		);
 
-		$form['action-doctor']['title'] = array(
+		$form['title'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Title'), 
 		  '#size' => 60, 
 		  '#maxlength' => 128, 
 		  '#prefix' => '<div class="col-md-6">',
       '#suffix' => '</div>',
+      '#default_value' => (!empty($node->field_title_discuss[LANGUAGE_NONE][0]['value'])) ? $node->field_title_discuss[LANGUAGE_NONE][0]['value'] : '',
 		);
 
-		$form['action-doctor']['email'] = array(
+		$form['email'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Email'), 
 		  '#size' => 60, 
@@ -198,7 +199,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#default_value' => (!empty($node->field_dc_email[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_email[LANGUAGE_NONE][0]['value'] : '',
 		);
 
-		$form['action-doctor']['phone'] = array(
+		$form['phone'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Phone'), 
 		  '#size' => 60, 
@@ -208,7 +209,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : $official_telephone
 		);
 
-		$form['action-doctor']['designation'] = array(
+		$form['designation'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Designation'), 
 		  '#size' => 60, 
@@ -221,10 +222,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
 			$time = strtotime($node->field_dc_date['und'][0]['value']);
-			$date_default = date('m/d/Y H:i');
+			$date_default = date('m/d/Y H:i',$time);
 		}
 
-		$form['action-doctor']['date_time'] = array(
+		$form['date_time'] = array(
 		  '#type' => 'textfield', 
 		  '#title' => t('Date Time Callback'), 
 		  '#size' => 60, 
@@ -241,31 +242,128 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		foreach($result as $record){
 			$node_card = node_load($record->nid);
-			$card_rate[$node_card->nid] =  $node_card->title .' - $'.$node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'];
-			$form['card_rate_price_'.$node_card->nid] = array('#type' => 'hidden', 
-				'#value' => $node_card->field_card_rate_price[LANGUAGE_NONE][0]['value'],
-				'#prefix' => '<div id="card_rate_price_'.$node_card->nid.'">',
-				'#suffix' => '</div>',);
+			$card_rate[$node_card->nid] =  $node_card->title;
 		}
 
-		$form['action-doctor']['card_rate'] = array(
+		if(!empty($form_state['values']['card_rate'])){
+			$default_card_rate = $form_state['values']['card_rate'];
+		}else{
+			$default_card_rate = (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All';
+		}
+
+		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])){
+			if(!array_key_exists($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'],$card_rate)){
+				$node_exists = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+				$card_rate[$node_exists->nid] = $node_exists->title;
+			}
+		}
+
+		$form['#tree'] = TRUE;
+		$form['card_rate'] = array(
        '#type' => 'select',
        '#title' => t('Card Rate'),
        '#options' => $card_rate,
-       '#default_value' => (!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'])) ? $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] : 'All'
+       '#default_value' => $default_card_rate,
+       '#ajax' => array(
+			    'wrapper' => 'card_rate_item_wrapper',
+			    'callback' => 'carenet_custom_card_rate_item_ajax_callback',
+			    'method' => 'replace',
+			  ),
+       '#prefix' => '<div class="col-md-12">',
+          '#suffix' => '</div>',
    	);
 
 
-   	$form['action-doctor']['custom_price'] = array(
-		  '#type' => 'textfield', 
-		  '#title' => t('Price'), 
-		  '#size' => 30, 
-		  '#maxlength' => 128,
-		  '#default_value' => (!empty($node->field_dc_price[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_price[LANGUAGE_NONE][0]['value'] : ''
-		);
+		$form['card_rate_item_wrapper'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Rate Details'),
+        '#prefix' => '<div id="card_rate_item_wrapper" class="col-md-12">',
+        '#suffix' => '</table></div>',
+    );
+
+
+		if(!empty($form_state['values']['card_rate']) && is_numeric($form_state['values']['card_rate'])){
+			$data_nid_card_item = $form_state['values']['card_rate'];
+		}else if($default_card_rate != 'All'){
+			$data_nid_card_item = $node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'];
+		}else{
+			$data_nid_card_item = '';
+		}
+
+
+    if(!empty($data_nid_card_item)){
+
+			$nid = $data_nid_card_item;
+			$node_card = node_load($nid);
+
+			$list_item = array();
+			if(!empty($node_card->field_card_rate_item[LANGUAGE_NONE][0])){
+				$form['card_rate_item_wrapper']['card_rate_item_top'] = array(
+			        '#prefix' => '<table class="table table-hover table-bordered sticky-enabled table-select-processed tableheader-processed">',
+			    );
+
+				$form['card_rate_item_wrapper']['card_rate_item_desc'] = array(
+			        '#prefix' => '<tr>
+			        								<td>Line Item</td>
+			        								<td>Description</td>
+			        								<td>Price (USD)</td>
+			        							</tr>',
+			  );
+
+			  $form['card_rate_item_wrapper']['card_rate_item_desc_1'] = array(
+			        '#prefix' => '<tr>
+			        								<td></td>
+			        								<td>General Medical Examination</td>
+			        								<td></td>
+			        							</tr>',
+			  );
+
+			  $form['card_rate_item_wrapper']['card_rate_item_desc_2'] = array(
+			        '#prefix' => '<tr>
+			        								<td></td>
+			        								<td>'.$node_card->body['und'][0]['value'].'</td>
+			        								<td></td>
+			        							</tr>',
+			  );
+			  $i = 1;
+				foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item_d){
+					$form['card_rate_item_wrapper']['card_rate_item_top_'.$item_d['value']] = array(
+			        '#prefix' => '<tr>',
+			    );
+			    
+					$field_data = field_collection_item_load($item_d['value']);
+
+					$form['card_rate_item_wrapper']['card_rate_item_number_'.$item_d['value']] = array(
+			        '#prefix' => '<td>'.$i.'</td>',
+			    );
+
+					$form['card_rate_item_wrapper']['card_rate_item_label_'.$item_d['value']] = array(
+			        '#prefix' => '<td>'.$field_data->field_text_title[LANGUAGE_NONE][0]['value'].'</td>',
+			    );
+
+					$form['card_rate_item_wrapper']['custom_price_'.$nid.'_'.$item_d['value']] = array(
+					  '#type' => 'textfield', 
+					  '#size' => 30, 
+					  '#maxlength' => 128,
+					  '#prefix' => '<td>',
+					  '#suffix' => '</td>',
+					  '#default_value' => $field_data->field_price[LANGUAGE_NONE][0]['value']
+					);
+
+					$form['card_rate_item_wrapper']['card_rate_item_bottom_'.$item_d['value']] = array(
+			        '#prefix' => '</tr>',
+			    );
+			    $i++;
+				}
+
+				$form['card_rate_item_wrapper']['card_rate_item_bottom'] = array(
+			        '#prefix' => '</table>',
+			    );
+			}
+		}
 
 		$method_contact = array('mail' => 'Mail','fax' => 'Fax');
-   	$form['action-doctor']['method_contact'] = array(
+   	$form['method_contact'] = array(
        '#type' => 'radios',
        '#title' => t('Method contact'),
        '#options' => $method_contact,
@@ -273,17 +371,34 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    	);
 
    	$fax_status = array('notsend' => 'Not sent yet','send' => 'Fax sent');
-   	$form['action-doctor']['fax'] = array(
+   	$form['fax'] = array(
        '#type' => 'select',
        '#title' => t('Fax status'),
        '#options' => $fax_status,
        '#default_value' => (!empty($node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'])) ? $node->field_pv_callback_fax[LANGUAGE_NONE][0]['value'] : ''
    	);
 
-   	$form['action-doctor']['comment'] = array(
+   	$list_comment = '';
+   	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
+   		$list_comment .= '<h3>List comment</h3><ul>';
+   		$data_list_cm = array();
+   		foreach($node->field_comment_list[LANGUAGE_NONE] as $item){
+   			$data_list_cm[$item['value']] = $item['value'];
+   		}
+
+   		foreach($data_list_cm as $item){
+   			$field_data = field_collection_item_load($item);
+   			$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
+   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
+   		}
+   		
+   		$list_comment .= '</ul>';
+   	}
+   	
+   	$form['comment'] = array(
 			'#title' => t('Comment'),
 			'#type' => 'textarea',
-			'#default_value' => (!empty($node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] : '',
+			'#prefix' => '<div class="list-comment">'.$list_comment.'</div>',
 		);
 
 		$form['action_end'] = array(
@@ -303,6 +418,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	}
 	
 	return $form;
+}
+
+function carenet_custom_card_rate_item_ajax_callback($form, $form_state) {
+  return $form['card_rate_item_wrapper'];
 }
 
 function carenet_custom_provider_action_validate($form, &$form_state){
@@ -365,6 +484,10 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('person', 'Please enter Person Name');
 			}
 			if(empty($data['phone'])){
+				form_set_error('phone', 'Please enter Person Name');
+			}
+
+			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
 				form_set_error('phone', 'Please enter Person Name');
 			}
 		//Rejected
@@ -457,15 +580,100 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  }
 
 		  if(!empty($data['comment'])){
-		  	$node->field_dc_reason_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+		  	$field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_comment_list'));
+				$field_collection_item->setHostEntity('node', $node);
+				$field_collection_item->field_comment[LANGUAGE_NONE][0]['value'] = $data['comment'];
+				$field_collection_item->field_date[LANGUAGE_NONE][0]['value'] = format_date(time(), 'custom', 'Y-m-d H:i', 'UTC');
+				$field_collection_item->save();
+				$key_data = count($node->field_comment_list[LANGUAGE_NONE]);
+				$node->field_comment_list[LANGUAGE_NONE][$key_data]['value'] = $field_collection_item->item_id;
 		  }
 
 		  if(!empty($data['card_rate']) && $data['card_rate'] != 'All'){
-		  	if(!empty($data['custom_price'])){
-		  		$node->field_dc_price[LANGUAGE_NONE][0]['value'] = $data['custom_price'];
+		  	if($data['status'] == 4919){
+		  		$node_card = node_load($data['card_rate']);
+
+			  	// Check custom field
+			  	$check_custom = FALSE;
+			  	foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $item){
+			  		//custom_price_'.$nid.'_'.$item_d['value']
+			  		$field_data = field_collection_item_load($item['value']);
+			  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
+			  			$check_custom = TRUE;
+			  		}
+			  	}
+			  	//
+
+
+			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
+			  		
+
+			  		$node_card_new = new stdClass();
+					  $node_card_new->title = $node_card->title.'_'.$data['telephone'];
+					  $node_card_new->type = 'card_rate';
+					  node_object_prepare($node_card_new);
+					  $node_card_new->language = LANGUAGE_NONE;
+					  $node_card_new->uid = $user->uid; 
+					  $node_card_new->status = 1; //(1 or 0): published or not
+					  $node_card_new->promote = 0; 
+
+					  $node_card_new->body = $node_card->body;
+					  $node_card_new->field_healthcare_provider = $node_card->field_healthcare_provider;
+					  $node_card_new->field_document = $node_card->field_document;
+			  		
+			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
+
+			  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
+			  			$field_data = field_collection_item_load($item['value']);
+
+			  			$field_collection_item = entity_create('field_collection_item', array('field_name' => 'field_card_rate_item'));
+							$field_collection_item->setHostEntity('node', $node_card_new);
+							$field_collection_item->field_text_title[LANGUAGE_NONE][0]['value'] = $field_data->field_text_title[LANGUAGE_NONE][0]['value'];
+							$field_collection_item->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
+							$field_collection_item->save();
+							$node_card_new->field_card_rate_item[LANGUAGE_NONE][$key]['value'] = $field_collection_item->item_id;
+			  		}
+
+			  		$node_card_new = node_submit($node_card_new);
+			  		node_save($node_card_new);
+			  		
+
+			  		if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] != 'master'){
+			  			$node_data_check = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+			  			if($node_data_check->field_card_type['und'][0]['value'] != 'master'){
+			  				node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+			  			}
+			  		}
+
+			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card_new->nid;
+
+			  	}else{
+
+
+
+			  		if($check_custom){
+				  		foreach($node_card->field_card_rate_item[LANGUAGE_NONE] as $key => $item){
+					  		$field_data = field_collection_item_load($item['value']);
+					  		if($data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']] != $field_data->field_price[LANGUAGE_NONE][0]['value']){
+
+									$field_collection_item = entity_load('field_collection_item', array($item['value']));
+									$field_collection_item[$item['value']]->field_price[LANGUAGE_NONE][0]['value'] = $data['card_rate_item_wrapper']['custom_price_'.$data['card_rate'].'_'.$item['value']];
+									$field_collection_item[$item['value']]->save();
+
+					  		}
+					  	}
+				  	}
+
+				  	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] == 'master'){
+			  			$node_data_check = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+			  			if($node_data_check->field_card_type['und'][0]['value'] != 'master'){
+			  				node_delete($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
+			  			}
+			  		}
+
+			  		$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $node_card->nid;
+			  	}	
 		  	}
-		  	
-		  	$node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id'] = $data['card_rate'];
 		  }
 
 		  if(!empty($data['method_contact'])){
