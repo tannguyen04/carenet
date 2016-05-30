@@ -165,7 +165,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->Write(0, $organization_name);
       // address
       $pdf->SetTextColor(0);
-      $pdf->SetXY(0, 49);
+      $pdf->SetXY(20, 50);
       $pdf->Write(0, $address);
 
     }
@@ -408,16 +408,13 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
-  dpm($form);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  dpm($discussion);
   $provider = $discussion->field_list_provider['und'][0]['target_id'];
-  dpm($provider);
   $address = '';
   if ($provider) {
     $provider = node_load($provider);
     $address = $provider->field_pv_practice_address['und'][0]['value'];
-    dpm($address);
+
   }
   //use card rate
   $rows = array();
