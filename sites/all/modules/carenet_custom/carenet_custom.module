@@ -724,8 +724,6 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  if(!empty($data['status']) && $data['status'] != 'All'){
 						$referDoc->field_pv_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 				  }
-				  print_r($referDoc);
-				  die('xxx123');
 				  node_save($referDoc);
 					
 				}
