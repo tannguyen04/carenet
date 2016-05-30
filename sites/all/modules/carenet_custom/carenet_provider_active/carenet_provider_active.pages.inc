@@ -154,13 +154,25 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     }
     // use the imported page
     $pdf->useTemplate($templateId);
+    $pdf->SetFont('Arial','',10);
+    if ($pageNo == 1) {
+      //Full name
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(35, 43);
+      $pdf->Write(0, trim($full_name));
+      //Organization name
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(35, 34);
+      $pdf->Write(0, $organization_name);
+
+    }
     if($pageNo == $pageCount) {
       // now write some text above the imported page
       $pdf->SetFont('Arial','',10);
       //Full name
       $pdf->SetTextColor(0);
       $pdf->SetXY(35, 243);
-      $pdf->Write(0, $full_name);
+      $pdf->Write(0, trim($full_name));
 
       //Organization name
       $pdf->SetTextColor(0);
