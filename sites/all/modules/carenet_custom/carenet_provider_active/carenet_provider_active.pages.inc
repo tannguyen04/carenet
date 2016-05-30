@@ -161,11 +161,11 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     if ($pageNo == 1) {
       //Full name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(70, 45);
+      $pdf->SetXY(70, 46);
       $pdf->Write(0, $full_name);
       //Organization name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(80, 45);
+      $pdf->SetXY(100, 46);
       $pdf->Write(0, $organization_name);
 
     }
@@ -439,7 +439,6 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
-    $full_name = t('@fullname, Signed on @time_sign', array('@fullname' => $values['full_name'], '@time_sign' => format_date(REQUEST_TIME, 'custom', 'm/d/Y')));
     carenet_provider_active_pdf_generate($source, $dest, $values['full_name'], $values['organization_name'], $values['job_title'],$rows);
 
     // We have complete file path.
