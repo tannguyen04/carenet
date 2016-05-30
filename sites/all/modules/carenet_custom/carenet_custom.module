@@ -700,7 +700,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		  		}
 		  	}
 		  }
-		  die('xxx123');
+		  
 		  if(!empty($data['method_contact'])){
 		  	$node->field_status_fax_mail['und'][0]['value'] = $data['method_contact'];
 		  }
@@ -728,7 +728,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 					
 				}
 			}
-
+			die('xxx123');
 			if(!empty($list_doctor_save)){
 				$node->field_list_provider[LANGUAGE_NONE] = $list_doctor_save;
 			}
