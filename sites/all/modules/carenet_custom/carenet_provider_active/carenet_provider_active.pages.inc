@@ -420,6 +420,15 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $rows = array();
   //Title card rate
   $title = $card_rate_wrapper->title->value();
+  $tmp = explode('_', $title);
+  dpm($tmp);
+  if (count($tmp) > 0) {
+    $title = '';
+    for($i=0;$i<count($tmp);$i++) {
+      $title .= $tmp[$i];
+    }
+  }
+  dpm($title);
   $rows[] = array('', strip_tags($title), '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
