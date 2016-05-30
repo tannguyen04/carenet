@@ -404,9 +404,15 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
-  dpm($values);
+  dpm($form);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
   dpm($discussion);
+  $provider = $discussion->field_list_provider['und'][0]['target_id'];
+  dpm($provider);
+  if ($provider) {
+    $provider = node_load($provider);
+    dpm($provider);
+  }
   //use card rate
   $rows = array();
   //Title card rate
