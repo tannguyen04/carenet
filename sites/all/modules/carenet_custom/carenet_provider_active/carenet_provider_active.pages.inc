@@ -158,11 +158,11 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     if ($pageNo == 1) {
       //Full name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 43);
+      $pdf->SetXY(70, 45);
       $pdf->Write(0, trim($full_name));
       //Organization name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 34);
+      $pdf->SetXY(80, 45);
       $pdf->Write(0, $organization_name);
 
     }
