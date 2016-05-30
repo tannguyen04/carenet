@@ -119,7 +119,7 @@ function carenet_provider_active_form_contract($form, &$form_state) {
   return $form;
 }
 
-function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title, $rows) {
+function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title, $address, $rows) {
   //$pdffile = file_create_url('public://doc.pdf');
   require_once(libraries_get_path('fpdf').'/fpdf.php');
   require_once(libraries_get_path('fpdi').'/fpdi.php');
@@ -163,6 +163,10 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->SetTextColor(0);
       $pdf->SetXY(70, 46);
       $pdf->Write(0, $organization_name);
+      // address
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(0, 49);
+      $pdf->Write(0, $address);
 
     }
     if($pageNo == $pageCount) {
@@ -409,9 +413,11 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   dpm($discussion);
   $provider = $discussion->field_list_provider['und'][0]['target_id'];
   dpm($provider);
+  $address = '';
   if ($provider) {
     $provider = node_load($provider);
-    dpm($provider);
+    $address = $provider->field_pv_practice_address['und'][0]['value'];
+    dpm($address);
   }
   //use card rate
   $rows = array();
@@ -443,7 +449,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
-    carenet_provider_active_pdf_generate($source, $dest, $values['full_name'], $values['organization_name'], $values['job_title'],$rows);
+    carenet_provider_active_pdf_generate($source, $dest, $values['full_name'], $values['organization_name'], $values['job_title'], $address,$rows);
 
     // We have complete file path.
     $file = new stdClass;
