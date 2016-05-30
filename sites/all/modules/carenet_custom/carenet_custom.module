@@ -639,7 +639,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 					  $node_card_new->body = $node_card->body;
 					  $node_card_new->field_healthcare_provider = $node_card->field_healthcare_provider;
-					  $node_card_new->field_document = $node_card->field_document;
+					  //$node_card_new->field_document = $node_card->field_document;
 			  		
 			  		$node_card_new->field_card_type[LANGUAGE_NONE][0]['value'] = 'custom';
 

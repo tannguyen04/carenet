@@ -165,7 +165,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->Write(0, $organization_name);
       // address
       $pdf->SetTextColor(0);
-      $pdf->SetXY(20, 50);
+      $pdf->SetXY(20, 51);
       $pdf->Write(0, $address);
 
     }
