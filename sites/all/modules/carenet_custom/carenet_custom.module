@@ -623,7 +623,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 			  		}
 			  	}
 			  	//
-			  	die('xxx');
+			  	
 
 			  	if($check_custom && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  		
@@ -653,7 +653,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 							$field_collection_item->save();
 							$node_card_new->field_card_rate_item[LANGUAGE_NONE][$key]['value'] = $field_collection_item->item_id;
 			  		}
-
+			  		
 			  		$node_card_new = node_submit($node_card_new);
 			  		node_save($node_card_new);
 			  		
@@ -683,7 +683,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 					  		}
 					  	}
 				  	}
-
+				  	die('xxx');
 				  	if(!empty($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']) && $node_card->field_card_type['und'][0]['value'] == 'master'){
 			  			$node_data_check = node_load($node->field_card_rate_ref[LANGUAGE_NONE][0]['target_id']);
 			  			if($node_data_check->field_card_type['und'][0]['value'] != 'master'){
