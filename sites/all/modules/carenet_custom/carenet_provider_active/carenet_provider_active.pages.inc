@@ -424,7 +424,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   dpm($tmp);
   if (count($tmp) > 0) {
     $title = '';
-    for($i=0;$i<count($tmp);$i++) {
+    for($i=0;$i<count($tmp)-1;$i++) {
       $title .= $tmp[$i];
     }
   }
