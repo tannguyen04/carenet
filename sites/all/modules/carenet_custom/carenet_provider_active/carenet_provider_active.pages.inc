@@ -155,11 +155,14 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
     // use the imported page
     $pdf->useTemplate($templateId);
     $pdf->SetFont('Arial','',10);
+    $full_name = trim($full_name);
+    $organization_name = trim($organization_name);
+    $job_title = trim($job_title);
     if ($pageNo == 1) {
       //Full name
       $pdf->SetTextColor(0);
       $pdf->SetXY(70, 45);
-      $pdf->Write(0, trim($full_name));
+      $pdf->Write(0, $full_name);
       //Organization name
       $pdf->SetTextColor(0);
       $pdf->SetXY(80, 45);
@@ -172,7 +175,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       //Full name
       $pdf->SetTextColor(0);
       $pdf->SetXY(35, 243);
-      $pdf->Write(0, trim($full_name));
+      $pdf->Write(0, $full_name);
 
       //Organization name
       $pdf->SetTextColor(0);
