@@ -408,9 +408,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion = $form['#discussion'];
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
-  dpm($discussion_wrapper);
+  dpm($values);
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  dpm($card_rate_wrapper);
+  dpm($discussion);
   //use card rate
   $rows = array();
   //Title card rate
