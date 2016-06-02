@@ -773,6 +773,10 @@ function carenet_custom_mail($key, &$message, $params) {
   }
 }
 
+function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
+  print $form_id;
+}
+
 function carenet_custom_get_data_county(){
 	global $base_url;
 	if(!empty($_GET['city'])){
