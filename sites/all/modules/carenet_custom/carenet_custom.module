@@ -775,7 +775,8 @@ function carenet_custom_mail($key, &$message, $params) {
 
 function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
  	if($form_id == 'provider_node_form'){
- 		print_r($form);die();
+ 		$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
+ 		$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
  	}
 }
 
