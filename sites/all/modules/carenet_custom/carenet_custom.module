@@ -774,7 +774,9 @@ function carenet_custom_mail($key, &$message, $params) {
 }
 
 function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
-  print $form_id;
+ 	if($form_id == 'provider_node_form'){
+ 		print_r($form);die();
+ 	}
 }
 
 function carenet_custom_get_data_county(){
