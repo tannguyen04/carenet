@@ -115,3 +115,7 @@
 #card-rate-node-form .form-wrapper select{
 	padding:9px 16px;
 }
+
+#card-rate-node-form .filter-wrapper{
+	display:none;
+}
