@@ -44,3 +44,19 @@
     padding: 10px;
     margin-bottom: 20px;
 }
+
+.page-back-office-manage #section-main-content > .container,
+.page-providers #section-main-content > .container {
+	 max-width:100%;
+	 width:100%;
+}
+
+.page-back-office-manage #section-main-content .form-type-select select,
+.page-providers #section-main-content .content select{
+	  padding: 10px 9px;
+}
+
+.page-back-office-manage #section-main-content .views-exposed-form .views-exposed-widget .form-submit{
+    margin-top: 29px;
+    padding: 10px 16px;
+}

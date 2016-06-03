@@ -5,7 +5,7 @@
  */
 function carenet_custom_menu() {
   $items['providers'] = array(
-    'title' => 'Provider Listing',
+    'title' => 'Dashboard',
     'page callback' => 'carenet_custom_list_data',
     'access arguments' => array('administer providers'),
     'type' => MENU_CALLBACK,
