@@ -91,3 +91,7 @@
 	margin-bottom: 0;
   margin-top: 4px;
 }
+
+#provider-node-form input.form-submit{
+	width:auto;
+}
