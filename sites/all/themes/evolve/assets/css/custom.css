@@ -60,3 +60,74 @@
     margin-top: 29px;
     padding: 10px 16px;
 }
+
+#provider-node-form .form-wrapper{
+    width: 49%;
+    display: inline-block;
+    vertical-align:top;
+    margin-left: 1%;
+}
+
+#provider-node-form .form-wrapper:nth-child(2n+2){
+	margin-left: 0;
+	margin-right:1%;
+}
+
+#provider-node-form .form-wrapper input,
+#provider-node-form .form-item input,
+#provider-node-form .form-wrapper select{
+	width: 100%;
+}
+
+#provider-node-form .form-wrapper select{
+	padding:9px 16px;
+}
+
+#provider-node-form .field-type-datetime legend{
+	display:none;
+}
+
+#provider-node-form .field-type-datetime .form-type-date-popup{
+	margin-bottom: 0;
+  margin-top: 4px;
+}
+
+#provider-node-form input.form-submit,
+#card-rate-node-form input.form-submit{
+	width:auto;
+	margin-right:20px;
+}
+
+#card-rate-node-form #field-card-rate-item-values{
+	width:100%;
+}
+
+#card-rate-node-form  #field-card-rate-item-values td{
+	padding:10px;
+}
+
+#card-rate-node-form #field-card-rate-item-values td .form-submit{
+	margin-top:10px;
+}
+
+#card-rate-node-form .field-name-field-card-type{
+	display:none;
+}
+
+#card-rate-node-form .form-wrapper select{
+	padding:9px 16px;
+}
+
+#card-rate-node-form .filter-wrapper{
+	display:none;
+}
+
+.views-field-field-card-rate-item table{
+	width: 100%;
+}
+
+.views-field-field-card-rate-item table th,
+.views-field-field-card-rate-item table td{
+	padding: 5px;
+	background: none;
+}
