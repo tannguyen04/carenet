@@ -50,3 +50,8 @@
 	 max-width:100%;
 	 width:100%;
 }
+
+.page-back-office-manage #section-main-content .form-type-select select,
+.page-providers #section-main-content .form-type-select select{
+	  padding: 10px 9px;
+}
