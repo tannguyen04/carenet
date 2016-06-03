@@ -95,3 +95,15 @@
 #provider-node-form input.form-submit{
 	width:auto;
 }
+
+#card-rate-node-form #field-card-rate-item-values{
+	width:100%;
+}
+
+#card-rate-node-form  #field-card-rate-item-values td{
+	padding:10px;
+}
+
+#card-rate-node-form #field-card-rate-item-values td .form-submit{
+	margin-top:10px;
+}
