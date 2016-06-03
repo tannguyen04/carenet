@@ -94,6 +94,7 @@
 
 #provider-node-form input.form-submit{
 	width:auto;
+	margin-right:20px;
 }
 
 #card-rate-node-form #field-card-rate-item-values{
