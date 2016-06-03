@@ -82,3 +82,12 @@
 #provider-node-form .form-wrapper select{
 	padding:9px 16px;
 }
+
+#provider-node-form .field-type-datetime legend{
+	display:none;
+}
+
+#provider-node-form .field-type-datetime .form-type-date-popup{
+	margin-bottom: 0;
+  margin-top: 4px;
+}
