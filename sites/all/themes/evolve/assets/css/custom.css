@@ -61,9 +61,8 @@
     padding: 10px 16px;
 }
 
-#provider-node-form .form-wrapper,
-#provider-node-form .form-item {
-    width: 50%;
+#provider-node-form .form-wrapper{
+    width: 48%;
     display: inline-block;
 }
 
