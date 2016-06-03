@@ -121,3 +121,13 @@
 #card-rate-node-form .filter-wrapper{
 	display:none;
 }
+
+.views-field-field-card-rate-item table{
+	width: 100%;
+}
+
+.views-field-field-card-rate-item table th,
+.views-field-field-card-rate-item table td{
+	padding: 5px;
+	background: none;
+}
