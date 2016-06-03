@@ -60,3 +60,15 @@
     margin-top: 29px;
     padding: 10px 16px;
 }
+
+#provider-node-form .form-wrapper,
+#provider-node-form .form-item {
+    width: 50%;
+    display: inline-block;
+}
+
+#provider-node-form .form-wrapper input,
+#provider-node-form .form-item input,
+#provider-node-form .form-wrapper select{
+	width: 100%;
+}
