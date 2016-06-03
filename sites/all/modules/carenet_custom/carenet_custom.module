@@ -750,7 +750,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 			drupal_set_message('Sent mail to doctor success');
 		 			break;
 		 		case 'fax':
-		 			$mail_sent = 'haibqit@gmail.com';
+		 			$mail_sent = variable_get('site_mail', '');
 		 			$params = array('mail_to' => $mail_sent,
 		 											'subject' => 'Carenet Fax',
 		 											'body' => 'account fax'
