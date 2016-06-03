@@ -64,10 +64,15 @@
 #provider-node-form .form-wrapper{
     width: 48%;
     display: inline-block;
+    vertical-align:top;
 }
 
 #provider-node-form .form-wrapper input,
 #provider-node-form .form-item input,
 #provider-node-form .form-wrapper select{
 	width: 100%;
+}
+
+#provider-node-form .form-wrapper select{
+	padding:9px 16px;
 }
