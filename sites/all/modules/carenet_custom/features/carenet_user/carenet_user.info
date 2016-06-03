@@ -4,7 +4,6 @@ package = Features
 dependencies[] = carenet_field_base_and_taxonomies
 dependencies[] = features
 dependencies[] = file
-dependencies[] = navbar
 dependencies[] = node
 dependencies[] = system
 dependencies[] = text
