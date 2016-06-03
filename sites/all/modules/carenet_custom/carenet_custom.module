@@ -783,7 +783,7 @@ function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
 
 function carenet_custom_get_data_county(){
 	global $base_url;
-	if(!empty($_GET['city'])){
+	if(!empty($_GET['state'])){
 		if($_GET['city'] == 'All'){
 			$county ='<option value="All" selected="selected">- Any -</option>';
 			$data_county = taxonomy_get_tree(8);
@@ -792,7 +792,7 @@ function carenet_custom_get_data_county(){
 			}
 			print $county;
 		}else{
-			$url = $base_url.'/get-county-by-city?city='.$_GET['city'];
+			$url = $base_url.'/get-county-by-state?state='.$_GET['state'];
 			$data = drupal_json_decode(file_get_contents($url));
 
 			$list_data = array();
@@ -813,7 +813,7 @@ function carenet_custom_get_data_county(){
 
 function carenet_custom_get_data_city(){
 	global $base_url;
-	if(!empty($_GET['state'])){
+	if(!empty($_GET['county'])){
 		if($_GET['state'] == 'All'){
 			$city ='<option value="All" selected="selected">- Any -</option>';
 			$data_city = taxonomy_get_tree(6);
@@ -822,7 +822,7 @@ function carenet_custom_get_data_city(){
 			}
 			print $city;
 		}else{
-			$url = $base_url.'/get-city-by-state?state='.$_GET['state'];
+			$url = $base_url.'/get-city-by-county?county='.$_GET['county'];
 			$data = drupal_json_decode(file_get_contents($url));
 
 			$list_data = array();
