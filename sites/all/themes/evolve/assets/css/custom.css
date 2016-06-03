@@ -44,3 +44,8 @@
     padding: 10px;
     margin-bottom: 20px;
 }
+
+.page-back-office-manage #section-main-content > .container,
+.page-providers #section-main-content > .container {
+	 max-width:100%;
+}
