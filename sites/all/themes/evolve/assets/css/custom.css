@@ -107,3 +107,11 @@
 #card-rate-node-form #field-card-rate-item-values td .form-submit{
 	margin-top:10px;
 }
+
+#card-rate-node-form .field-name-field-card-type{
+	display:none;
+}
+
+#card-rate-node-form .form-wrapper select{
+	padding:9px 16px;
+}
