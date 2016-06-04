@@ -221,11 +221,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
-			$reset = date_default_timezone_get();
-			date_default_timezone_set($node->field_dc_date['und'][0]['timezone']);
-			$stamp = strtotime($node->field_dc_date['und'][0]['value']);
-			date_default_timezone_set($reset);
-			$date_default = format_date($stamp,'custom', 'm/d/Y H:i');
+			$time = strtotime($node->field_dc_date['und'][0]['value']);
+			$date_default = format_date($time,'custom', 'm/d/Y H:i');
 		}
 
 		$form['date_time'] = array(
@@ -1036,7 +1033,7 @@ function carenet_custom_get_data(){
 			if(!empty($node_discuss->field_dc_date[LANGUAGE_NONE][0]['value'])){
 				$date = strtotime($node_discuss->field_dc_date['und'][0]['value']);
 
-				$activity .='Date :'. date('m/d/Y H:i',$date).'<br />';
+				$activity .=date('m/d/Y H:i',$date).'<br />';
 			}
 
 			if(!empty($node_discuss->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
