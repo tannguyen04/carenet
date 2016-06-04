@@ -222,7 +222,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
 			$time = strtotime($node->field_dc_date['und'][0]['value']);
-			$date_default = format_date($time,'custom', 'm/d/Y H:i',$node->field_dc_date['und'][0]['timezone']);
+			$date_default = format_date($time,'custom', 'm/d/Y',$node->field_dc_date['und'][0]['timezone']).' '.format_date($time,'custom', 'H:i',$node->field_dc_date['und'][0]['timezone']);
 		}
 
 		$form['date_time'] = array(
