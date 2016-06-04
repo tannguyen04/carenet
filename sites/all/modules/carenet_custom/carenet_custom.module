@@ -974,7 +974,6 @@ function carenet_custom_get_data(){
 	if(!empty($_GET['my_quee']) && $_GET['my_quee'] == 1){
 		$url_my_quee = $base_url.'/list-dissusion/'.$user->uid;
 		$data_my_quee = drupal_json_decode(file_get_contents($url_my_quee));
-		print_r($data_my_quee);die();
 		$data_nid_provider = array();
 		foreach ($data_my_quee['nodes'] as $data_my_quee_item) {
 			$list_data_quee_item = explode(',', $data_my_quee_item['node']['nid']);
