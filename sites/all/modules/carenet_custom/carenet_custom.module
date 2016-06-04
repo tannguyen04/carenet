@@ -513,7 +513,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('phone', 'Please enter phone number');
 			}
 
-			if(empty($data['person']) || $data['person'] == ''){
+			if(empty($data['person']) || trim($data['person']) == ''){
 				die('ad');
 				form_set_error('person', 'Please enter Person Name');
 			}
