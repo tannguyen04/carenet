@@ -978,7 +978,7 @@ function carenet_custom_get_data(){
 		foreach ($data_my_quee['nodes'] as $data_my_quee_item) {
 			$list_data_quee_item = explode(',', $data_my_quee_item['node']['nid']);
 			foreach($list_data_quee_item as $per_item_quee){
-				$data_nid_provider[$per_item_quee] = $per_item_quee;
+				$data_nid_provider[$per_item_quee] = trim($per_item_quee);
 			}
 		}
 
