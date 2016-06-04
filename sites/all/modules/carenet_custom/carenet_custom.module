@@ -146,11 +146,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 
-		$status = array('All' => ' - Any - ');
-		$data_status = taxonomy_get_tree(13);
-		foreach($data_status as $key => $value){
-			$status[$value->tid] = $value->name;
-		}
+		
 
 
    	
@@ -211,7 +207,12 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
   //         '#suffix' => '</div>',
   //     '#default_value' => (!empty($node->field_dc_designation[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_designation[LANGUAGE_NONE][0]['value'] : '',
 		// );
-
+		$status = array('All' => ' - Any - ');
+		$data_status = taxonomy_get_tree(13);
+		foreach($data_status as $key => $value){
+			$status[$value->tid] = $value->name;
+		}
+		
 		$form['status'] = array(
        '#type' => 'select',
        '#title' => t('Status'),
