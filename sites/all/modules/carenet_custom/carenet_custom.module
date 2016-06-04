@@ -516,7 +516,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 
 
 			if(empty($data['phone']) && $data['method_contact'] =='mail'){
-				form_set_error('phone', 'Please enter Person Name');
+				form_set_error('phone', 'Please enter phone number');
 			}
 
 			if($data['method_contact'] == 'fax' && empty($data['fax_number'])){
