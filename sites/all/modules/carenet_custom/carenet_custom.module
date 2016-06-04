@@ -86,6 +86,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	
 	$form['telephone'] = array('#type' => 'hidden', '#value' => $telephone);
 
+	$form['link_back'] = array(
+	  '#markup' => '<a class="back_to_provider" href="/providers">Back to Providers Listing</a>'
+	);
 
 	$authorized_official = '';
 	$official_telephone = '';
