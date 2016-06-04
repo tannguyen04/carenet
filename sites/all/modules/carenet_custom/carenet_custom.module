@@ -513,8 +513,14 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			if(empty($data['person'])){
 				form_set_error('person', 'Please enter Person Name');
 			}
-			if(empty($data['phone'])){
+
+
+			if(empty($data['phone']) && $data['method_contact'] =='mail'){
 				form_set_error('phone', 'Please enter Person Name');
+			}
+
+			if($data['method_contact'] == 'fax' && empty($data['fax_number'])){
+				form_set_error('fax_number', 'Please enter fax number');
 			}
 
 			if(empty($data['card_rate']) || $data['card_rate'] == 'All'){
@@ -563,7 +569,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		$link_active = '';
 
-		if(!empty($data['status']) && $data['status'] != 'All'){
+		if(!empty($data['status']) && $data['status'] != 'All' && $data['method_contact'] = 'mail'){
 	  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 
   		if(($data['status'] == 4919) && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
