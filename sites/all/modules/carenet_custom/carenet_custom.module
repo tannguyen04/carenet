@@ -152,29 +152,30 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			$status[$value->tid] = $value->name;
 		}
 
-		$form['status'] = array(
-       '#type' => 'select',
-       '#title' => t('Status'),
-       '#options' => $status,
-       '#prefix' => '<div class="col-md-6">',
-       '#suffix' => '</div>',
-       '#default_value' => (!empty($node->field_dc_status[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_status[LANGUAGE_NONE][0]['tid'] : 'All',
-   	);
+		$list_comment = '';
+   	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
+   		$list_comment .= '<h3>List comment</h3><ul>';
+   		$data_list_cm = array();
+   		foreach($node->field_comment_list[LANGUAGE_NONE] as $item){
+   			$data_list_cm[$item['value']] = $item['value'];
+   		}
 
-   	$reason = array('All' => ' - Any - ');
-		$data_reason = taxonomy_get_tree(14);
-		foreach($data_reason as $key => $value){
-			$reason[$value->tid] = $value->name;
-		}
-
-		$form['reason'] = array(
-       '#type' => 'select',
-       '#title' => t('Reason'),
-       '#options' => $reason,
-       '#prefix' => '<div class="col-md-6">',
-       '#suffix' => '</div>',
-       '#default_value' => (!empty($node->field_dc_reason[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['tid'] : 'All',
-   	);
+   		foreach($data_list_cm as $item){
+   			$field_data = field_collection_item_load($item);
+   			$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
+   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
+   		}
+   		
+   		$list_comment .= '</ul>';
+   	}
+   	
+   	$form['comment'] = array(
+			'#title' => t('Comment'),
+			'#type' => 'textarea',
+			'#prefix' => '<div class="list-comment col-md-12">'.$list_comment.'</div><div class="col-md-12">',
+			'#suffix' => '</div>',
+		);
+		
 
    	$form['person'] = array(
 		  '#type' => 'textfield', 
@@ -225,6 +226,30 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
           '#suffix' => '</div>',
       '#default_value' => (!empty($node->field_dc_designation[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_designation[LANGUAGE_NONE][0]['value'] : '',
 		);
+
+		$form['status'] = array(
+       '#type' => 'select',
+       '#title' => t('Status'),
+       '#options' => $status,
+       '#prefix' => '<div class="col-md-6">',
+       '#suffix' => '</div>',
+       '#default_value' => (!empty($node->field_dc_status[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_status[LANGUAGE_NONE][0]['tid'] : 'All',
+   	);
+
+   	$reason = array('All' => ' - Any - ');
+		$data_reason = taxonomy_get_tree(14);
+		foreach($data_reason as $key => $value){
+			$reason[$value->tid] = $value->name;
+		}
+
+		$form['reason'] = array(
+       '#type' => 'select',
+       '#title' => t('Reason'),
+       '#options' => $reason,
+       '#prefix' => '<div class="col-md-6">',
+       '#suffix' => '</div>',
+       '#default_value' => (!empty($node->field_dc_reason[LANGUAGE_NONE][0]['tid'])) ? $node->field_dc_reason[LANGUAGE_NONE][0]['tid'] : 'All',
+   	);
 
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
@@ -393,31 +418,6 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		  '#prefix' => '<div class="col-md-6">',
        	  '#suffix' => '</div>',
        	'#default_value' => (!empty($node->field_fax_number[LANGUAGE_NONE][0]['value'])) ? $node->field_fax_number[LANGUAGE_NONE][0]['value'] : ''
-		);
-		
-
-   	$list_comment = '';
-   	if(!empty($node->field_comment_list[LANGUAGE_NONE][0]['value'])){
-   		$list_comment .= '<h3>List comment</h3><ul>';
-   		$data_list_cm = array();
-   		foreach($node->field_comment_list[LANGUAGE_NONE] as $item){
-   			$data_list_cm[$item['value']] = $item['value'];
-   		}
-
-   		foreach($data_list_cm as $item){
-   			$field_data = field_collection_item_load($item);
-   			$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
-   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
-   		}
-   		
-   		$list_comment .= '</ul>';
-   	}
-   	
-   	$form['comment'] = array(
-			'#title' => t('Comment'),
-			'#type' => 'textarea',
-			'#prefix' => '<div class="list-comment col-md-12">'.$list_comment.'</div><div class="col-md-12">',
-			'#suffix' => '</div>',
 		);
 
 		$form['action_end'] = array(
