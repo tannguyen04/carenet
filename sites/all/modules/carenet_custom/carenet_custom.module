@@ -509,14 +509,12 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 			break;
 		//Interested
 		case 4919:
-			
-			if(empty($data['person'])){
-				form_set_error('person', 'Please enter Person Name');
-			}
-
-
 			if(empty($data['phone']) && $data['method_contact'] =='mail'){
 				form_set_error('phone', 'Please enter phone number');
+			}
+
+			if(empty($data['person'])){
+				form_set_error('person', 'Please enter Person Name');
 			}
 
 			if($data['method_contact'] == 'fax' && empty($data['fax_number'])){
