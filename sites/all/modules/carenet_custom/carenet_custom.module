@@ -918,13 +918,15 @@ function carenet_custom_list_data(){
 	}
 	$status .='</select>';
 
-	$output .= '<div class="filter_date" style="margin-right: 20px;"><label>Date</label><input type="text" id="date_tick" name="date"></div>';
+	
 
 	$output .= '<div class="filter_status" style="display: inline-block;margin-right: 20px;"><label>Status</label>'.$status.'</div>';
 
-	
+	$output .= '<div class="filter_my_quee" style="display: inline-block;margin-right: 20px;"><label>My queue</label><input type="checkbox" id="my_quee" name="my_quee"></div>';
 
-	$output .= '<div class="filter_my_quee" style="display: none;margin-right: 20px;"><label>My queue</label><input type="checkbox" id="my_quee" name="my_quee"></div>';
+	$output .= '<div class="filter_date" style="display: none;margin-right: 20px;"><label>Date</label><input type="text" id="date_tick" name="date"></div>';
+
+	
 
 	$output .='<table id="carenet_custom_list_data" class="display" cellspacing="0" width="100%">
         <thead>
