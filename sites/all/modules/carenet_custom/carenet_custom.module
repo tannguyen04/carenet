@@ -217,15 +217,15 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
       '#default_value' => (!empty($node->field_dc_phone[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_phone[LANGUAGE_NONE][0]['value'] : $official_telephone
 		);
 
-		$form['designation'] = array(
-		  '#type' => 'textfield', 
-		  '#title' => t('Designation'), 
-		  '#size' => 60, 
-		  '#maxlength' => 128,
-		  '#prefix' => '<div class="col-md-6">',
-          '#suffix' => '</div>',
-      '#default_value' => (!empty($node->field_dc_designation[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_designation[LANGUAGE_NONE][0]['value'] : '',
-		);
+		// $form['designation'] = array(
+		//   '#type' => 'textfield', 
+		//   '#title' => t('Designation'), 
+		//   '#size' => 60, 
+		//   '#maxlength' => 128,
+		//   '#prefix' => '<div class="col-md-6">',
+  //         '#suffix' => '</div>',
+  //     '#default_value' => (!empty($node->field_dc_designation[LANGUAGE_NONE][0]['value'])) ? $node->field_dc_designation[LANGUAGE_NONE][0]['value'] : '',
+		// );
 
 		$form['status'] = array(
        '#type' => 'select',
