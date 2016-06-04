@@ -569,7 +569,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 		$link_active = '';
 
-		if(!empty($data['status']) && $data['status'] != 'All' && $data['method_contact'] = 'mail'){
+		if(!empty($data['status']) && $data['status'] != 'All' && $data['method_contact'] == 'mail'){
 	  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 
   		if(($data['status'] == 4919) && empty($node->field_token[LANGUAGE_NONE][0]['value'])) {
