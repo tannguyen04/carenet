@@ -221,8 +221,11 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		$date_default = '';
 		if(!empty($node->field_dc_date['und'][0]['value'])){
-			$time = strtotime($node->field_dc_date['und'][0]['value']);
-			$date_default = format_date($time,'custom', 'm/d/Y H:i',date_default_timezone_get());
+			$reset = date_default_timezone_get();
+			date_default_timezone_set($node->field_dc_date['und'][0]['timezone']);
+			$stamp = strtotime($node->field_dc_date['und'][0]['value']);
+			date_default_timezone_set($reset);
+			$date_default = format_date($stamp,'custom', 'm/d/Y H:i');
 		}
 
 		$form['date_time'] = array(
