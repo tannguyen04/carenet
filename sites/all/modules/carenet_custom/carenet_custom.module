@@ -87,7 +87,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	$form['telephone'] = array('#type' => 'hidden', '#value' => $telephone);
 
 	$form['link_back'] = array(
-	  '#markup' => '<a class="back_to_provider dexp-shortcodes-button btn btn-sm btn-link" href="/providers">Back to Providers Listing</a>'
+	  '#markup' => '<a class="back_to_provider dexp-shortcodes-button btn btn-sm btn-link" href="/providers" style="float: right;">Back to Providers Listing</a>'
 	);
 
 	$authorized_official = '';
@@ -99,7 +99,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 	  $header = array(
 	    'name' => t('Name'),
+	    'npi' => t('NPI'),
 	    'type' => t('Type'),
+	    'hpt' => t('Healthcare Provider Taxonomy'),
 	    'state' => t('State'),
 	    'city' => t('City'),
 	    'county' => t('County'),
@@ -109,7 +111,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		foreach($data['nodes'] as $item){
 			$options[$item['node']['nid']] = array(
 	      'name' => $item['node']['name'],
+	      'npi' => $item['node']['npi'],
 	      'type' => $item['node']['type'],
+	      'hpt' => $item['node']['hpt'],
 	      'state' => $item['node']['state'],
 	      'city' => $item['node']['city'],
 	      'county' => $item['node']['county']
