@@ -472,7 +472,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$form['button_cancel'] = array(
-		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" href="/providers">Cancel</a>',
+		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" href="/providers" onclick="confirm("Are you sure ?") && unlock_provider();">Cancel</a>',
 		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
@@ -819,6 +819,8 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 	}
 		}
 	}
+	//unlock provider
+	carenet_custom_unlock_provider();
 }
 
 function carenet_custom_mail($key, &$message, $params) {

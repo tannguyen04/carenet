@@ -1,12 +1,12 @@
 jQuery(document).ready(function($) {
 
-	$(window).unload(function(){
+	function unlock_provider(){
     $.ajax({
-          type: 'POST',
-          url: '/unlock_provider',
-          async:false,
-    });
-  });
+		  url: "/unlock_provider"
+		}).done(function() {
+		  window.location.href = "/providers";
+		});
+	}
 
 	$('#edit-date-time').datetimepicker({
 		 format:'m/d/Y H:i',
