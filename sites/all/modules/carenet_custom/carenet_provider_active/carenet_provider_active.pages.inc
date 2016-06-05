@@ -168,8 +168,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->SetXY(20, 50);
       $pdf->Write(0, $address);
 
-    }
-    if($pageNo == $pageCount) {
+    } elseif($pageNo == 6) {
       // now write some text above the imported page
       $pdf->SetFont('Arial','',10);
       //Full name
@@ -208,24 +207,6 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
 
   $pdf->Output($destination, 'F');
 
-
-/*
-  //Merge table rate
-  $pdf = new FPDI();
-  $pageCount = $pdf->setSourceFile($destination);
-  for ($i=1;$i<7;$i++) {
-    $tplIdx = $pdf->importPage($i, '/MediaBox');
-    $pdf->addPage();
-    $pdf->useTemplate($tplIdx, 0, 0, 0);
-  }
-
-  $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
-  $tplIdx = $pdf->importPage(1, '/MediaBox');
-  $pdf->addPage();
-  $pdf->useTemplate($tplIdx, 0, 0, 0);
-  //$pdf->Output();
-  //$pdf->Output('F',$destination);
-*/
   file_unmanaged_delete($path_pdf_table_rate_tmp);
   return $destination;
 }

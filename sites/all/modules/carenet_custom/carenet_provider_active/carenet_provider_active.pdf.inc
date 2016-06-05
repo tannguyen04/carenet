@@ -25,7 +25,7 @@ class PDF extends FPDF
     $this->SetFont('','B');
     $this->SetFontSize(9);
     // Header
-    $w = array(12, 170, 15);
+    $w = array(12, 150, 15);
     for($i=0;$i<count($header);$i++)
       $this->Cell($w[$i],12,$header[$i],1,0,'C',true);
     $this->Ln();
