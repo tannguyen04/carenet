@@ -36,7 +36,7 @@ function carenet_admin_provider_active_form($form, &$form_state) {
     '#title' => t('Contract'),
     '#default_value' => variable_get('carenet_provider_active_contract', ''),
     '#format' => variable_get('carenet_provider_active_contract_format', 'full_html'),
-    '#required' => TRUE,
+    //'#required' => TRUE,
   );
   //List email
   $form['email'] = array(
