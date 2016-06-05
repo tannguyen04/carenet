@@ -1,13 +1,5 @@
 jQuery(document).ready(function($) {
 
-	$(window).unload(function(){
-    $.ajax({
-          type: 'POST',
-          url: '/unlock_provider',
-          async:false,
-    });
-  });
-
 	$('#edit-date-time').datetimepicker({
 		 format:'m/d/Y H:i',
 		 minDate:'-1970/01/02',
@@ -116,3 +108,16 @@ jQuery(document).ready(function($) {
 	});
 
 });
+
+function unlock_provider(){
+  var r = confirm("Are you sure ?");
+  if (r == true) {
+  	jQuery(document).ready(function($) {
+  		$.ajax({
+			  url: "/unlock_provider"
+			}).done(function() {
+			  window.location.href = "/providers";
+			});
+  	});
+  }
+}
