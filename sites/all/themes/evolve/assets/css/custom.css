@@ -182,7 +182,7 @@
 	clear: both;
 }
 #user-profile-form select {
-	padding: 10px;
+	padding: 8px;
 
 }
 #user-profile-form .field-type-taxonomy-term-reference select {
@@ -211,9 +211,18 @@
 #user-profile-form .field-type-list-integer .description {
 	clear: left;
 }
-#user-profile-form .field-name-field-prostaff-license-number {
+#user-profile-form .field-name-field-prostaff-license-number,
+#edit-profile-main-field-clinical-support-staff-und-0-field-profile-license-number  {
 	clear: both;
 }
 #user-profile-form .tabledrag-toggle-weight-wrapper {
 	display: none;
+}
+
+#edit-profile-main-field-prostaff-languages-spoken label {
+	float: left;
+	margin-right: 20px;
+}
+#edit-profile-main-field-prostaff-languages-spoken input {
+	width: 300px;
 }
