@@ -627,7 +627,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		}
 
 		$link_active = '';
-
+		$link_active_mail = '';
 		if(!empty($data['status']) && $data['status'] != 'All'){
 	  	$node->field_dc_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 
@@ -644,6 +644,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 	  	if($data['status'] == 4919){
 	  		$link_active = l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
+	  		$link_active_mail = l(t('secure link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link')));
 	  	}
 	  	
 		}
@@ -820,9 +821,38 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		 	switch ($data['method_contact']) {
 		 		case 'mail':
 		 			$mail_sent = $data['email'];
+
+		 			$body = 'Dear '.$data['person'].',
+
+Thank you for your interest in joining Infinite CareNet. Our company has been contracted by the
+
+Department of Veteran Affairs, to empanel physicians for the evaluations of Veterans and Service
+
+Members for their compensation &amp; pension benefits. As a key member of your medical community, we
+
+want to invite you to partner with us to enhance your revenue stream while providing health assessments
+
+to the Veterans. 
+
+<p>Below is a link to our registration portal that will take you through the following details</p>
+<ul>
+	<li>Program Overview &amp; Highlights</li>
+	<li>Contract Terms &amp; Conditions</li>
+	<li>Applicable Rate Card(s)</li>
+</ul>
+
+<p>Portal Link: Please use this '.$link_active_mail.'</p>
+
+Should you have any questions after reading all of the information on the portal, you will be presented
+
+with an option to <b>Ask a Question</b>. Alternatively, you can reply to this email and one of our provider
+
+relationship managers get in touch with you.
+
+<p>Best Regards,</p>';
 		 			$params = array('mail_to' => $mail_sent,
 		 											'subject' => 'Carenet activation',
-		 											'body' => 'Click here to active your account: '.$link_active
+		 											'body' => $body
 		 										 );
 		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
 		 			drupal_set_message('Sent mail to doctor success');
