@@ -131,3 +131,20 @@
 	padding: 5px;
 	background: none;
 }
+/** profile 2 **/
+#user-profile-form .field-group-htabs-wrapper {
+	margin-top: 20px;
+}
+#user-profile-form .horizontal-tabs {
+	border: 0px;
+}
+#user-profile-form .horizontal-tabs-list {
+	background: none;
+}
+#user-profile-form .horizontal-tabs-list li {
+	background: #428bca;
+	border-radius: 4px;
+}
+#user-profile-form .horizontal-tabs-list a {
+	color: #fff;
+}
