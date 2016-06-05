@@ -409,12 +409,12 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $discussion_wrapper = entity_metadata_wrapper('node', $discussion);
   $card_rate = $discussion_wrapper->field_card_rate_ref->value();
   $card_rate_wrapper = entity_metadata_wrapper('node', $card_rate);
-  $provider = $discussion->field_list_provider['und'][0]['target_id'];
+  $providers = $discussion_wrapper->field_list_provider->value();
   $address = '';
-  if ($provider) {
-    $provider = node_load($provider);
-    $address = $provider->field_pv_practice_address['und'][0]['value'];
-
+  if ($providers) {
+    $provider = $providers[0];
+    $provider_wrapper = entity_metadata_wrapper('node', $provider);
+    $address = $provider_wrapper->field_pv_practice_address->value();
   }
   //use card rate
   $rows = array();
