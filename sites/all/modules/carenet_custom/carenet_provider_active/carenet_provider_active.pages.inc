@@ -210,23 +210,20 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       }
       //Full name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 140);
+      $pdf->SetXY(30, 143);
       $pdf->Write(0, $full_name);
       //Job title
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 150);
+      $pdf->SetXY(30, 152);
       $pdf->Write(0, $job_title);
       // Date
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 160);
+      $pdf->SetXY(30, 161);
       $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
     }
   }
   $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
   $tplIdx = $pdf->importPage(1, '/MediaBox');
-  $pdf->addPage();
-  $pdf->useTemplate($tplIdx, 0, 0, 0);
-  $tplIdx = $pdf->importPage(2, '/MediaBox');
   $pdf->addPage();
   $pdf->useTemplate($tplIdx, 0, 0, 0);
   $pdf->Output($destination, 'F');
@@ -424,22 +421,14 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   //use card rate
   $rows = array();
   $row2 = array();
-  //Title card rate
-  $title = $card_rate_wrapper->title->value();
-  $tmp = explode('_', $title);
-  if (count($tmp) > 0) {
-    $title = '';
-    for($i=0;$i<count($tmp)-1;$i++) {
-      $title .= $tmp[$i];
-    }
-  }
-  $rows[] = array('', strip_tags($title), '');
+  dpm($card_rate_wrapper);
+  dpm($card_rate_wrapper->title);
+  $title = strip_tags($card_rate_wrapper->title->value());
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
-  if (strip_tags($title) != 'General Medical Examination') {
-    $row2 = _cardrate_getdata($card_rate_wrapper, $rows);
+  if (strpos($title,'General Medical Examination') == false) {
+    $rows = _cardrate_getdata($card_rate_wrapper, $rows);
   }
-  dpm(strip_tags($title));
-dpm($row2);
+
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
@@ -512,6 +501,16 @@ dpm($row2);
 }
 
 function _cardrate_getdata($card_rate_wrapper, $rows) {
+  //Title card rate
+  $title = $card_rate_wrapper->title->value();
+  $tmp = explode('_', $title);
+  if (count($tmp) > 0) {
+    $title = '';
+    for($i=0;$i<count($tmp)-1;$i++) {
+      $title .= $tmp[$i];
+    }
+  }
+  $rows[] = array('', strip_tags($title), '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
   if (!empty($description)) {
