@@ -143,15 +143,20 @@
 }
 #user-profile-form .horizontal-tabs-list li {
 	background: none;
-	
+	border: 0px;
 	margin: 0 15px;
 }
 #user-profile-form .horizontal-tabs-list a {
 	color: #fff;
 	background: #428bca;
-	padding: 5px 10px;
+	padding: 10px 20px;
 	border-radius: 4px;
 }
 #user-profile-form .horizontal-tabs-list a:hover {
 	background: #5F8CB4;
+}
+#user-profile-form .field-type-text {
+	float: left;
+	margin-right: 20px;
+
 }
