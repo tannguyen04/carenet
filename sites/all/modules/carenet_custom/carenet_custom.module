@@ -1129,9 +1129,24 @@ function carenet_custom_get_data(){
 				$activity .=date('m/d/Y H:i',$date).'<br />';
 			}
 
-			if(!empty($node_discuss->field_dc_reason_comment[LANGUAGE_NONE][0]['value'])){
-				$activity .='Comment :'. $node_discuss->field_dc_reason_comment[LANGUAGE_NONE][0]['value'].'<br />';
-			}
+			$list_comment = '';
+	   	if(!empty($node_discuss->field_comment_list[LANGUAGE_NONE][0]['value'])){
+	   		$list_comment .= '<h3>List comment</h3><ul>';
+	   		$data_list_cm = array();
+	   		foreach($node_discuss->field_comment_list[LANGUAGE_NONE] as $item){
+	   			$data_list_cm[$item['value']] = $item['value'];
+	   		}
+
+	   		foreach($data_list_cm as $item){
+	   			$field_data = field_collection_item_load($item);
+	   			$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
+	   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
+	   		}
+	   		
+	   		$list_comment .= '</ul>';
+	   		$activity .='Comment :'. $list_comment;
+	   	}
+	   	
 		}
 		
 
