@@ -31,7 +31,7 @@ function carenet_user_menu() {
     'access callback' => 'carenet_user_has_role',
     'access arguments' => array(1, array('provider', 'administrator')),
     'file' => 'carenet_user.pages.inc',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'type' => MENU_LOCAL_TASK,
     'weight' => 10,
   );
   return $items;
