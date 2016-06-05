@@ -122,13 +122,6 @@
 
   });
 
-  $(window).unload(function(){
-    $.ajax({
-          type: 'POST',
-          url: '/unlock_provider',
-          async:false,
-    });
-  });
 }(jQuery));
 
           
