@@ -1,5 +1,13 @@
 jQuery(document).ready(function($) {
 
+	$(window).unload(function(){
+    $.ajax({
+          type: 'POST',
+          url: '/unlock_provider',
+          async:false,
+    });
+  });
+
 	$('#edit-date-time').datetimepicker({
 		 format:'m/d/Y H:i',
 		 minDate:'-1970/01/02',

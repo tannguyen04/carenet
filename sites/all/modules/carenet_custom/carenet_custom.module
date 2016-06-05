@@ -50,8 +50,34 @@ function carenet_custom_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
+
+  //unload open lock
+  $items['unlock_provider'] = array(
+    'title' => 'Provider Listing',
+    'page callback' => 'carenet_custom_unlock_provider',
+    'access arguments' => array('administer providers'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
+}
+
+function carenet_custom_unlock_provider(){
+	$telephone = arg(1);
+	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
+	$data = drupal_json_decode(file_get_contents($url));
+
+	$nids_provider = array();
+	foreach($data['nodes'] as $item){
+		$nids_provider[] = $item['node']['nid'];
+	}
+
+	// lock
+	foreach($nids_provider as $nid_item){
+		$node_p = node_load($nid_item);
+		$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 0;
+		node_save($node_p);
+	}
 }
 
 function carenet_custom_permission() {
