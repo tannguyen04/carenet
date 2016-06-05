@@ -50,8 +50,34 @@ function carenet_custom_menu() {
     'file' => 'system.admin.inc',
     'file path' => drupal_get_path('module', 'system'),
   );
+
+  //unload open lock
+  $items['unlock_provider'] = array(
+    'title' => 'Provider Listing',
+    'page callback' => 'carenet_custom_unlock_provider',
+    'access arguments' => array('administer providers'),
+    'type' => MENU_CALLBACK,
+  );
   
   return $items;
+}
+
+function carenet_custom_unlock_provider(){
+	$telephone = arg(1);
+	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
+	$data = drupal_json_decode(file_get_contents($url));
+
+	$nids_provider = array();
+	foreach($data['nodes'] as $item){
+		$nids_provider[] = $item['node']['nid'];
+	}
+
+	// lock
+	foreach($nids_provider as $nid_item){
+		$node_p = node_load($nid_item);
+		$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 0;
+		node_save($node_p);
+	}
 }
 
 function carenet_custom_permission() {
@@ -65,6 +91,9 @@ function carenet_custom_permission() {
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
 	global $base_url;
+
+
+
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/jquery.datetimepicker.full.min.js', 'file');
 	drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_form.js', 'file');
 	drupal_add_css(drupal_get_path('module', 'carenet_custom').'/css/jquery.datetimepicker.css', array('group' => CSS_DEFAULT, 'type' => 'file'));
@@ -86,9 +115,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	
 	$form['telephone'] = array('#type' => 'hidden', '#value' => $telephone);
 
-	$form['link_back'] = array(
-	  '#markup' => '<a class="back_to_provider dexp-shortcodes-button btn btn-sm btn-link" href="/providers" style="float: right;">Back to Providers Listing</a>'
-	);
+	
 
 	$authorized_official = '';
 	$official_telephone = '';
@@ -108,7 +135,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	  );
 
 	  $options = array();
+	  $nids_provider = array();
 		foreach($data['nodes'] as $item){
+			$nids_provider[] = $item['node']['nid'];
 			$options[$item['node']['nid']] = array(
 	      'name' => $item['node']['name'],
 	      'npi' => $item['node']['npi'],
@@ -129,6 +158,17 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 				$nid_default[$item['target_id']] = TRUE;
 			}
 		}
+
+		// lock
+		foreach($nids_provider as $nid_item){
+			$node_p = node_load($nid_item);
+			$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 1;
+			node_save($node_p);
+		}
+
+		$form['link_back'] = array(
+		  '#markup' => '<a class="back_to_provider dexp-shortcodes-button btn btn-sm btn-link" href="/providers" style="float: right;">Back to Providers Listing</a>'
+		);
 
 		$form['list_doctor'] = array(
 	    '#type' => 'tableselect',
@@ -796,20 +836,20 @@ function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
  		drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_add_provider.js', 'file');
  		$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
  		$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
- 		$form['#validate'][] = 'carenet_custom_provider_node_form_validate';
+ 		//$form['#validate'][] = 'carenet_custom_provider_node_form_validate';
  	}
 }
 
-function carenet_custom_provider_node_form_validate(&$form, &$form_state){
-	$data = $form_state['values'];
-	$npi = $data['field_pv_npi'][LANGUAGE_NONE][0]['value'];
-	if(!empty($npi)){
-			$result = db_query('SELECT entity_id FROM {field_data_field_pv_npi} WHERE field_pv_npi_value = :field_pv_npi_value',array(':field_pv_npi_value' => $npi))->fetchField();
-		if(!empty($result)){
-			form_set_error('field_pv_npi', 'NPI existing');
-		}
-	}
-}
+// function carenet_custom_provider_node_form_validate(&$form, &$form_state){
+// 	$data = $form_state['values'];
+// 	$npi = $data['field_pv_npi'][LANGUAGE_NONE][0]['value'];
+// 	if(!empty($npi)){
+// 			$result = db_query('SELECT entity_id FROM {field_data_field_pv_npi} WHERE field_pv_npi_value = :field_pv_npi_value',array(':field_pv_npi_value' => $npi))->fetchField();
+// 		if(!empty($result)){
+// 			form_set_error('field_pv_npi', 'NPI existing');
+// 		}
+// 	}
+// }
 
 function carenet_custom_get_data_county(){
 	global $base_url;
