@@ -796,8 +796,12 @@ function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
  		drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_add_provider.js', 'file');
  		$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
  		$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
- 		print_r($form);die();
+ 		$form['#validate'][] = 'carenet_custom_provider_node_form_validate';
  	}
+}
+
+function carenet_custom_provider_node_form_validate(&$form, &$form_state){
+	print_r($form_state);die();
 }
 
 function carenet_custom_get_data_county(){
