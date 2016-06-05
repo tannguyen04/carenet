@@ -504,7 +504,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
 
 function _cardrate_getdata($card_rate_wrapper, $rows) {
   //Title card rate
-  $title = $card_rate_wrapper->title->value();
+  $title = strip_tags($card_rate_wrapper->title->value());
   $tmp = explode('_', $title);
   if (count($tmp) > 0) {
     $title = '';
@@ -512,7 +512,8 @@ function _cardrate_getdata($card_rate_wrapper, $rows) {
       $title .= $tmp[$i];
     }
   }
-  $rows[] = array('', strip_tags($title), '');
+  dpm($title);
+  $rows[] = array('', $title, '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
   if (!empty($description)) {
