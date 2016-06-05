@@ -1,11 +1,14 @@
 jQuery(document).ready(function($) {
 
 	function unlock_provider(){
-    $.ajax({
-		  url: "/unlock_provider"
-		}).done(function() {
-		  window.location.href = "/providers";
-		});
+    var r = confirm("Are you sure ?");
+    if (r == true) {
+        $.ajax({
+				  url: "/unlock_provider"
+				}).done(function() {
+				  window.location.href = "/providers";
+				});
+    }
 	}
 
 	$('#edit-date-time').datetimepicker({
