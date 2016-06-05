@@ -1119,12 +1119,12 @@ function carenet_custom_get_data(){
 		if($discuss_nid > 0){
 			$node_discuss = node_load($discuss_nid);
 			if(!empty($node_discuss->field_dc_status[LANGUAGE_NONE][0]['tid'])){
-				$term = taxonomy_term_load($node_discuss->field_dc_status['und'][0]['tid']);
+				$term = taxonomy_term_load($node_discuss->field_dc_status[LANGUAGE_NONE][0]['tid']);
 				$status = $term->name;
 			}
 
 			if(!empty($node_discuss->field_dc_date[LANGUAGE_NONE][0]['value'])){
-				$date = strtotime($node_discuss->field_dc_date['und'][0]['value']);
+				$date = strtotime($node_discuss->field_dc_date[LANGUAGE_NONE][0]['value']);
 
 				$activity .=date('m/d/Y H:i',$date).'<br />';
 			}
