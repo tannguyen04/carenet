@@ -158,8 +158,8 @@
 #user-profile-form .field-type-text {
 	float: left;
 	width: 49.5%;
-
 }
-#user-profile-form .field-type-text {
-
+#user-profile-form .field-type-email {
+	float: left;
+	width: 49.5%;
 }
