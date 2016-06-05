@@ -615,7 +615,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 		//Check node discuss
 		if(!empty($data['discuss_nid']) && $data['discuss_nid'] != 0){
 			$node = node_load($data['discuss_nid']);
-			$node->uid = $user->uid; 
+			$node->name = $user->name; 
 		}else{
 			$node = new stdClass();
 		  $node->title = $data['telephone'];
