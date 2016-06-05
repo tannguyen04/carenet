@@ -157,6 +157,9 @@
 }
 #user-profile-form .field-type-text {
 	float: left;
-	margin-right: 20px;
+	width: 49.5%;
+
+}
+#user-profile-form .field-type-text {
 
 }
