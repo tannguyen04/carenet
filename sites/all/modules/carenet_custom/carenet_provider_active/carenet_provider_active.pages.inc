@@ -415,7 +415,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   }
   $rows[] = array('', strip_tags($title), '');
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
-  if (strip_tags($title) == 'General Medical Examination') {
+  if (strip_tags($title) !== 'General Medical Examination') {
     $row2 = _cardrate_getdata($card_rate_wrapper, $rows);
   }
 
