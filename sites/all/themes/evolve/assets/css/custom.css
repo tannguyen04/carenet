@@ -142,11 +142,16 @@
 	background: none;
 }
 #user-profile-form .horizontal-tabs-list li {
-	background: #428bca;
-	border-radius: 4px;
+	background: none;
+	
 	margin: 0 15px;
-	padding: 5px 10px;
 }
 #user-profile-form .horizontal-tabs-list a {
 	color: #fff;
+	background: #428bca;
+	padding: 5px 10px;
+	border-radius: 4px;
+}
+#user-profile-form .horizontal-tabs-list a:hover {
+	background: #5F8CB4;
 }
