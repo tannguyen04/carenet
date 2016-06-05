@@ -472,7 +472,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		);
 
 		$form['button_cancel'] = array(
-		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" onclick="confirm("Are you sure ?") && unlock_provider();">Cancel</a>',
+		  '#markup' => '<a class="dexp-shortcodes-button btn btn-sm gray btn-link cancel_button" onclick="confirm("Are you sure ?") && unlock_provider()">Cancel</a>',
 		);
 		$form['submit'] = array('#type' => 'submit', '#value' => t('Submit'));
 
