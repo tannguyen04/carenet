@@ -116,7 +116,7 @@ function unlock_provider(){
   		$.ajax({
 			  url: "/unlock_provider"
 			}).done(function() {
-			  window.location.href = "/providers";
+			  //window.location.href = "/providers";
 			});
   	});
   }
