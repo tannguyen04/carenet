@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 });
 
 function unlock_provider(){
-  var r = confirm("Are you sure ?");
+  var r = confirm("Are you sure want to cancel this discussion?");
   if (r == true) {
   	jQuery(document).ready(function($) {
   		var telephone = location.href.split("discuss/")[1];

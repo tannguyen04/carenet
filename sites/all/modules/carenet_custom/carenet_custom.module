@@ -63,7 +63,7 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_unlock_provider(){
-	global $base_url,$user;
+	global $base_url;
 	$telephone = arg(2);
 	if(empty($telephone)){
 		$telephone = $_GET['telephone'];
