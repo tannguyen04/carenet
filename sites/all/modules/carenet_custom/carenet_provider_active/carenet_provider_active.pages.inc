@@ -206,19 +206,19 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $fid = variable_get('carenet_signature', '');
       if ($file = file_load($fid)) {
         $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 125, 229, 20, 6);
+        $pdf->Image($signature_image_url, 50, 130, 20, 6);
       }
       //Full name
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 243);
+      $pdf->SetXY(35, 140);
       $pdf->Write(0, $full_name);
       //Job title
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 239);
+      $pdf->SetXY(35, 150);
       $pdf->Write(0, $job_title);
       // Date
       $pdf->SetTextColor(0);
-      $pdf->SetXY(35, 247);
+      $pdf->SetXY(35, 160);
       $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
     }
   }
@@ -226,7 +226,9 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
   $tplIdx = $pdf->importPage(1, '/MediaBox');
   $pdf->addPage();
   $pdf->useTemplate($tplIdx, 0, 0, 0);
-
+  $tplIdx = $pdf->importPage(2, '/MediaBox');
+  $pdf->addPage();
+  $pdf->useTemplate($tplIdx, 0, 0, 0);
   $pdf->Output($destination, 'F');
 
   file_unmanaged_delete($path_pdf_table_rate_tmp);
@@ -436,7 +438,8 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   if (strip_tags($title) != 'General Medical Examination') {
     $row2 = _cardrate_getdata($card_rate_wrapper, $rows);
   }
-
+  dpm(strip_tags($title));
+dpm($row2);
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
