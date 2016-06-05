@@ -167,3 +167,12 @@
 	float:none;
 	clear: both;
 }
+#user-profile-form .field-type-list-integer.field-widget-options-select label {
+	float: left;
+	margin-right: 20px;
+}
+#user-profile-form .field-type-list-integer.field-widget-options-select .form-radios label,
+#user-profile-form .field-type-list-integer.field-widget-options-select .form-checkboxes label {
+	float: none;
+	margin-right: 0px;
+}
