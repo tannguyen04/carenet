@@ -63,7 +63,7 @@ function carenet_custom_menu() {
 }
 
 function carenet_custom_unlock_provider(){
-	global $base_url;
+	global $base_url,$user;
 	$telephone = arg(2);
 	if(empty($telephone)){
 		$telephone = $_GET['telephone'];
@@ -78,6 +78,7 @@ function carenet_custom_unlock_provider(){
 	foreach($nids_provider as $nid_item){
 		$node_p = node_load($nid_item);
 		$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 0;
+		$node_p->field_lock_uid[LANGUAGE_NONE][0]['value'] = '';
 		node_save($node_p);
 	}
 }
@@ -92,7 +93,7 @@ function carenet_custom_permission() {
 }
 
 function carenet_custom_provider_action($form, &$form_state, $telephone){
-	global $base_url;
+	global $base_url,$user;
 
 
 
@@ -165,7 +166,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 		foreach($nids_provider as $nid_item){
 			$node_p = node_load($nid_item);
-			if(!empty($node_p->field_lock[LANGUAGE_NONE][0]['value']) && $node_p->field_lock[LANGUAGE_NONE][0]['value'] == 1){
+			if(!empty($node_p->field_lock[LANGUAGE_NONE][0]['value']) && $node_p->field_lock[LANGUAGE_NONE][0]['value'] == 1 && $node_p->field_lock_uid[LANGUAGE_NONE][0]['value'] != $user->uid){
 				$check_lock = true;
 			}
 		}
@@ -181,6 +182,7 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		foreach($nids_provider as $nid_item){
 			$node_p = node_load($nid_item);
 			$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 1;
+			$node_p->field_lock_uid[LANGUAGE_NONE][0]['value'] = $user->uid;
 			node_save($node_p);
 		}
 
