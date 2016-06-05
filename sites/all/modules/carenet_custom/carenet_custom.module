@@ -796,7 +796,19 @@ function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
  		drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_add_provider.js', 'file');
  		$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
  		$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
+ 		$form['#validate'][] = 'carenet_custom_provider_node_form_validate';
  	}
+}
+
+function carenet_custom_provider_node_form_validate(&$form, &$form_state){
+	$data = $form_state['values'];
+	$npi = $data['field_pv_npi'][LANGUAGE_NONE][0]['value'];
+	if(!empty($npi)){
+			$result = db_query('SELECT entity_id FROM {field_data_field_pv_npi} WHERE field_pv_npi_value = :field_pv_npi_value',array(':field_pv_npi_value' => $npi))->fetchField();
+		if(!empty($result)){
+			form_set_error('field_pv_npi', 'NPI existing');
+		}
+	}
 }
 
 function carenet_custom_get_data_county(){
