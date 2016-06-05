@@ -1108,6 +1108,7 @@ function carenet_custom_get_data(){
 		$city = array_unique($city);
 		$county = array_unique($county);
 
+		print_r($provider);die();
 		$discuss_nid = 0;
 		$result_d = db_query('SELECT entity_id FROM {field_data_field_list_provider} WHERE bundle = :bundle AND field_list_provider_target_id IN(:nid)',array(':bundle' => 'discuss',':nid' => $provider)) ;
 		foreach($result_d as $record){
@@ -1146,7 +1147,7 @@ function carenet_custom_get_data(){
 	   		$list_comment .= '</ul>';
 	   		$activity .='Comment :'. $list_comment;
 	   	}
-	   	
+
 		}
 		
 
