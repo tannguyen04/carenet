@@ -10,16 +10,6 @@
 function carenet_user_user_default_permissions() {
   $permissions = array();
 
-  // Exported permission: 'access navbar'.
-  $permissions['access navbar'] = array(
-    'name' => 'access navbar',
-    'roles' => array(
-      'administrator' => 'administrator',
-      'teller' => 'teller',
-    ),
-    'module' => 'navbar',
-  );
-
   // Exported permission: 'create card_rate content'.
   $permissions['create card_rate content'] = array(
     'name' => 'create card_rate content',

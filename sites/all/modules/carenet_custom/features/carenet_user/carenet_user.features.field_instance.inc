@@ -10,6 +10,43 @@
 function carenet_user_field_default_field_instances() {
   $field_instances = array();
 
+  // Exported field_instance: 'user-user-field_card_rate_ref'.
+  $field_instances['user-user-field_card_rate_ref'] = array(
+    'bundle' => 'user',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'entityreference',
+        'settings' => array(
+          'link' => FALSE,
+        ),
+        'type' => 'entityreference_label',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'user',
+    'field_name' => 'field_card_rate_ref',
+    'label' => 'Card rate',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => 0,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'entityreference',
+      'settings' => array(
+        'match_operator' => 'CONTAINS',
+        'path' => '',
+        'size' => 60,
+      ),
+      'type' => 'entityreference_autocomplete',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'user-user-field_contract'.
   $field_instances['user-user-field_contract'] = array(
     'bundle' => 'user',
@@ -150,6 +187,7 @@ function carenet_user_field_default_field_instances() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Card rate');
   t('Contract');
   t('Full name');
   t('Job Title');

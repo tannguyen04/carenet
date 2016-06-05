@@ -421,14 +421,12 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   //Title card rate
   $title = $card_rate_wrapper->title->value();
   $tmp = explode('_', $title);
-  dpm($tmp);
   if (count($tmp) > 0) {
     $title = '';
     for($i=0;$i<count($tmp)-1;$i++) {
       $title .= $tmp[$i];
     }
   }
-  dpm($title);
   $rows[] = array('', strip_tags($title), '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
@@ -496,7 +494,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $new_username_wrapper->field_full_name->set($values['full_name']);
   $new_username_wrapper->field_pv_og_name->set($values['organization_name']);
   $new_username_wrapper->field_job_title->set($values['job_title']);
+  $new_username_wrapper->field_card_rate_ref->set($card_rate_wrapper->getIdentifier());
   $new_username_wrapper->save();
+
 
   if (!$new_username) {
     drupal_set_message(t("Error saving"), 'error');
