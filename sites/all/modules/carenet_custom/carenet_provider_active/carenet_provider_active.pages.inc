@@ -201,7 +201,25 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
         $signature_image_url = file_create_url($file->uri);
         $pdf->Image($signature_image_url, 125, 229, 20, 6);
       }
-
+    } elseif ($pageNo == $pageCount) {
+      //Add image signature
+      $fid = variable_get('carenet_signature', '');
+      if ($file = file_load($fid)) {
+        $signature_image_url = file_create_url($file->uri);
+        $pdf->Image($signature_image_url, 125, 229, 20, 6);
+      }
+      //Full name
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(35, 243);
+      $pdf->Write(0, $full_name);
+      //Job title
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(35, 239);
+      $pdf->Write(0, $job_title);
+      // Date
+      $pdf->SetTextColor(0);
+      $pdf->SetXY(35, 247);
+      $pdf->Write(0, format_date(REQUEST_TIME, 'custom', 'm/d/Y'));
     }
   }
   $pageCount = $pdf->setSourceFile($path_pdf_table_rate_tmp);
@@ -415,7 +433,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   }
   $rows[] = array('', strip_tags($title), '');
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
-  if (strip_tags($title) !== 'General Medical Examination') {
+  if (strip_tags($title) != 'General Medical Examination') {
     $row2 = _cardrate_getdata($card_rate_wrapper, $rows);
   }
 
