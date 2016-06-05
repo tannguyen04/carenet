@@ -155,6 +155,9 @@
 #user-profile-form .horizontal-tabs-list a:hover {
 	background: #5F8CB4;
 }
+#user-profile-form .field-multiple-table .btn.form-submit {
+	clear: both;
+}
 #user-profile-form .field-type-text {
 	float: left;
 	width: 49.5%;
@@ -175,4 +178,8 @@
 #user-profile-form .field-type-list-integer.field-widget-options-select .form-checkboxes label {
 	float: none;
 	margin-right: 0px;
+}
+#user-profile-form .field-type-list-integer.field-widget-options-select .form-checkboxes .form-item {
+	float: left;
+	width: 32.5%;
 }
