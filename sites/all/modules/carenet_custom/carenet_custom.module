@@ -820,6 +820,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 	}
 	//unlock provider
 	carenet_custom_unlock_provider();
+	drupal_goto('/providers');
 }
 
 function carenet_custom_mail($key, &$message, $params) {
