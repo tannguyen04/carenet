@@ -168,8 +168,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
       $pdf->SetXY(20, 50);
       $pdf->Write(0, $address);
 
-    }
-    if($pageNo == $pageCount) {
+    } elseif($pageNo == 6) {
       // now write some text above the imported page
       $pdf->SetFont('Arial','',10);
       //Full name
