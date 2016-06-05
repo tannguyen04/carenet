@@ -171,9 +171,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 		}
 
 		if($check_lock){
-			return $form['lock'] = array(
+			 $form['lock'] = array(
 		  '#markup' => '<h3><You can not open this discussion because it is locked and being processed by other teller. /h3>'
 		);
+			 return $form;
 		}
 
 		// lock
