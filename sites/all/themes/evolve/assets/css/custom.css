@@ -158,14 +158,13 @@
 #user-profile-form .field-multiple-table .btn.form-submit {
 	clear: both;
 }
-#user-profile-form .field-type-text {
+#user-profile-form .field-type-text,
+#user-profile-form .field-type-email,
+#user-profile-form .field-type-taxonomy-term-reference {
 	float: left;
 	width: 49.5%;
 }
-#user-profile-form .field-type-email {
-	float: left;
-	width: 49.5%;
-}
+ 
 #user-profile-form .field-type-list-text {
 	float:none;
 	clear: both;
