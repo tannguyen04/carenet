@@ -119,7 +119,7 @@ function carenet_provider_active_form_contract($form, &$form_state) {
   return $form;
 }
 
-function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title, $address, $rows) {
+function carenet_provider_active_pdf_generate($source, $destination, $full_name, $organization_name, $job_title, $address, $rows, $row2=array()) {
   //$pdffile = file_create_url('public://doc.pdf');
   require_once(libraries_get_path('fpdf').'/fpdf.php');
   require_once(libraries_get_path('fpdi').'/fpdi.php');
@@ -133,6 +133,10 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
   $pdf->SetFont('Arial','',14);
   $pdf->AddPage();
   $pdf->FancyTable($header,$rows);
+  if (count($row2) > 0) {
+    $pdf->AddPage();
+    $pdf->FancyTable($header,$rows);
+  }
   $pdf->Output('F', $path_pdf_table_rate_tmp);
 
   // initiate FPDI
@@ -399,6 +403,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   }
   //use card rate
   $rows = array();
+  $row2 = array();
   //Title card rate
   $title = $card_rate_wrapper->title->value();
   $tmp = explode('_', $title);
@@ -409,24 +414,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     }
   }
   $rows[] = array('', strip_tags($title), '');
-  //Description card rate
-  $description = $card_rate_wrapper->body->value->value();
-  if (!empty($description)) {
-    $rows[] = array('', strip_tags($description), '');
-  }
-  //Line item card rate
-  $line_items = $card_rate_wrapper->field_card_rate_item->value();
-  if (!empty($line_items)) {
-    foreach ($line_items as $key => $item) {
-      $collection_wrapper = entity_metadata_wrapper('field_collection_item', $item);
-      $label = $collection_wrapper->field_text_title->value();
-      $price = $collection_wrapper->field_price->value();
-      $rows[] = array(
-          $key+1,
-          $label,
-          '$ '. $price,
-      );
-    }
+  $rows = _cardrate_getdata($card_rate_wrapper, $rows);
+  if (strip_tags($title) !== 'General Medical Examination') {
+    $row2 = _cardrate_getdata($card_rate_wrapper, $rows);
   }
 
     $time_generate_pdf = REQUEST_TIME;
@@ -434,7 +424,7 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
     $source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
 
-    carenet_provider_active_pdf_generate($source, $dest, $values['full_name'], $values['organization_name'], $values['job_title'], $address,$rows);
+    carenet_provider_active_pdf_generate($source, $dest, $values['full_name'], $values['organization_name'], $values['job_title'], $address,$rows,$row2);
 
     // We have complete file path.
     $file = new stdClass;
@@ -498,6 +488,29 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
     $discussion_wrapper->save();
     $form_state['redirect'] = 'node/1100';
   }
+}
+
+function _cardrate_getdata($card_rate_wrapper, $rows) {
+  //Description card rate
+  $description = $card_rate_wrapper->body->value->value();
+  if (!empty($description)) {
+    $rows[] = array('', strip_tags($description), '');
+  }
+  //Line item card rate
+  $line_items = $card_rate_wrapper->field_card_rate_item->value();
+  if (!empty($line_items)) {
+    foreach ($line_items as $key => $item) {
+      $collection_wrapper = entity_metadata_wrapper('field_collection_item', $item);
+      $label = $collection_wrapper->field_text_title->value();
+      $price = $collection_wrapper->field_price->value();
+      $rows[] = array(
+          $key+1,
+          $label,
+          '$ '. $price,
+      );
+    }
+  }
+  return $rows;
 }
 
 /*
