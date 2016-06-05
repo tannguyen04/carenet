@@ -184,4 +184,5 @@
 }
 #user-profile-form .field-type-taxonomy-term-reference select {
 	padding: 10px;
+	width: 250px;
 }
