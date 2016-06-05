@@ -1082,8 +1082,6 @@ function carenet_custom_get_data(){
 		}
 	}
 
-	print $list_quee_arg;die();
-
 	$url = $base_url.'/provide-listing-data'.$list_quee_arg.'?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&hpt='.$_GET['hpt'].'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
