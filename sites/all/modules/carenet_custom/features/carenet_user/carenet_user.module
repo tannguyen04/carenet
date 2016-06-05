@@ -23,6 +23,17 @@ function carenet_user_menu() {
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'weight' => -10,
   );
+  $items['user/%user/edit/card-rate'] = array(
+    'title' => 'Card rate',
+    'description' => 'Card rate of user',
+    'page callback' => 'carenet_card_rate_user',
+    'page arguments' => array(1),
+    'access callback' => 'carenet_user_has_role',
+    'access arguments' => array(1, array('provider', 'administrator')),
+    'file' => 'carenet_user.pages.inc',
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 10,
+  );
   return $items;
 }
 
@@ -37,4 +48,16 @@ function carenet_user_permission() {
       'description' => t('Access carenet manage page'),
     ),
   );
+}
+
+/*
+ * Function check access with user
+ */
+function carenet_user_has_role($account, $roles) {
+  foreach ($roles as $role) {
+    if (in_array($role, $account->roles)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
