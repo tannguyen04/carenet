@@ -167,6 +167,9 @@
 #user-profile-form .field-multiple-table .btn.form-submit {
 	clear: both;
 }
+#user-profile-form .field-type-field-collection td {
+	padding-bottom: 20px;
+}
 #user-profile-form .field-type-text,
 #user-profile-form .field-type-email,
 #user-profile-form .field-type-taxonomy-term-reference,
