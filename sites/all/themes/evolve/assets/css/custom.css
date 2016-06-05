@@ -148,12 +148,17 @@
 }
 #user-profile-form .horizontal-tabs-list a {
 	color: #fff;
-	background: #428bca;
+	background: #a0a5aa;
 	padding: 10px 20px;
+	border: 1px solid #a0a5aa;
 	border-radius: 4px;
 }
 #user-profile-form .horizontal-tabs-list a:hover {
-	background: #5F8CB4;
+	background: #428bca;
+	color: #fff;
+}
+#user-profile-form .required-fields {
+	clear: both;
 }
 #user-profile-form .field-multiple-table .btn.form-submit {
 	clear: both;
@@ -161,8 +166,9 @@
 #user-profile-form .field-type-text,
 #user-profile-form .field-type-email,
 #user-profile-form .field-type-taxonomy-term-reference {
-	float: left;
-	width: 49.5%;
+    float: left;
+    width: 47%;
+    margin-right: 3%;
 }
  
 #user-profile-form .field-type-list-text,
@@ -193,4 +199,7 @@
 #user-profile-form .field-type-taxonomy-term-reference select {
 	padding: 10px;
 	width: 250px;
+}
+#user-profile-form .field-name-field-prostaff-license-number {
+	clear: both;
 }
