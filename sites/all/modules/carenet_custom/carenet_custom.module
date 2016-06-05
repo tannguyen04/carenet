@@ -137,6 +137,8 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	    'county' => t('County'),
 	  );
 
+	  $hpt = '';
+
 	  $options = array();
 	  $nids_provider = array();
 		foreach($data['nodes'] as $item){
@@ -152,7 +154,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 	    );
 	    $authorized_official = $item['node']['authorized_official'];
 			$official_telephone = $item['node']['official_telephone'];
+			$hpt = $item['node']['hpt'];
 		}
+
+		$form['hpt'] = array('#type' => 'hidden', '#value' => $hpt);
 
 		$nid_default = array();
 
@@ -859,10 +864,30 @@ relationship managers get in touch with you.
 		 			drupal_set_message('Sent mail to doctor success');
 		 			break;
 		 		case 'fax':
+
+		 		$body = '<p>Dear Provider Network Team!</p>
+
+<p>One of the providers have requested information to be faxed to them about the program. Please fax them
+
+the program information at the earliest. Information on the provider is as follows –</p>
+
+<p>Fax #: '.$data['fax_number'].'</p>
+
+<p>Contact Name: '.$data['person'].'</p>
+
+<p>Contact Title: '.$data['title'].'</p>
+
+<p>Taxonomy: '.$data['hpt'].'</p>
+
+<p>Please refer to the intake portal and search for telephone number '.$data['telephone'].' for more information on
+
+this provider.</p>
+
+<p>Best Regards,</p>';
 		 			$mail_sent = variable_get('site_mail', '');
 		 			$params = array('mail_to' => $mail_sent,
 		 											'subject' => 'Carenet Fax',
-		 											'body' => 'account fax'
+		 											'body' => $body
 		 										 );
 		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
 		 			drupal_set_message('Sent mail to Admin success');
