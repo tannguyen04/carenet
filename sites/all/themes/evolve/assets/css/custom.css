@@ -165,10 +165,12 @@
 	width: 49.5%;
 }
  
-#user-profile-form .field-type-list-text {
+#user-profile-form .field-type-list-text,
+#user-profile-form .field-type-list-integer {
 	float:none;
 	clear: both;
 }
+
 #user-profile-form .field-type-list-integer.field-widget-options-select label {
 	float: left;
 	margin-right: 20px;
