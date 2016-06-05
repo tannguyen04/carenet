@@ -161,6 +161,22 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			}
 		}
 
+		$check_lock = false;
+
+		foreach($nids_provider as $nid_item){
+			$node_p = node_load($nid_item);
+			if(!empty($node_p->field_lock[LANGUAGE_NONE][0]['value']) && $node_p->field_lock[LANGUAGE_NONE][0]['value'] == 1){
+				$check_lock = true;
+			}
+		}
+
+		if($check_lock){
+			 $form['lock'] = array(
+		  '#markup' => '<h3><You can not open this discussion because it is locked and being processed by other teller. </h3>'
+		);
+			 return $form;
+		}
+
 		// lock
 		foreach($nids_provider as $nid_item){
 			$node_p = node_load($nid_item);
