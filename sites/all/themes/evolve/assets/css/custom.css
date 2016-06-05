@@ -184,7 +184,7 @@
 	float: left;
 	width: 32.5%;
 }
-#user-profile-form .field-type-list-integer .form-checkboxes .form-item:nth-child(3n+3) {
+#user-profile-form .field-type-list-integer .form-checkboxes .form-item:nth-child(3n+4) {
 	float: none;
 	clear: both;
 	width: 32.5%;
