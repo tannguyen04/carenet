@@ -113,8 +113,9 @@ function unlock_provider(){
   var r = confirm("Are you sure ?");
   if (r == true) {
   	jQuery(document).ready(function($) {
+  		var telephone = location.href.split("discuss/")[1];
   		$.ajax({
-			  url: "/unlock_provider"
+			  url: "/unlock_provider?telephone="+telephone
 			}).done(function() {
 			  window.location.href = "/providers";
 			});
