@@ -78,7 +78,7 @@ function carenet_custom_unlock_provider(){
 	foreach($nids_provider as $nid_item){
 		$node_p = node_load($nid_item);
 		$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 0;
-		$node_p->field_lock_uid[LANGUAGE_NONE][0]['value'] = '';
+		$node_p->field_lock_uid[LANGUAGE_NONE][0]['value'] = 0;
 		node_save($node_p);
 	}
 }
