@@ -153,6 +153,7 @@
 	border: 1px solid #a0a5aa;
 	border-radius: 4px;
 }
+#user-profile-form .horizontal-tabs-list a.selected,
 #user-profile-form .horizontal-tabs-list a:hover {
 	background: #428bca;
 	color: #fff;
