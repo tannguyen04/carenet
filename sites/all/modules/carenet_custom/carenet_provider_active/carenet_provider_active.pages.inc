@@ -502,16 +502,13 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
 function _cardrate_getdata($card_rate_wrapper, $rows) {
   //Title card rate
   $title = strip_tags($card_rate_wrapper->title->value());
-  dpm($title);
   $tmp = explode('_', $title);
-  dpm($tmp);
-  if (count($tmp) > 0) {
+  if (count($tmp) > 1) {
     $title = '';
     for($i=0;$i<count($tmp)-1;$i++) {
       $title .= $tmp[$i];
     }
   }
-  dpm($title);
   $rows[] = array('', $title, '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
