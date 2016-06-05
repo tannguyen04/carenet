@@ -219,10 +219,12 @@
 	display: none;
 }
 
-#edit-profile-main-field-prostaff-languages-spoken label {
+#edit-profile-main-field-prostaff-languages-spoken label,
+#edit-profile-main-field-prostaff-state label {
 	float: left;
 	margin-right: 20px;
 }
-#edit-profile-main-field-prostaff-languages-spoken input {
+#edit-profile-main-field-prostaff-languages-spoken input,
+#edit-profile-main-field-prostaff-state input {
 	width: 300px;
 }
