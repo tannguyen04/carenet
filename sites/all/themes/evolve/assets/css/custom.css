@@ -144,6 +144,8 @@
 #user-profile-form .horizontal-tabs-list li {
 	background: #428bca;
 	border-radius: 4px;
+	margin: 0 15px;
+	padding: 5px 10px;
 }
 #user-profile-form .horizontal-tabs-list a {
 	color: #fff;
