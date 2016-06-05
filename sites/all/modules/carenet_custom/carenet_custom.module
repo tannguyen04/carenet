@@ -1131,7 +1131,7 @@ function carenet_custom_get_data(){
 
 			$list_comment = '';
 	   	if(!empty($node_discuss->field_comment_list[LANGUAGE_NONE][0]['value'])){
-	   		$list_comment .= '<h3>List comment</h3><ul>';
+	   		$list_comment .= '<ul>';
 	   		$data_list_cm = array();
 	   		foreach($node_discuss->field_comment_list[LANGUAGE_NONE] as $item){
 	   			$data_list_cm[$item['value']] = $item['value'];
