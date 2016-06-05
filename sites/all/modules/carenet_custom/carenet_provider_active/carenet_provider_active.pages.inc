@@ -421,13 +421,10 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   //use card rate
   $rows = array();
   $row2 = array();
-  dpm($card_rate);
-  dpm($card_rate_wrapper->title->value());
   $title = strip_tags($card_rate_wrapper->title->value());
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
   if (strpos($title,'General Medical Examination') == false) {
     $tmp = node_load(1155);
-    dpm($tmp);
     $rows = _cardrate_getdata(entity_metadata_wrapper('node', $tmp), $rows);
   }
 
@@ -505,7 +502,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
 function _cardrate_getdata($card_rate_wrapper, $rows) {
   //Title card rate
   $title = strip_tags($card_rate_wrapper->title->value());
+  dpm($title);
   $tmp = explode('_', $title);
+  dpm($tmp);
   if (count($tmp) > 0) {
     $title = '';
     for($i=0;$i<count($tmp)-1;$i++) {
