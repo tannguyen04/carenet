@@ -421,12 +421,14 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   //use card rate
   $rows = array();
   $row2 = array();
-  dpm($card_rate_wrapper);
-  dpm($card_rate_wrapper->title);
+  dpm($card_rate);
+  dpm($card_rate_wrapper->title->value());
   $title = strip_tags($card_rate_wrapper->title->value());
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
   if (strpos($title,'General Medical Examination') == false) {
-    $rows = _cardrate_getdata($card_rate_wrapper, $rows);
+    $tmp = node_load(1155);
+    dpm($tmp);
+    $rows = _cardrate_getdata(entity_metadata_wrapper('node', $tmp), $rows);
   }
 
     $time_generate_pdf = REQUEST_TIME;
