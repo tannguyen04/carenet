@@ -64,6 +64,7 @@ function carenet_custom_menu() {
 
 function carenet_custom_unlock_provider(){
 	$telephone = arg(1);
+	print $telephone;die();
 	$url = $base_url.'/list-provider-by-telephone?telephone='.$telephone;
 	$data = drupal_json_decode(file_get_contents($url));
 
@@ -72,7 +73,7 @@ function carenet_custom_unlock_provider(){
 		$nids_provider[] = $item['node']['nid'];
 	}
 
-	// lock
+	// unlock
 	foreach($nids_provider as $nid_item){
 		$node_p = node_load($nid_item);
 		$node_p->field_lock[LANGUAGE_NONE][0]['value'] = 0;
