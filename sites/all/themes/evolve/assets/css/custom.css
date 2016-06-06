@@ -255,3 +255,18 @@
 .group_attestation_questions .field-type-list-integer label {
 	width: 65%;
 }
+/** professional staff */
+#edit-profile-main-field-prostaff-dob legend {
+	border: 0px;
+	margin: 0px;
+}
+#edit-profile-main-field-prostaff-dob-und-0-value {
+	padding: 10px 0px;
+}
+#edit-profile-main-field-prostaff-languages-spoken{
+	width: auto;
+	float: none;
+}
+#edit-profile-main-field-prostaff-languages-spoken-und-0-value {
+	width: 500px;
+}
