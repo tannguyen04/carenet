@@ -173,7 +173,8 @@
 #user-profile-form .field-type-text,
 #user-profile-form .field-type-email,
 #user-profile-form .field-type-taxonomy-term-reference,
-#user-profile-form .field-type-number-integer {
+#user-profile-form .field-type-number-integer,
+#user-profile-form .field-type-datetime{
     float: left;
     width: 47%;
     margin-right: 3%;
