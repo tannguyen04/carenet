@@ -227,7 +227,7 @@
 	float: left;
 	margin-right: 20px;
 }
-#edit-profile-main-field-prostaff-languages-spoken input,
+
 #edit-profile-main-field-prostaff-state input {
 	width: 300px;
 }
@@ -260,10 +260,10 @@
 	border: 0px;
 	margin: 0px;
 }
-#user-profile-form #edit-profile-main-field-prostaff-dob-und-0-value {
+#edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
 }
-#user-profile-form  #edit-profile-main-field-prostaff-languages-spoken{
+#edit-profile-main-field-prostaff-languages-spoken{
 	width: auto;
 	float: none;
 }
