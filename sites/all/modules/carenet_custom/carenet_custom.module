@@ -167,6 +167,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			}
 		}
 
+		if(empty($nid_default)){
+			$nid_default = $nids_provider;
+		}
+
 		$check_lock = false;
 
 		foreach($nids_provider as $nid_item){
