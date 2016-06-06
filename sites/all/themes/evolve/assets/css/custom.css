@@ -231,3 +231,7 @@
 #edit-profile-main-field-prostaff-state input {
 	width: 300px;
 }
+#group_prostaff_attestation_ques {
+	border: 1px solid #ccccee;
+	padding: 10px;
+}
