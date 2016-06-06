@@ -494,6 +494,11 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
    		$list_comment .= '</ul>';
    	}
 
+   	$form['sendmail_check'] = array(
+		  '#type' =>	'checkbox', 
+		  '#title' => t('Send email to the doctor'),
+		);
+
    	$form['list-comment'] = array(
 		  '#markup' => '<div class="list-comment col-md-12">'.$list_comment.'</div>',
 		);
@@ -866,8 +871,11 @@ relationship managers get in touch with you.
 		 											'subject' => 'Carenet activation',
 		 											'body' => $body
 		 										 );
-		 			drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
-		 			drupal_set_message('Sent mail to doctor success');
+		 			if($data['sendmail_check'] == 1){
+		 				drupal_mail('carenet_custom', 'carenet_custom_mail', $mail_sent, LANGUAGE_NONE , $params, variable_get('site_mail', ini_get('sendmail_from')), TRUE);
+		 				drupal_set_message('Sent mail to doctor success');
+		 			}
+		 			
 		 			break;
 		 		case 'fax':
 
