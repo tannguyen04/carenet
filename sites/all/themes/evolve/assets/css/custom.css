@@ -253,6 +253,12 @@
 .group_attestation_questions .field-type-list-integer label {
 	width: 65%;
 }
+/** Operations Staff **/
+.field-name-field-profile-all-doctors {
+	clear: both;
+}
+/** Service Facility Information **/
+
 /** professional staff */
 #edit-profile-main-field-prostaff-dob legend {
 	border: 0px;
