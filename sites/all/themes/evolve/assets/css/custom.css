@@ -237,6 +237,10 @@
 }
 #group-prostaff-attestation-ques h3 {
 	background: #5F8CB4;
-	padding: 20px;
+	padding: 10px 20px;
 	margin: -10px;
+	color: #fff;
+}
+#group-prostaff-attestation-ques .field-type-list-integer label {
+	width: 80%;
 }
