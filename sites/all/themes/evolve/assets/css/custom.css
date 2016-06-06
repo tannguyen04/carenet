@@ -235,6 +235,7 @@
 .group_profile {
 	border: 1px solid #ccccee;
 	padding: 10px;
+	margin-bottom: 15px;
 }
 #group-prostaff-attestation-ques h3,
 .group_profile h3 {
