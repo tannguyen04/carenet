@@ -232,13 +232,15 @@
 	width: 300px;
 }
 #group-prostaff-attestation-ques,
-.group_profile {
+.group_profile,
+#user-profile-form .field-type-field-collection{
 	border: 1px solid #ccccee;
 	padding: 10px;
 	margin-bottom: 15px;
 }
 #group-prostaff-attestation-ques h3,
-.group_profile h3 {
+.group_profile h3,
+#user-profile-form .field-type-field-collection legend{
 	background: #5F8CB4;
 	padding: 10px 20px;
 	margin: -9px -9px 0px -9px;
