@@ -73,7 +73,7 @@
       var url = '/provider-get-data?priority='+data['priority']+'&city='+data['city']+'&state='+data['state']+'&county='+data['county']+'&status='+data['status']+'&date='+data['date']+'&hpt='+data['hpt']+'&my_quee='+data['my_quee'];
       datatable.ajax.url(url).load();
 
-      if($(this).val() == 4851 || $(this).val() == 4850 || $(this).val() == 4920){
+      if($(this).val() == 4851 || $(this).val() == 4850 || $(this).val() == 4920 || $(this).val() == 4919){
         $('.filter_date').css('display','inline-block');
         $('#date_pick').val('');
       }else{
