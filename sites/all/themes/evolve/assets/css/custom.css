@@ -276,3 +276,6 @@
 #edit-profile-main-field-prostaff-state input{
 	width: 600px;
 }
+.field-name-field-prostaff-license-other label {
+	display: none;
+}
