@@ -169,9 +169,9 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			}
 		}
 
-		// if(empty($nid_default)){
-		// 	$nid_default = $option_default_check;
-		// }
+		if(empty($nid_default)){
+			$nid_default = $option_default_check;
+		}
 
 		$check_lock = false;
 
