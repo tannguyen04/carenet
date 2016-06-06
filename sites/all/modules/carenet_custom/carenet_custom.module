@@ -141,8 +141,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 
 	  $options = array();
 	  $nids_provider = array();
+	  $option_default_check = array();
 		foreach($data['nodes'] as $item){
 			$nids_provider[] = $item['node']['nid'];
+			$option_default_check[$item['node']['nid']] = TRUE;
 			$options[$item['node']['nid']] = array(
 	      'name' => $item['node']['name'],
 	      'npi' => $item['node']['npi'],
@@ -165,6 +167,10 @@ function carenet_custom_provider_action($form, &$form_state, $telephone){
 			foreach($node->field_list_provider[LANGUAGE_NONE] as $item){
 				$nid_default[$item['target_id']] = TRUE;
 			}
+		}
+
+		if(empty($nid_default)){
+			$nid_default = $option_default_check;
 		}
 
 		$check_lock = false;
