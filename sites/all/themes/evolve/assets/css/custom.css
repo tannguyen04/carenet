@@ -263,6 +263,10 @@
 #edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
 }
+#edit-profile-main-field-prostaff-languages-spoken{
+	width: auto;
+	float: none;
+}
 #edit-profile-main-field-prostaff-languages-spoken-und-0-value {
-	width: 300px;
+	width: 500px;
 }
