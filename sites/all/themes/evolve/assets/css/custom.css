@@ -249,3 +249,6 @@
 #group-prostaff-attestation-ques .field-type-list-integer label {
 	width: 80%;
 }
+.service_general_info .field-type-list-integer label {
+	width: 40%;
+}
