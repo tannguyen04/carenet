@@ -252,3 +252,6 @@
 .service_general_info .field-type-list-integer label {
 	width: 40%;
 }
+.group_attestation_questions .field-type-list-integer label {
+	width: 65%;
+}
