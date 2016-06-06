@@ -228,9 +228,7 @@
 	margin-right: 20px;
 }
 
-#edit-profile-main-field-prostaff-state input {
-	width: 300px;
-}
+
 #group-prostaff-attestation-ques,
 .group_profile,
 #user-profile-form .field-type-field-collection{
@@ -263,10 +261,12 @@
 #edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
 }
-#user-profile-form #edit-profile-main-field-prostaff-languages-spoken{
+#user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
+#user-profile-form #edit-profile-main-field-prostaff-state {
 	width: auto;
 	float: none;
 }
-#edit-profile-main-field-prostaff-languages-spoken-und-0-value {
-	width: 500px;
+#edit-profile-main-field-prostaff-languages-spoken input,
+#edit-profile-main-field-prostaff-state input{
+	width: 600px;
 }
