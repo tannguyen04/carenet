@@ -913,8 +913,10 @@ function carenet_custom_mail($key, &$message, $params) {
 function carenet_custom_form_alter(&$form, &$form_state, $form_id) {
  	if($form_id == 'provider_node_form'){
  		drupal_add_js(drupal_get_path('module', 'carenet_custom').'/js/custom_add_provider.js', 'file');
- 		$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
- 		$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
+ 		if(arg(2) != 'edit'){
+ 			$form['field_pv_city']['und']['#options'] = array("_none" =>  "- None -");
+ 			$form['field_pv_county']['und']['#options'] = array("_none" =>  "- None -");
+ 		}
  		//$form['#validate'][] = 'carenet_custom_provider_node_form_validate';
  	}
 }
