@@ -231,14 +231,16 @@
 #edit-profile-main-field-prostaff-state input {
 	width: 300px;
 }
-#group-prostaff-attestation-ques {
+#group-prostaff-attestation-ques,
+.group_profile {
 	border: 1px solid #ccccee;
 	padding: 10px;
 }
-#group-prostaff-attestation-ques h3 {
+#group-prostaff-attestation-ques h3,
+.group_profile h3 {
 	background: #5F8CB4;
 	padding: 10px 20px;
-	margin: -10px;
+	margin: -10px -10px -10px 0px;
 	color: #fff;
 }
 #group-prostaff-attestation-ques .field-type-list-integer label {
