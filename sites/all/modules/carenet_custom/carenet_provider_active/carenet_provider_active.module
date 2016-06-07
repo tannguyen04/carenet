@@ -108,7 +108,9 @@ function _carenet_provider_active_mail_notify($key, $account, $attachment = NULL
   }
   $language = $language ? $language : user_preferred_language($account);
   $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
+  $mail = drupal_mail('carenet_provider_active', $key, 'inquiries@infinitecarenet.com', $language, $params);
   return empty($mail) ? NULL : $mail['result'];
+  
 }
 
 /**
