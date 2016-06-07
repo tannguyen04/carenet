@@ -54,6 +54,7 @@ function carenet_profile_form_user_cancel($form, &$form_state) {
  * cancel_button callback.
  */
 function carenet_profile_form_user_sign($form, &$form_state) {
-
+    dpm($form_state);
+    dpm($form);
     dpm('carenet_profile_form_sign');
 }
