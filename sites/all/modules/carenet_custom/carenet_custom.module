@@ -826,7 +826,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  }
 
 				  $referDoc->field_uid_my_quee[LANGUAGE_NONE][0]['value'] = $user->uid;
-				  
+
 				  node_save($referDoc);
 					
 				}
@@ -1152,24 +1152,11 @@ function carenet_custom_get_data(){
 
 	$list_quee_arg = '';
 	if(!empty($_GET['my_quee']) && $_GET['my_quee'] == 1){
-		$url_my_quee = $base_url.'/list-dissusion/'.$user->uid;
-		$data_my_quee = drupal_json_decode(file_get_contents($url_my_quee));
-		$data_nid_provider = array();
-		foreach ($data_my_quee['nodes'] as $data_my_quee_item) {
-			$list_data_quee_item = explode(',', $data_my_quee_item['node']['nid']);
-			foreach($list_data_quee_item as $per_item_quee){
-				if(!empty(trim($per_item_quee))){
-					$data_nid_provider[$per_item_quee] = trim($per_item_quee);
-				}
-			}
-		}
-
-		if(!empty($data_nid_provider)){
-			$list_quee_arg = '/'.implode('+', $data_nid_provider);
-		}
+		$list_quee_arg = $user->uid;
 	}
 
-	$url = $base_url.'/provide-listing-data'.$list_quee_arg.'?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&hpt='.$_GET['hpt'].'&page='.$parameter['page'];
+
+	$url = $base_url.'/provide-listing-data'.$list_quee_arg.'?search_full='.$parameter['search_full'].'&priority='.$_GET['priority'].'&city='.$_GET['city'].'&state='.$_GET['state'].'&county='.$_GET['county'].'&status='.$_GET['status'].'&date='.$date.'&hpt='.$_GET['hpt'].'&my_quee='.$list_quee_arg.'&page='.$parameter['page'];
 
 	$data = drupal_json_decode(file_get_contents($url));
 	$data_telephone = array();
