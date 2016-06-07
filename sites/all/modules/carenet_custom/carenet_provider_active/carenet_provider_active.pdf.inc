@@ -14,7 +14,7 @@ class PDF extends FPDF
 
 
   // Colored table
-  function FancyTable($header, $data, $multirow=null)
+  function FancyTable($header, $data)
   {
     // Colors, line width and bold font
     $this->SetFillColor(0,124,198);
@@ -33,8 +33,10 @@ class PDF extends FPDF
     // Data
     $fill = true;
     $first = true;
+    $i = 0;
     foreach($data as $row)
     {
+      $i = $i + 1;
       if (!$first) {
         // Color and font restoration
         $this->SetFillColor(224,235,255);
@@ -45,11 +47,13 @@ class PDF extends FPDF
         $this->SetTextColor(255);
         $this->SetFont('','B');
       }
-      if (($multirow == 2) && (!$first)) {
+      $first = false;
+      if ($row[1] == '') {
+        $first = true;
+      }
+      if ($i == 2) {
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
-        //$this->Cell($w[1],10,$row[1],'LR',0,'L',$fill);
-        $this->MultiCell(100,10,$row[1],0,'L',$fill);
-        $multirow = null;
+        $this->MultiCell($w[1],10,$row[1],'LR',0,'L',$fill);
       } else {
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
         $this->Cell($w[1],10,$row[1],'LR',0,'L',$fill);
@@ -57,10 +61,7 @@ class PDF extends FPDF
         $this->Cell($w[2],10,$row[2],'LR',0,'L',$fill);
       }
 
-      $first = false;
-      if ($row[1] == '') {
-        $first = true;
-      }
+
       //$this->Cell($w[2],6,number_format($row[2]),'LR',0,'R',$fill);
       $this->Ln();
       $fill = !$fill;
