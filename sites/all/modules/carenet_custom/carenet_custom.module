@@ -868,7 +868,7 @@ relationship managers get in touch with you.
 
 <p>Best Regards,</p>
 
-<p style="color:blue;"><img src="'.$$base_url.'/sites/all/themes/evolve/logo.png" style="float:left;margin-right:20px" />Provider Relations Team<br />Infinite CARENET | Health Assessments for those who serve and have served<br />Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com</p>
+<p style="color:blue;"><img src="'.$base_url.'/sites/all/themes/evolve/logo.png" style="float:left;margin-right:20px" />Provider Relations Team<br />Infinite CARENET | Health Assessments for those who serve and have served<br />Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com</p>
 <p></p>
 <p style="color:gray;"><i>This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com.</i></p>';
 		 			$params = array('mail_to' => $mail_sent,
