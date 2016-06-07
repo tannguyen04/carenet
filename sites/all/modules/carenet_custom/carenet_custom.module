@@ -594,6 +594,10 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('person', 'Please enter Person Name');
 			}
 
+			if(empty($data['email']) || trim($data['email']) == ''){
+				form_set_error('email', 'Please enter email');
+			}
+
 			if($data['method_contact'] == 'fax' && empty($data['fax_number'])){
 				form_set_error('fax_number', 'Please enter fax number');
 			}
