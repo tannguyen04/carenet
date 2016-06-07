@@ -269,6 +269,8 @@
 #user-profile-form #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob legend {
 	background: none;
 	color: #666666;
+	border: 0px;
+	font-weight: 700;
 }
 #edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
