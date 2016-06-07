@@ -88,7 +88,7 @@ function _carenet_provider_active_mail_notify($key, $account, $attachment = NULL
   }
   if ($key == 'email_provider_ask_question'){
     $params['headers'] = array(
-      'Cc' => 'raucaixanh04@gmail.com',
+      'Cc' => 'inquiries@infinitecarenet.com',
     );
   }
   $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
