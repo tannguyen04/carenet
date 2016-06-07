@@ -52,57 +52,57 @@ function carenet_update_update_7006(&$sandbox) {
  * Implements hook_update_N()
  * Enable Import field collection on dicussion
  */
-function carenet_update_update_7007(&$sandbox) {
-  // If this is the first pass through this update function then set some variables.
-  if (!isset($sandbox['total'])) {
-    //$result = db_query('SELECT nid FROM {node} WHERE type="fortune_cookie"');
-
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'discuss')
-      ->propertyCondition('status', NODE_PUBLISHED)
-      ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
-      ->addMetaData('account', user_load(1)); // Run the query as user 1.
-    $result = $query->execute();
-    $sandbox['total'] = count($result['node']);
-    $sandbox['current'] = 0;
-  }
-  $nodes_per_pass = 10;
-
-// Get the nodes to process during this pass.
-  $query = new EntityFieldQuery();
-  $query->entityCondition('entity_type', 'node')
-    ->entityCondition('bundle', 'discuss')
-    ->propertyCondition('status', NODE_PUBLISHED)
-    ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
-    ->range($sandbox['current'], $nodes_per_pass)
-    ->addMetaData('account', user_load(1)); // Run the query as user 1.
-  $result = $query->execute();
-  if (isset($result['node'])) {
-    $news_items_nids = array_keys($result['node']);
-    $news_items = entity_load('node', $news_items_nids);
-    foreach ($news_items as $discussion) {
-      $ewrapper = entity_metadata_wrapper('node', $discussion);
-      $comment = $ewrapper->field_dc_reason_comment->value();
-      if (!empty($comment)) {
-        // Create the collection entity and set it's "host".
-        $collection = entity_create('field_collection_item', array('field_name' => 'field_comment_list'));
-        $collection->setHostEntity('node', $discussion);
-        // Now define the collection parameters.
-        $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
-        $cwrapper->field_comment->set($comment[0]);
-        $cwrapper->save();
-      }
-      drupal_set_message(t('We processed node @nid', array('@nid' => $discussion->title)));
-      $sandbox['current']++;
-    }
-  }
-  // Set the value for finished. If current == total then finished will be 1, signifying we are done.
-  $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
-  if ($sandbox['#finished'] === 1) {
-    drupal_set_message(t('We processed @nodes nodes. DONE!!!', array('@nodes' => $sandbox['total'])));
-  }
-}
+//function carenet_update_update_7007(&$sandbox) {
+//  // If this is the first pass through this update function then set some variables.
+//  if (!isset($sandbox['total'])) {
+//    //$result = db_query('SELECT nid FROM {node} WHERE type="fortune_cookie"');
+//
+//    $query = new EntityFieldQuery();
+//    $query->entityCondition('entity_type', 'node')
+//      ->entityCondition('bundle', 'discuss')
+//      ->propertyCondition('status', NODE_PUBLISHED)
+//      ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
+//      ->addMetaData('account', user_load(1)); // Run the query as user 1.
+//    $result = $query->execute();
+//    $sandbox['total'] = count($result['node']);
+//    $sandbox['current'] = 0;
+//  }
+//  $nodes_per_pass = 10;
+//
+//// Get the nodes to process during this pass.
+//  $query = new EntityFieldQuery();
+//  $query->entityCondition('entity_type', 'node')
+//    ->entityCondition('bundle', 'discuss')
+//    ->propertyCondition('status', NODE_PUBLISHED)
+//    ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
+//    ->range($sandbox['current'], $nodes_per_pass)
+//    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+//  $result = $query->execute();
+//  if (isset($result['node'])) {
+//    $news_items_nids = array_keys($result['node']);
+//    $news_items = entity_load('node', $news_items_nids);
+//    foreach ($news_items as $discussion) {
+//      $ewrapper = entity_metadata_wrapper('node', $discussion);
+//      $comment = $ewrapper->field_dc_reason_comment->value();
+//      if (!empty($comment)) {
+//        // Create the collection entity and set it's "host".
+//        $collection = entity_create('field_collection_item', array('field_name' => 'field_comment_list'));
+//        $collection->setHostEntity('node', $discussion);
+//        // Now define the collection parameters.
+//        $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+//        $cwrapper->field_comment->set($comment[0]);
+//        $cwrapper->save();
+//      }
+//      drupal_set_message(t('We processed node @nid', array('@nid' => $discussion->title)));
+//      $sandbox['current']++;
+//    }
+//  }
+//  // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+//  $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+//  if ($sandbox['#finished'] === 1) {
+//    drupal_set_message(t('We processed @nodes nodes. DONE!!!', array('@nodes' => $sandbox['total'])));
+//  }
+//}
 
 /*
  * Implements hook_update_N
