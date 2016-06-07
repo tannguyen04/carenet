@@ -10,7 +10,6 @@ function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
             drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js'
         );
         $form['actions']['submit']['#value'] = 'Save Draft';
-        $destination = 'users';
         $form['actions']['cancel'] = array(
             '#type' => 'submit',
             '#value' => t('Cancel'),
@@ -28,11 +27,17 @@ function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
         $form['#sign'] = array('carenet_profile_form_user_sign');
         $test = 1;
         if ($test == 1) {
-            $form['#attributes'] = array('disabled' => TRUE);
+            $form['#attributes'] = array('#disabled' => TRUE);
         }
-        dpm($form);
-    }
+        /*
+        foreach($form['profile_main'] as $key=>&$field) {
+            if (strpos($key,'field_') !== false) {
+                $field['#attributes']['readonly'] = 'readonly';
+                $field['#attributes']['#disabled'] = TRUE;
 
+            }
+        }*/
+    }
 }
 function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     /*
@@ -79,17 +84,10 @@ function carenet_profile_form_user_cancel($form, &$form_state) {
  * cancel_button callback.
  */
 function carenet_profile_form_user_sign($form, &$form_state) {
-    //$form_state['profiles']['main ']->field_profile_sign
-    $tmp = $form_state['profiles']['main']->field_profile_sign;
-    $form_state['profiles']['main']->field_profile_sign[LANGUAGE_NONE][0]['value'] = 1;
-
-    dpm('carenet_profile_form_sign');
-
     profile2_form_submit_build_profile($form, $form_state);
     // This is needed as some submit callbacks like user_register_submit() rely on
     // clean form values.
     profile2_form_submit_cleanup($form, $form_state);
-    dpm($form_state['profiles']);
     foreach ($form_state['profiles'] as $type => $profile) {
         // During registration set the uid field of the newly created user.
         if (empty($profile->uid) && isset($form_state['user']->uid)) {
@@ -100,5 +98,4 @@ function carenet_profile_form_user_sign($form, &$form_state) {
         }
         profile2_save($profile);
     }
-    dpm($form_state['profiles']);
 }

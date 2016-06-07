@@ -7,11 +7,18 @@ console.log('test');
         attach: function (context, settings) {
             console.log(context);
             console.log(settings);
-            var events = $('.form-submit').data('events'); // Get the jQuery events.
-            $('.form-submit').unbind('click'); // Remove the click events.
-            $('.form-submit').click(function () {
+            //disable form
+            var disable = $('#edit-profile-main-field-profile-sign-und-0-value').val();
+            if (disable == 1) {
+                $('#user-profile-form').find('input').attr('disabled', true);
+            }
+
+            //confirm sign button
+            var events = $('#edit-sign').data('events'); // Get the jQuery events.
+            $('#edit-sign').unbind('click'); // Remove the click events.
+            $('#edit-sign').click(function () {
                 console.log('.form-submit');
-                if (confirm('Are you sure you want to delete that?')) {
+                if (confirm('Are you sure you want to sign that?')) {
                     $.each(events.click, function() {
                         this.handler(); // Invoke the click handlers that was removed.
                     });
@@ -19,9 +26,25 @@ console.log('test');
                 // Prevent default action.
                 return false;
             });
+
+            //confirm sign button
+            var events = $('#field-professional-staff-values .form-submit').data('events'); // Get the jQuery events.
+            $('#field-professional-staff-values .form-submit').unbind('click'); // Remove the click events.
+            $('#field-professional-staff-values .form-submit').click(function () {
+                console.log('.form-submit');
+                if (confirm('Are you sure you want to sign that?')) {
+                    $.each(events.click, function() {
+                        this.handler(); // Invoke the click handlers that was removed.
+                    });
+                }
+                // Prevent default action.
+                return false;
+            });
+            /*
             $('#edit-profile-main-field-prostaff-license-other-und-0-value').click(function() {
                 console.log('field-professional-staff-values .ajax-processed');
-            });
+            });*/
+
         }
     };
 
