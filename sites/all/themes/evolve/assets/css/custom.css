@@ -270,17 +270,23 @@
 #edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
 }
-#edit-profile-main-field-prostaff-boardcert-spec label,
-#edit-profile-main-field-prostaff-languages-spoken label,
-#edit-profile-main-field-prostaff-state label {
-	float: left;
-	margin-right: 20px;
-}
+
 #user-profile-form #edit-profile-main-field-prostaff-boardcert-spec,
 #user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
 #user-profile-form #edit-profile-main-field-prostaff-state {
 	width: auto;
 	float: none;
+}
+#edit-profile-main-field-prostaff-boardcert-spec label,
+#edit-profile-main-field-prostaff-languages-spoken label,
+#edit-profile-main-field-prostaff-state label {
+	float: left;
+	margin-right: 20px;
+	width: 190px;
+}
+#edit-profile-main-field-prostaff-veteran label,
+#edit-profile-main-field-prostaff-board-certified label {
+	width: 190px;
 }
 #edit-profile-main-field-prostaff-languages-spoken input,
 #edit-profile-main-field-prostaff-state input{
