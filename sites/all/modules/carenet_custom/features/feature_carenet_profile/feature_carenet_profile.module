@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the feature_carenet_profile feature.
+ */
+
+include_once 'feature_carenet_profile.features.inc';
