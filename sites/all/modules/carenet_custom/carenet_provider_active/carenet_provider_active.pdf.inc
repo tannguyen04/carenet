@@ -50,10 +50,11 @@ class PDF extends FPDF
       $first = false;
       if ($row[1] == '') {
         $first = true;
+        $i = 0;
       }
       if ($i == 2) {
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
-        $this->MultiCell($w[1],10,$row[1],'LR',0,'L',$fill);
+        $this->MultiCell($w[1],10,$row[1],'L',0,'L',$fill);
       } else {
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
         $this->Cell($w[1],10,$row[1],'LR',0,'L',$fill);
