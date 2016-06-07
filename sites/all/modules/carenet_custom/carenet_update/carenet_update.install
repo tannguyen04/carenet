@@ -140,4 +140,13 @@ function carenet_update_update_7008(&$sandbox) {
 <p></p><p style="color:blue;"><img src="/sites/all/themes/evolve/logo.png" width="50" height="auto" style="float:left;margin-right:20px" />Provider Relations Team<br />Infinite CARENET | Health Assessments for those who serve and have served<br />Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com</p>
 <p></p>
 <p style="color:gray;"><i>This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com.</i></p>');
+
+  variable_set('email_provider_receive_when_ask_question_body', '<p>Dear [user:name],</p>
+<p>We understand you have questions related to the sign-up process. One of our Provider Relations Representatives will reach out to you shortly. Alternatively, feel free to each us (301) 355-7774.</p>
+<p>Best Regards,</p>
+<p></p><p style="color:blue;"><img src="/sites/all/themes/evolve/logo.png" width="50" height="auto" style="float:left;margin-right:20px" />Provider Relations Team<br />Infinite CARENET | Health Assessments for those who serve and have served<br />Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com</p>
+<p></p>
+<p style="color:gray;"><i>This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com.</i></p>');
+
+  variable_set('email_provider_receive_when_ask_question_subject', 'Dear [user:name]');
 }
