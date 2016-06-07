@@ -45,6 +45,7 @@ function carenet_provider_active_mail($key, &$message, $params) {
   if (isset($params['attachment'])) {
     $message['params']['attachments'][] = $params['attachment'];
   }
+  $message['headers'] += $params['headers'];
 }
 
 
@@ -78,13 +79,14 @@ function _carenet_provider_active_mail_text($key, $language = NULL, $variables =
 
 function _carenet_provider_active_mail_notify($key, $account, $attachment = NULL, $language = NULL) {
   $params['account'] = $account;
+  $params['headers'] = array();
   $language = $language ? $language : user_preferred_language($account);
   if ($attachment) {
     $params['attachment'] = $attachment;
   }
   if ($key == 'email_provider_ask_question'){
-    $params['header'] = array(
-      'cc' => 'raucaixanh04@gmail.com',
+    $params['headers'] = array(
+      'Cc' => 'raucaixanh04@gmail.com',
     );
   }
   $mail = drupal_mail('carenet_provider_active', $key, $account->mail, $language, $params);
