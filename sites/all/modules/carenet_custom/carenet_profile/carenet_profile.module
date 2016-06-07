@@ -43,7 +43,8 @@ function carenet_profile_form_cancel($form, &$form_state) {
         // If editing entity, link to node view screen
         $link = $path . '/' . arg(1);
     }
-    drupal_goto($link);
+    dpm($link);
+    //drupal_goto($link);
 }
 /**
  * cancel_button callback.
