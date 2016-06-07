@@ -29,6 +29,8 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
  */
 function carenet_profile_form_cancel($form, &$form_state) {
     dpm('carenet_profile_form_cancel');
+    $url = 'users';
+    drupal_goto($url);
 }
 /**
  * cancel_button callback.
