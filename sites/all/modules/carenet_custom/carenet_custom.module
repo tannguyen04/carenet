@@ -659,7 +659,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 
 	  	if(($data['status'] == 4919) && isset($node->field_token[LANGUAGE_NONE][0]['value']) && $data['method_contact'] == 'mail') {
 	  		$token = $node->field_token[LANGUAGE_NONE][0]['value'];
-	  		drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
+	  		//drupal_set_message('Here is: '. l(t('Activation Link'), $base_url.'/activate/'.$token, array('attributes' => array('class' => 'about-link'))));
 	  		
 	  	}
 
