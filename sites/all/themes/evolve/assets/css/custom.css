@@ -267,10 +267,14 @@
 	font-size: 14px;
 	line-height: 24px;
 }
-#edit-profile-main-field-prostaff-dob-und-0-value {
+#edit-profile-main-field-prostaff-dob-und-0-value,
+#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value
+{
 	padding: 10px 0px;
 }
-
+#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value label {
+	display: none;
+}
 #user-profile-form #edit-profile-main-field-prostaff-boardcert-spec,
 #user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
 #user-profile-form #edit-profile-main-field-prostaff-state {
