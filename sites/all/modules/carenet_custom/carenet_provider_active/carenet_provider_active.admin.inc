@@ -29,7 +29,7 @@ function carenet_admin_provider_active_form($form, &$form_state) {
     '#title' => t('Program Review'),
     '#default_value' => variable_get('carenet_provider_active_program_review', ''),
     '#format' => variable_get('carenet_provider_active_program_review_format', 'full_html'),
-    '#required' => TRUE,
+    //'#required' => TRUE,
   );
   $form['carenet_provider_active_contract'] = array(
     '#type' => 'text_format',
@@ -111,6 +111,7 @@ function carenet_admin_provider_active_form($form, &$form_state) {
     '#type' => 'submit',
     '#value' => t('Submit'),
   );
+  $form['#submit'][] = 'carenet_admin_provider_active_form_submit';
   return $form;
 }
 
@@ -120,7 +121,6 @@ function carenet_admin_provider_active_form($form, &$form_state) {
 
 function carenet_admin_provider_active_form_submit($form, $form_state) {
   $values = $form_state['values'];
-
   //Signature file
   if ($values['carenet_signature']) {
     //Save new file
@@ -182,8 +182,9 @@ function carenet_admin_provider_active_form_submit($form, $form_state) {
   variable_set('email_provider_ask_question_body', $values['email_provider_ask_question_body']);
   variable_set('email_provider_accept_subject', $values['email_provider_accept_subject']);
   variable_set('email_provider_accept_body', $values['email_provider_accept_body']);
-  variable_set('email_provider_receive_when_ask_question_subject', $values['email_provider_receive_when_ask_question_subject']);
-  variable_set('email_provider_receive_when_ask_question_body', $values['email_provider_receive_when_ask_question_body']);
+  drupal_set_message('Saved');
+  //variable_set('email_provider_receive_when_ask_question_subject', $values['email_provider_receive_when_ask_question_subject']);
+  //variable_set('email_provider_receive_when_ask_question_body', $values['email_provider_receive_when_ask_question_body']);
 }
 
 
