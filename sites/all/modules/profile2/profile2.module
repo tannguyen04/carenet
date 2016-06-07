@@ -418,6 +418,7 @@ function profile2_attach_form(&$form, &$form_state) {
   $form['#validate'][] = 'profile2_form_validate_handler';
   $form['#submit'][] = 'profile2_form_submit_handler';
   dpm($form);
+  dpm($form_state);
 }
 
 /**
@@ -426,6 +427,7 @@ function profile2_attach_form(&$form, &$form_state) {
  * @see profile2_attach_form()
  */
 function profile2_form_validate_handler(&$form, &$form_state) {
+  dpm($form_state);
   foreach ($form_state['profiles'] as $type => $profile) {
     if (isset($form_state['values']['profile_' . $profile->type])) {
       // @see entity_form_field_validate()
