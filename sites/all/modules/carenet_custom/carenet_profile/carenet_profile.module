@@ -29,8 +29,21 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
  */
 function carenet_profile_form_cancel($form, &$form_state) {
     dpm('carenet_profile_form_cancel');
-    $url = 'users';
-    drupal_goto($url);
+
+    $link = '';
+    $path = 'node';
+    if('user_profile_form' == $form['#form_id']){
+        $path = 'user';
+    }
+    if(arg(1) == 'add') {
+        // If adding entity link to [user|node]/add screen
+        $link = $path . '/add';
+    }
+    elseif(arg(2) == 'edit') {
+        // If editing entity, link to node view screen
+        $link = $path . '/' . arg(1);
+    }
+    drupal_goto($link);
 }
 /**
  * cancel_button callback.
