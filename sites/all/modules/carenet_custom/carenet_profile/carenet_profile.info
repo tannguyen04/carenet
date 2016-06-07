@@ -1,0 +1,4 @@
+name = Carenet Profile
+description = Carenet User Profile Implementation.
+core = 7.x
+package = Carenet

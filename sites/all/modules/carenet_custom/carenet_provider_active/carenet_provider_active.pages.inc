@@ -7,19 +7,19 @@ function _carenet_provider_active_form_steps() {
   return array(
     1 => array(
       'form' => 'carenet_provider_active_form_program_review',
-      'title' => t('Program review'),
+      'title' => t('Program Review'),
     ),
     2 => array(
       'form' => 'carenet_provider_active_form_rate_card',
-      'title' => t('Rate card information'),
+      'title' => t('Rate Card Information'),
     ),
     3 => array(
       'form' => 'carenet_provider_active_form_contract',
-      'title' => t('Contract information'),
+      'title' => t('Contract Information'),
     ),
     4 => array(
       'form' => 'carenet_provider_active_form_signature_execute',
-      'title' => t('Signature execute'),
+      'title' => t('Approval'),
     ),
   );
 }
@@ -202,12 +202,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
         $pdf->Image($signature_image_url, 125, 229, 20, 6);
       }
     } elseif ($pageNo == $pageCount) {
-      //Add image signature
-      $fid = variable_get('carenet_signature', '');
-      if ($file = file_load($fid)) {
-        $signature_image_url = file_create_url($file->uri);
-        $pdf->Image($signature_image_url, 50, 130, 20, 6);
-      }
+
       //Full name
       $pdf->SetTextColor(0);
       $pdf->SetXY(30, 143);
@@ -248,11 +243,14 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#type' => 'container',
   );
   //
+  $form['signature_execute']['aggreement'] = array(
+    '#markup' => '<div id="actions-buttons-container"><br/><br/><p>I have reviewed the program overview, the contract and applicable rate card(s).</p>',
+  );
   $form['signature_execute']['signature_execute_show_accept'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
+    '#markup' => '<div id="actions-buttons"><a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
   );
   $form['signature_execute']['signature_execute_show_ask_question'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask question') . ' </a>',
+    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask a Question') . ' </a></div></div>',
   );
   $form['signature_execute']['accept'] = array(
     '#type' => 'container',
@@ -303,7 +301,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Submit'),
+    '#value' => t('Sign'),
     '#submit' => array('carenet_provider_active_form_signature_execute_accept_submit'),
     '#validate' => array('carenet_provider_active_form_signature_execute_accept_validate'),
     '#name' => 'op_accept',
@@ -421,13 +419,11 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   //use card rate
   $rows = array();
   $row2 = array();
-  dpm($card_rate);
-  dpm($card_rate_wrapper->title->value());
   $title = strip_tags($card_rate_wrapper->title->value());
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
   if (strpos($title,'General Medical Examination') == false) {
     $tmp = node_load(1155);
-    dpm($tmp);
+    $rows[] = array('','','');
     $rows = _cardrate_getdata(entity_metadata_wrapper('node', $tmp), $rows);
   }
 
@@ -504,15 +500,15 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
 
 function _cardrate_getdata($card_rate_wrapper, $rows) {
   //Title card rate
-  $title = $card_rate_wrapper->title->value();
+  $title = strip_tags($card_rate_wrapper->title->value());
   $tmp = explode('_', $title);
-  if (count($tmp) > 0) {
+  if (count($tmp) > 1) {
     $title = '';
     for($i=0;$i<count($tmp)-1;$i++) {
       $title .= $tmp[$i];
     }
   }
-  $rows[] = array('', strip_tags($title), '');
+  $rows[] = array('', $title, '');
   //Description card rate
   $description = $card_rate_wrapper->body->value->value();
   if (!empty($description)) {

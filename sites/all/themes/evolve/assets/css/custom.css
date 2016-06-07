@@ -173,7 +173,8 @@
 #user-profile-form .field-type-text,
 #user-profile-form .field-type-email,
 #user-profile-form .field-type-taxonomy-term-reference,
-#user-profile-form .field-type-number-integer {
+#user-profile-form .field-type-number-integer,
+#user-profile-form .field-type-datetime{
     float: left;
     width: 47%;
     margin-right: 3%;
@@ -222,12 +223,90 @@
 	display: none;
 }
 
+#group-prostaff-attestation-ques,
+.group_profile,
+#user-profile-form .field-type-field-collection{
+	border: 1px solid #ccccee;
+	padding: 10px;
+	margin-bottom: 15px;
+}
+#group-prostaff-attestation-ques h3,
+.group_profile h3,
+#user-profile-form .field-type-field-collection legend{
+	background: #5F8CB4;
+	padding: 10px 20px;
+	margin: -9px -9px 0px -9px;
+	color: #fff;
+}
+#group-prostaff-attestation-ques .field-type-list-integer label {
+	width: 80%;
+}
+.service_general_info .field-type-list-integer label {
+	width: 40%;
+}
+.group_attestation_questions .field-type-list-integer label {
+	width: 65%;
+}
+#user-profile-form .form-actions input {
+	margin-right: 20px;
+}
+/** Operations Staff **/
+.field-name-field-profile-all-doctors {
+	clear: both;
+}
+/** Service Facility Information **/
+
+/** professional staff */
+#edit-profile-main-field-prostaff-dob legend {
+	border: 0px;
+	margin: 0px;
+}
+
+#user-profile-form #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob legend {
+	background: none;
+	color: #666666;
+	border: 0px;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 24px;
+}
+#edit-profile-main-field-prostaff-dob-und-0-value,
+#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value
+{
+	padding: 10px 0px;
+}
+#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value label {
+	display: none;
+}
+#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob .container-inline-date .date-padding {
+	float: none;
+}
+#user-profile-form #edit-profile-main-field-prostaff-boardcert-spec,
+#user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
+#user-profile-form #edit-profile-main-field-prostaff-state {
+	width: auto;
+	float: none;
+}
+#edit-profile-main-field-prostaff-boardcert-spec label,
 #edit-profile-main-field-prostaff-languages-spoken label,
 #edit-profile-main-field-prostaff-state label {
 	float: left;
 	margin-right: 20px;
+	width: 190px;
+}
+#edit-profile-main-field-prostaff-veteran label,
+#edit-profile-main-field-prostaff-board-certified label {
+	width: 190px;
 }
 #edit-profile-main-field-prostaff-languages-spoken input,
-#edit-profile-main-field-prostaff-state input {
-	width: 300px;
+#edit-profile-main-field-prostaff-state input{
+	width: 600px;
+}
+.field-name-field-prostaff-license-other label,
+#user-profile-form .field-type-datetime .description{
+	display: none;
+}
+
+#actions-buttons-container{
+	text-align: center;
 }
