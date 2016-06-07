@@ -7,19 +7,19 @@ function _carenet_provider_active_form_steps() {
   return array(
     1 => array(
       'form' => 'carenet_provider_active_form_program_review',
-      'title' => t('Program review'),
+      'title' => t('Program Review'),
     ),
     2 => array(
       'form' => 'carenet_provider_active_form_rate_card',
-      'title' => t('Rate card information'),
+      'title' => t('Rate Card Information'),
     ),
     3 => array(
       'form' => 'carenet_provider_active_form_contract',
-      'title' => t('Contract information'),
+      'title' => t('Contract Information'),
     ),
     4 => array(
       'form' => 'carenet_provider_active_form_signature_execute',
-      'title' => t('Signature execute'),
+      'title' => t('Approval'),
     ),
   );
 }
@@ -243,11 +243,14 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#type' => 'container',
   );
   //
+  $form['signature_execute']['aggreement'] = array(
+    '#markup' => '<div id="actions-buttons-container"><p>I have reviewed the program overview, the contract and applicable rate card(s).</p>',
+  );
   $form['signature_execute']['signature_execute_show_accept'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
+    '#markup' => '<div id="actions-buttons"><a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
   );
   $form['signature_execute']['signature_execute_show_ask_question'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask question') . ' </a>',
+    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask a Question') . ' </a></div></div>',
   );
   $form['signature_execute']['accept'] = array(
     '#type' => 'container',
@@ -298,7 +301,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   $form['signature_execute']['accept']['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Submit'),
+    '#value' => t('Sign'),
     '#submit' => array('carenet_provider_active_form_signature_execute_accept_submit'),
     '#validate' => array('carenet_provider_active_form_signature_execute_accept_validate'),
     '#name' => 'op_accept',
@@ -327,7 +330,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#default_value' => !empty($form_state['values']['question']) ? $form_state['values']['question'] : '',
   );
   $form['signature_execute']['ask_question']['submit'] = array(
-    '#type' => 'submit',
+    '#type' => 'Send',
     '#value' => t('Send'),
     '#submit' => array('carenet_provider_active_form_signature_execute_ask_question_submit'),
     '#limit_validation_errors' => array(
