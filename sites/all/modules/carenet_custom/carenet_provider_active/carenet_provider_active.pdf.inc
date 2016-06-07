@@ -53,8 +53,13 @@ class PDF extends FPDF
         $i = 0;
       }
       if ($i == 2) {
+        $current_y = $this->GetY();
+        $current_x = $this->GetX();
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
-        $this->MultiCell($w[1],10,$row[1],'L',0,'L',$fill);
+        $this->MultiCell($w[1],10,$row[1],0,'L',$fill);
+        $end_y = $this->GetY();
+        $current_x = $current_x + 1;
+        $this->SetXY($current_x, $current_y);
       } else {
         $this->Cell($w[0],10,$row[0],'LR',0,'L',$fill);
         $this->Cell($w[1],10,$row[1],'LR',0,'L',$fill);
