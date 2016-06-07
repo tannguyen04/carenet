@@ -26,9 +26,11 @@ function carenet_provider_active_menu() {
  * Token callback to add unsafe tokens for user mails.
  */
 function provider_active_mail_tokens(&$replacements, $data, $options) {
-  if (isset($data['user']) && ($data['user']->uid)) {
-    $replacements['[user:one-time-login-url]'] = user_pass_reset_url($data['user']);
-    $replacements['[user:cancel-url]'] = user_cancel_url($data['user']);
+  if (isset($data['user'])) {
+    if (($data['user']->uid)){
+      $replacements['[user:one-time-login-url]'] = user_pass_reset_url($data['user']);
+      $replacements['[user:cancel-url]'] = user_cancel_url($data['user']);
+    }
     $replacements['[user:ask_question]'] = isset($data['user']->ask_question) ? $data['user']->ask_question : '';
   }
 }
