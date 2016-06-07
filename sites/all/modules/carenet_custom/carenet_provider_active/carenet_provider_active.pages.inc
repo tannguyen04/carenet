@@ -421,6 +421,9 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $row2 = array();
   $title = strip_tags($card_rate_wrapper->title->value());
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
+  var_dump($title);
+  var_dump(strpos($title,'General Medical Examination'));
+  die;
   if (strpos($title,'General Medical Examination') == false) {
     $tmp = node_load(1155);
     $rows[] = array('','','');
