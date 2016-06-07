@@ -535,10 +535,20 @@ function _cardrate_getdata($card_rate_wrapper, $rows) {
  * Handler submit ask question
  */
 function carenet_provider_active_form_signature_execute_ask_question_submit($form, $form_state) {
+  $discussion_wrapper = entity_metadata_wrapper('node', $form['#discussion']);
   //Send mail for admin
   $admin_load = user_load(1);
   $admin_load->ask_question = $form_state['values']['question'];
+  //sent to admin
   $sent = _carenet_provider_active_mail_notify('email_provider_ask_question', $admin_load);
+  //Send to provider
+  $provider_account = new stdClass;
+  $provider_account->uid = 0;
+  $provider_account->name = $discussion_wrapper->field_dc_person->value();
+  $provider_account->mail = $discussion_wrapper->field_dc_email->value();
+  $provider_account->init = $discussion_wrapper->field_dc_email->value();
+  $sent = _carenet_provider_active_mail_notify('email_provider_receive_when_ask_question', $provider_account);
+
   if ($sent) {
     drupal_set_message(t('Your question has been sent, we will review and get back to you as soon as possible.'));
   }

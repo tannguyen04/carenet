@@ -83,6 +83,26 @@ function carenet_admin_provider_active_form($form, &$form_state) {
     '#default_value' => variable_get('email_provider_ask_question_body', ''),
     '#rows' => 15,
   );
+  $form['email_provider_receive_when_ask_question'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Email was sent to provider when ask question'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#description' => t('Edit the welcome e-mail messages sent when provider ask question') . ' ' . $email_token_help,
+    '#group' => 'email',
+  );
+  $form['email_provider_receive_when_ask_question']['email_provider_receive_when_ask_question_subject'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Subject'),
+    '#default_value' => variable_get('email_provider_receive_when_ask_question_subject', ''),
+    '#maxlength' => 180,
+  );
+  $form['email_provider_receive_when_ask_question']['email_provider_receive_when_ask_question_body'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Body'),
+    '#default_value' => variable_get('email_provider_receive_when_ask_question_body', ''),
+    '#rows' => 15,
+  );
 
   $form['actions'] = array(
     '#type' => 'actions'
@@ -162,6 +182,8 @@ function carenet_admin_provider_active_form_submit($form, $form_state) {
   variable_set('email_provider_ask_question_body', $values['email_provider_ask_question_body']);
   variable_set('email_provider_accept_subject', $values['email_provider_accept_subject']);
   variable_set('email_provider_accept_body', $values['email_provider_accept_body']);
+  variable_set('email_provider_receive_when_ask_question_subject', $values['email_provider_receive_when_ask_question_subject']);
+  variable_set('email_provider_receive_when_ask_question_body', $values['email_provider_receive_when_ask_question_body']);
 }
 
 
