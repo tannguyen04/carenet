@@ -824,6 +824,9 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 				  if(!empty($data['status']) && $data['status'] != 'All'){
 						$referDoc->field_pv_status[LANGUAGE_NONE][0]['tid'] = $data['status'];
 				  }
+
+				  $referDoc->field_uid_my_quee[LANGUAGE_NONE][0]['value'] = $user->uid;
+				  
 				  node_save($referDoc);
 					
 				}
