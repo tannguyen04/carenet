@@ -10,8 +10,16 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
     $form['actions']['submit']['#value'] = 'Save Draft';
     $destination = 'users';
     $form['actions']['cancel'] = array(
-        '#markup' => l(t('Cancel'), $destination),
+        '#type' => 'button',
+        '#value' => t('Cancel'),
         '#weight' => 20,
+    );
+    $form['actions']['preview'] = array(
+
+        '#type' => 'submit',
+        '#value' => t('Sign'),
+        '#weight' => 10,
+        '#submit' => array('node_form_build_sign'),
     );
     $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
     $form['some_text']['#weight'] = 100;
