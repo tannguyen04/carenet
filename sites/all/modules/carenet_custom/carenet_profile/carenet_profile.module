@@ -9,30 +9,33 @@ function carenet_profile_form_alter(&$form, &$form_state, $form_id) {
 }
 function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     //drupal_add_js(array('carenet_profile' => array('key' => 'value')), 'setting');
-    drupal_add_js(drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js');
+    if ($form['#user_category'] == 'main') {
+        drupal_add_js(drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js');
 
-    $form['actions']['submit']['#value'] = 'Save Draft';
-    $destination = 'users';
-    $form['actions']['cancel'] = array(
-        '#type' => 'submit',
-        '#value' => t('Cancel'),
-        '#weight' => 20,
-        '#submit' => array('carenet_profile_form_user_cancel'),
-    );
-    $form['actions']['sign'] = array(
-        '#type' => 'submit',
-        '#value' => t('Sign'),
-        '#weight' => 10,
-        '#submit' => array('carenet_profile_form_user_sign'),
-    );
-    $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
-    $form['some_text']['#weight'] = 100;
-    $test = 1;
-    if ($test == 1) {
-        $form['#attributes'] = array('disabled' => TRUE);
+        $form['actions']['submit']['#value'] = 'Save Draft';
+        $destination = 'users';
+        $form['actions']['cancel'] = array(
+            '#type' => 'submit',
+            '#value' => t('Cancel'),
+            '#weight' => 20,
+            '#submit' => array('carenet_profile_form_user_cancel'),
+        );
+        $form['actions']['sign'] = array(
+            '#type' => 'submit',
+            '#value' => t('Sign'),
+            '#weight' => 10,
+            '#submit' => array('carenet_profile_form_user_sign'),
+        );
+        $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
+        $form['some_text']['#weight'] = 100;
+        $test = 2;
+        if ($test == 1) {
+            $form['#attributes'] = array('disabled' => TRUE);
+        }
+        dpm($form);
+        dpm($form_state);
     }
-    dpm($form);
-    dpm($form_state);
+
 }
 /**
  * cancel_button callback.
