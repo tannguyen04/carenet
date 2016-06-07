@@ -4,8 +4,11 @@
  */
 function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
     if ($form['#user_category'] == 'main') {
-        drupal_add_js(drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js');
+        //drupal_add_js(drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js');
 
+        $form['#attached']['js'] = array(
+            drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js'
+        );
         $form['actions']['submit']['#value'] = 'Save Draft';
         $destination = 'users';
         $form['actions']['cancel'] = array(
@@ -18,15 +21,16 @@ function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
             '#type' => 'submit',
             '#value' => t('Sign'),
             '#weight' => 10,
-            '#submit' => array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler'),
+            //'#submit' => array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler'),
+            '#submit' => array('carenet_profile_form_user_sign')
         );
-        $form['#sign'] = array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler');
-        //$form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
-        //$form['some_text']['#weight'] = 100;
+        //$form['#sign'] = array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler');
+        $form['#sign'] = array('carenet_profile_form_user_sign');
         $test = 1;
         if ($test == 1) {
             $form['#attributes'] = array('disabled' => TRUE);
         }
+        dpm($form);
     }
 
 }
@@ -77,6 +81,24 @@ function carenet_profile_form_user_cancel($form, &$form_state) {
 function carenet_profile_form_user_sign($form, &$form_state) {
     //$form_state['profiles']['main ']->field_profile_sign
     $tmp = $form_state['profiles']['main']->field_profile_sign;
-    $form_state['profiles']['main']->field_profile_sign['und'][0]['value'] = 1;
+    $form_state['profiles']['main']->field_profile_sign[LANGUAGE_NONE][0]['value'] = 1;
+
     dpm('carenet_profile_form_sign');
+
+    profile2_form_submit_build_profile($form, $form_state);
+    // This is needed as some submit callbacks like user_register_submit() rely on
+    // clean form values.
+    profile2_form_submit_cleanup($form, $form_state);
+    dpm($form_state['profiles']);
+    foreach ($form_state['profiles'] as $type => $profile) {
+        // During registration set the uid field of the newly created user.
+        if (empty($profile->uid) && isset($form_state['user']->uid)) {
+            $profile->uid = $form_state['user']->uid;
+        }
+        if ($type == 'main') {
+            $profile->field_profile_sign['und'][0]['value'] = 1;
+        }
+        profile2_save($profile);
+    }
+    dpm($form_state['profiles']);
 }

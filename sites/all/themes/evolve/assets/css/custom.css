@@ -131,6 +131,19 @@
 	padding: 5px;
 	background: none;
 }
+/** my account */
+.profile dl,
+.profile h3,
+#edit-mimemail,
+#edit-contact,
+#edit-picture,
+#edit-timezone,
+#edit-field-contract{
+	display: none;
+}
+#user-profile-form #edit-actions {
+	clear: both;
+}
 /** profile 2 **/
 #user-profile-form .field-group-htabs-wrapper {
 	margin-top: 20px;
@@ -185,6 +198,9 @@
 	float:none;
 	clear: both;
 }
+#user-profile-form .field-type-number-integer input {
+	width: 100%;
+}
 #user-profile-form select {
 	padding: 8px;
 
@@ -222,7 +238,26 @@
 #user-profile-form .tabledrag-toggle-weight-wrapper {
 	display: none;
 }
-
+#user-profile-form .field-type-datetime fieldset {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+#user-profile-form .field-type-datetime legend {
+	border: 0px;
+	margin-bottom: 0px;
+	font-size: 14px;
+	line-height: 24px;
+	font-weight: 700;
+}
+#user-profile-form .field-type-datetime .date-combo .container-inline-date .date-padding {
+	padding-top: 5px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+#user-profile-form .field-type-datetime .container-inline-date .form-item,
+#user-profile-form .container-inline-date .form-item input {
+	width: 100%;
+}
 #group-prostaff-attestation-ques,
 .group_profile,
 #user-profile-form .field-type-field-collection{
@@ -238,11 +273,14 @@
 	margin: -9px -9px 0px -9px;
 	color: #fff;
 }
+#user-profile-form .field-type-field-collection .field-type-datetime legend {
+	background: none;
+	color: #666666;
+	padding: 0px;
+	margin: 0px 0px 5px 0;
+}
 #group-prostaff-attestation-ques .field-type-list-integer label {
 	width: 80%;
-}
-.service_general_info .field-type-list-integer label {
-	width: 40%;
 }
 .group_attestation_questions .field-type-list-integer label {
 	width: 65%;
@@ -250,33 +288,65 @@
 #user-profile-form .form-actions input {
 	margin-right: 20px;
 }
+/** business information */
+#user-profile-form .field-name-field-business-information .field-name-field-profile-address,
+#user-profile-form .field-name-field-business-information .field-name-field-profile-address2{
+	float: none;
+	width: 100%;
+	margin: 0px;
+}
+#user-profile-form .field-name-field-business-information .field-name-field-profile-address input,
+#user-profile-form .field-name-field-business-information .field-name-field-profile-address2 input {
+	width: 97%;
+}
 /** Operations Staff **/
 .field-name-field-profile-all-doctors {
 	clear: both;
 }
 /** Service Facility Information **/
-
-/** professional staff */
-#edit-profile-main-field-prostaff-dob legend {
-	border: 0px;
+#user-profile-form .field-name-field-facility-location .field-name-field-profile-address,
+#user-profile-form .field-name-field-facility-location .field-name-field-profile-address2{
+	float: none;
+	width: 100%;
 	margin: 0px;
 }
-
-#user-profile-form #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob legend {
-	background: none;
-	color: #666666;
-	border: 0px;
-	font-weight: 700;
-	font-size: 14px;
-	line-height: 24px;
+#user-profile-form .field-name-field-facility-location .field-name-field-profile-address input,
+#user-profile-form .field-name-field-facility-location .field-name-field-profile-address2 input {
+	width: 97%;
 }
-#edit-profile-main-field-prostaff-dob-und-0-value,
-#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value
+.service_general_info .field-type-list-integer label {
+	width: 40%;
+}
+
+/** professional staff */
+#user-profile-form .field-widget-field-collection-table thead th:first-child label {
+	display: none;
+}
+#user-profile-form .field-widget-field-collection-table .field-type-text,
+#user-profile-form .field-widget-field-collection-table .field-type-email,
+#user-profile-form .field-widget-field-collection-table .field-type-datetime {
+	float: none;
+	width: auto;
+	margin-right: 0px;
+}
+#user-profile-form .field-widget-field-collection-table .field-type-datetime .container-inline-date .form-item {
+	margin: 0px;
+}
+#user-profile-form .field-widget-field-collection-table .field-type-datetime legend {
+	display: none;
+}
+#user-profile-form .field-widget-field-collection-table .sticky-table td {
+	padding: 5px;
+}
+#user-profile-form .field-widget-field-collection-table .sticky-table input {
+	width: 150px;
+}
+#user-profile-form .field-widget-field-collection-table .sticky-table input.btn {
+	width: 90px;
+}
+#edit-profile-main-field-prostaff-dob-und-0-value
 {
 	padding: 10px 0px;
-}
-#edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value label {
-	display: none;
 }
 #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob .container-inline-date .date-padding {
 	float: none;
@@ -298,11 +368,18 @@
 #edit-profile-main-field-prostaff-board-certified label {
 	width: 190px;
 }
+.field-name-field-prostaff-boardcert-spec input,
 #edit-profile-main-field-prostaff-languages-spoken input,
 #edit-profile-main-field-prostaff-state input{
 	width: 600px;
 }
-.field-name-field-prostaff-license-other label,
+.field-name-field-prostaff-traveling label,
+.field-name-field-prostaff-currently-maintai label {
+	width: 700px;
+}
+.field-name-field-prostaff-license-other {
+	clear: both;
+}
 #user-profile-form .field-type-datetime .description,
 #edit-profile-main-field-profile-sign{
 	display: none;
