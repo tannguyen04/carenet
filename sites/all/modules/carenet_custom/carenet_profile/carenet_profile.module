@@ -3,9 +3,9 @@
  * Implements hook_form_BASE_FORM_ID_alter()
  */
 function carenet_profile_form_alter(&$form, &$form_state, $form_id) {
-    dpm($form_id);
-    dpm($form);
-    dpm($form_state);
+    //dpm($form_id);
+    //dpm($form);
+    //dpm($form_state);
 }
 function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     //drupal_add_js(array('carenet_profile' => array('key' => 'value')), 'setting');
