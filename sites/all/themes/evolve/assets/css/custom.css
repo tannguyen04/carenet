@@ -281,3 +281,7 @@
 #user-profile-form .field-type-datetime .description{
 	display: none;
 }
+
+#actions-buttons-container{
+	text-align: center;
+}
