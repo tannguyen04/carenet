@@ -247,6 +247,9 @@
 .group_attestation_questions .field-type-list-integer label {
 	width: 65%;
 }
+#user-profile-form .form-actions input {
+	margin-right: 20px;
+}
 /** Operations Staff **/
 .field-name-field-profile-all-doctors {
 	clear: both;

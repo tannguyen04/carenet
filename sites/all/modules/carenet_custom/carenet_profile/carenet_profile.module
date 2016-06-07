@@ -13,14 +13,26 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
         '#type' => 'button',
         '#value' => t('Cancel'),
         '#weight' => 20,
+        '#submit' => array('carenet_profile_form_cancel'),
     );
     $form['actions']['preview'] = array(
-
         '#type' => 'submit',
         '#value' => t('Sign'),
         '#weight' => 10,
-        '#submit' => array('node_form_build_sign'),
+        '#submit' => array('carenet_profile_form_sign'),
     );
     $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
     $form['some_text']['#weight'] = 100;
+}
+/**
+ * cancel_button callback.
+ */
+function carenet_profile_form_cancel($form, &$form_state) {
+    dpm('carenet_profile_form_cancel');
+}
+/**
+ * cancel_button callback.
+ */
+function carenet_profile_form_sign($form, &$form_state) {
+    dpm('carenet_profile_form_sign');
 }
