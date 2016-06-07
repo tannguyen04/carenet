@@ -818,7 +818,7 @@ function carenet_custom_provider_action_submit($form, &$form_state){
 					$referDoc = node_load($doctor);
 
 					if(!empty($data['date_time'])){
-				  	$referDoc->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d', 'UTC');
+				  	$referDoc->field_last_datetime[LANGUAGE_NONE][0]['value'] = format_date(strtotime($data['date_time']), 'custom', 'Y-m-d');
 				  }
 				  
 				  if(!empty($data['status']) && $data['status'] != 'All'){
@@ -1225,8 +1225,12 @@ function carenet_custom_get_data(){
 
 	   		foreach($data_list_cm as $item){
 	   			$field_data = field_collection_item_load($item);
-	   			$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
-	   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.date('m/d/Y H:i',$time).'</li>';
+	   			$time = '';
+	   			if(!empty($field_data->field_date[LANGUAGE_NONE][0]['value'])){
+	   				$time = strtotime($field_data->field_date[LANGUAGE_NONE][0]['value']);
+	   				$time = date('m/d/Y H:i',$time);
+	   			}
+	   			$list_comment .= '<li>'.$field_data->field_comment[LANGUAGE_NONE][0]['value'].' - '.$time.'</li>';
 	   		}
 	   		
 	   		$list_comment .= '</ul>';
