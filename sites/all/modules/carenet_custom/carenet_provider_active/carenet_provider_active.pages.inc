@@ -135,7 +135,7 @@ function carenet_provider_active_pdf_generate($source, $destination, $full_name,
   $pdf->FancyTable($header,$rows);
   if (count($row2) > 0) {
     $pdf->AddPage();
-    $pdf->FancyTable($header,$rows);
+    $pdf->FancyTable($header,$rows,2);
   }
   $pdf->Output('F', $path_pdf_table_rate_tmp);
 
