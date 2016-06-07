@@ -59,7 +59,7 @@ class PDF extends FPDF
         $this->Cell($w[0],$height,$row[0],'LR',0,'L',$fill);
         $this->MultiCell($w[1],$height,$row[1],0,'L',$fill);
         $end_y = $this->GetY();
-        $current_x = $current_x + $height;
+        $current_x = $current_x + 2*$height;
         $this->SetXY($current_x, $current_y);
       } else {
         $this->Cell($w[0],$height,$row[0],'LR',0,'L',$fill);
