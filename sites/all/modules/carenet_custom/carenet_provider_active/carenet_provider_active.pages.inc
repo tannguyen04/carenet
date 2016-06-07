@@ -244,13 +244,13 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
   );
   //
   $form['signature_execute']['aggreement'] = array(
-    '#markup' => '<p>I have reviewed the program overview, the contract and applicable rate card(s).</p>',
+    '#markup' => '<div id="actions-buttons-container"><p>I have reviewed the program overview, the contract and applicable rate card(s).</p>',
   );
   $form['signature_execute']['signature_execute_show_accept'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
+    '#markup' => '<div id="actions-buttons"><a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-accept" href="#"> ' . t('Accept') . ' </a>',
   );
   $form['signature_execute']['signature_execute_show_ask_question'] = array(
-    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask a Question') . ' </a>',
+    '#markup' => '<a class="dexp-shortcodes-button btn btn-lg btn-link" id="show-ask-question" href="#"> ' . t('Ask a Question') . ' </a></div></div>',
   );
   $form['signature_execute']['accept'] = array(
     '#type' => 'container',
