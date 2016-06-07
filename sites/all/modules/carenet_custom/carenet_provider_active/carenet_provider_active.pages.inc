@@ -423,13 +423,14 @@ function carenet_provider_active_form_signature_execute_accept_submit($form, &$f
   $rows = _cardrate_getdata($card_rate_wrapper, $rows);
   var_dump($title);
   var_dump(strpos($title,'General Medical Examination'));
-  die;
-  if (strpos($title,'General Medical Examination') == false) {
+
+  if (strpos($title,'General Medical Examination') === false) {
+    var_dump('32423');
     $tmp = node_load(1155);
     $rows[] = array('','','');
     $rows = _cardrate_getdata(entity_metadata_wrapper('node', $tmp), $rows);
   }
-
+  die;
     $time_generate_pdf = REQUEST_TIME;
     $dest = drupal_realpath('private://contract_'.$time_generate_pdf.'.pdf');
     //$source = drupal_realpath('public://infinite_contract/Participation__AGREEMENT_Final_1463949571.pdf');
