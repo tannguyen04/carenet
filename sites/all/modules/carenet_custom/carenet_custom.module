@@ -594,7 +594,7 @@ function carenet_custom_provider_action_validate($form, &$form_state){
 				form_set_error('person', 'Please enter Person Name');
 			}
 
-			if(empty($data['email']) || trim($data['email']) == ''){
+			if(empty($data['email']) || trim($data['email']) == '' || $data['email'] == 'user@example.com'){
 				form_set_error('email', 'Please enter email');
 			}
 
