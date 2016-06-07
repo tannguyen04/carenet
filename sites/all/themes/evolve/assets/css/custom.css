@@ -265,9 +265,15 @@
 	border: 0px;
 	margin: 0px;
 }
+
+#user-profile-form #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob legend {
+	background: none;
+	color: #666666;
+}
 #edit-profile-main-field-prostaff-dob-und-0-value {
 	padding: 10px 0px;
 }
+
 #user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
 #user-profile-form #edit-profile-main-field-prostaff-state {
 	width: auto;
