@@ -18,9 +18,9 @@ function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
             '#type' => 'submit',
             '#value' => t('Sign'),
             '#weight' => 10,
-            '#submit' => array('carenet_profile_form_user_sign','user_profile_form_submit'),
+            '#submit' => array('carenet_profile_form_user_sign','profile2_form_submit_handler'),
         );
-        $form['#sign'] = array('carenet_profile_form_user_sign','user_profile_form_submit');
+        $form['#sign'] = array('carenet_profile_form_user_sign','profile2_form_submit_handler');
         $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
         $form['some_text']['#weight'] = 100;
         $test = 1;
