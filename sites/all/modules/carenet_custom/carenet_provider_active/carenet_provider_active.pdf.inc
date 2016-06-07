@@ -62,7 +62,9 @@ class PDF extends FPDF
         $end_y = ($this->GetY() > $end_y)?$this->GetY() : $end_y;
         $current_x = $current_x + 1;
         if (strlen($row[1]) >90) {
-          $current_y = $current_y +10;
+          $current_y = $current_y + 10;
+        }elseif (strlen($row[1]) > 190) {
+          $current_y = $current_y + 20;
         }
         $this->SetXY($current_x, $current_y);
       } else {

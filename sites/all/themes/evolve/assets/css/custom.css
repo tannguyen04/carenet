@@ -303,7 +303,8 @@
 	width: 600px;
 }
 .field-name-field-prostaff-license-other label,
-#user-profile-form .field-type-datetime .description{
+#user-profile-form .field-type-datetime .description,
+#edit-profile-main-field-profile-sign{
 	display: none;
 }
 
