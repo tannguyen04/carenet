@@ -61,7 +61,10 @@ class PDF extends FPDF
         $end_y = $this->GetY();
         $end_y = ($this->GetY() > $end_y)?$this->GetY() : $end_y;
         $current_x = $current_x + 1;
-        $this->SetXY($current_x, $current_y+10);
+        if (strlen($row[1]) >90) {
+          $current_y = $current_y +10;
+        }
+        $this->SetXY($current_x, $current_y);
       } else {
         $this->Cell($w[0],$height,$row[0],'LR',0,'L',$fill);
         $this->Cell($w[1],$height,$row[1],'LR',0,'L',$fill);
