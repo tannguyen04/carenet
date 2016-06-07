@@ -330,7 +330,7 @@ function carenet_provider_active_form_signature_execute($form, &$form_state) {
     '#default_value' => !empty($form_state['values']['question']) ? $form_state['values']['question'] : '',
   );
   $form['signature_execute']['ask_question']['submit'] = array(
-    '#type' => 'Send',
+    '#type' => 'submit',
     '#value' => t('Send'),
     '#submit' => array('carenet_provider_active_form_signature_execute_ask_question_submit'),
     '#limit_validation_errors' => array(
