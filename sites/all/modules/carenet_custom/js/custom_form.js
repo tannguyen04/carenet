@@ -56,6 +56,7 @@ jQuery(document).ready(function($) {
 			$('#carenet-custom-provider-action .form-item-card-rate').show();
 			$('#carenet-custom-provider-action #card_rate_item_wrapper').show();
 			$('#carenet-custom-provider-action .form-item-date-time').show();
+			$('#carenet-custom-provider-action .form-item-reason').hide();
 			
 			if($('#edit-method-contact-fax').is(':checked')){
 				$('#carenet-custom-provider-action .form-item-fax').show();
