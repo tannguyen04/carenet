@@ -275,6 +275,9 @@
 #edit-profile-main-field-professional-staff-und-0-field-prostaff-dob-und-0-value label {
 	display: none;
 }
+#edit-profile-main-field-prostaff-dob .container-inline-date .date-padding {
+	float: none;
+}
 #user-profile-form #edit-profile-main-field-prostaff-boardcert-spec,
 #user-profile-form #edit-profile-main-field-prostaff-languages-spoken,
 #user-profile-form #edit-profile-main-field-prostaff-state {
