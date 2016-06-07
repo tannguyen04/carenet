@@ -47,3 +47,101 @@ function carenet_update_update_7006(&$sandbox) {
   //Enable module
   module_enable(array('carenet_user'));
 }
+
+/**
+ * Implements hook_update_N()
+ * Enable Import field collection on dicussion
+ */
+function carenet_update_update_7007(&$sandbox) {
+  // If this is the first pass through this update function then set some variables.
+  if (!isset($sandbox['total'])) {
+    //$result = db_query('SELECT nid FROM {node} WHERE type="fortune_cookie"');
+
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'discuss')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
+      ->addMetaData('account', user_load(1)); // Run the query as user 1.
+    $result = $query->execute();
+    $sandbox['total'] = count($result['node']);
+    $sandbox['current'] = 0;
+  }
+  $nodes_per_pass = 10;
+
+// Get the nodes to process during this pass.
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'discuss')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_dc_reason_comment', 'value', 'NULL', '!=')
+    ->range($sandbox['current'], $nodes_per_pass)
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $news_items_nids = array_keys($result['node']);
+    $news_items = entity_load('node', $news_items_nids);
+    foreach ($news_items as $discussion) {
+      $ewrapper = entity_metadata_wrapper('node', $discussion);
+      $comment = $ewrapper->field_dc_reason_comment->value();
+      if (!empty($comment)) {
+        // Create the collection entity and set it's "host".
+        $collection = entity_create('field_collection_item', array('field_name' => 'field_comment_list'));
+        $collection->setHostEntity('node', $discussion);
+        // Now define the collection parameters.
+        $cwrapper = entity_metadata_wrapper('field_collection_item', $collection);
+        $cwrapper->field_comment->set($comment[0]);
+        $cwrapper->save();
+      }
+      drupal_set_message(t('We processed node @nid', array('@nid' => $discussion->title)));
+      $sandbox['current']++;
+    }
+  }
+  // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+  $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  if ($sandbox['#finished'] === 1) {
+    drupal_set_message(t('We processed @nodes nodes. DONE!!!', array('@nodes' => $sandbox['total'])));
+  }
+}
+
+/*
+ * Implements hook_update_N
+ * Update variable mail
+ */
+
+function carenet_update_update_7008(&$sandbox) {
+  variable_set('email_provider_accept_body', '<p>Dear [user:field_full_name],</p>
+<p>Welcome to the Infinite CareNet family of healthcare providers.  We look forward to working with you for the purpose of providing disability assessment to Veterans and Service Members in a timely manner.</p>
+<p>Please find enclosed a copy of the executed Participation Agreement along with Schedules thereto.</p>
+<p>Next Steps:</p>
+<ul>
+<li>Please click on this <a href="[user:one-time-login-url]">activation link</a> to activate your account on our Provider registration portal. Once you have setup your password and security questions, you will also see the contract uploaded under your profile.</li>
+<li>Additional information is required for the purpose of Credentialing and Facility certification.  Upon successful login and access to your profile, please fill in the requested information under the 3 tabs on the portal –
+<ul>
+<li>Professional Staff Questionnaire</li>
+<li>Service Facility Questionnaire</li>
+<li>Additional Documents</li>
+</ul>
+</li>
+</ul>
+<p>Under the additional documents tab, you are requested to upload the following documents –</p>
+<ul>
+<li>Current Medical License</li>
+<li>Certificate of Specialty</li>
+<li>Professional Liability Insurance Certificate</li>
+<li>Written description of any claims made or resolved, if any</li>
+<li>Completed and signed Form W-9.2</li>
+<li>Photos of the outside of your business location, waiting room and exam room, parking lot, and restroom.</li>
+</ul>
+<p>Please look out for further communication from us with respect to Infinite CareNet portal setup, training sessions etc.</p>
+<p>We invite you to visit our website at www.infinitecarenet.com for the latest information on Infinite CareNet.</p>
+<p>Please feel free to contact your Provider Relations Representative at (301) 355-7774 with any questions you may have.</p>
+
+Best Regards,
+Provider Relations Team
+Infinite CARENET | Health Assessments for those who serve and have served
+Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com
+
+This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com. 
+');
+}
