@@ -9,7 +9,7 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
     $form['actions']['submit']['#value'] = 'Save Draft';
     $destination = 'users';
     $form['actions']['cancel'] = array(
-        '#type' => 'button',
+        '#type' => 'submit',
         '#value' => t('Cancel'),
         '#weight' => 20,
         '#submit' => array('carenet_profile_form_cancel','carenet_profile_form_cancel2'),
