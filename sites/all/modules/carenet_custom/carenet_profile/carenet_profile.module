@@ -21,8 +21,8 @@ function carenet_profile_form_profile2_form_alter(&$form, &$form_state) {
             '#submit' => array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler'),
         );
         $form['#sign'] = array('carenet_profile_form_user_sign','user_profile_form_submit','profile2_form_submit_handler');
-        $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
-        $form['some_text']['#weight'] = 100;
+        //$form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
+        //$form['some_text']['#weight'] = 100;
         $test = 1;
         if ($test == 1) {
             $form['#attributes'] = array('disabled' => TRUE);
