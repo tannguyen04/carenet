@@ -104,11 +104,10 @@ function carenet_update_update_7006(&$sandbox) {
 //  }
 //}
 
-/*
- * Implements hook_update_N
- * Update variable mail
+/**
+ * Implements hook_update_N()
+ * Setvariable
  */
-
 function carenet_update_update_7008(&$sandbox) {
   variable_set('email_provider_accept_body', '<p>Dear [user:field_full_name],</p>
 <p>Welcome to the Infinite CareNet family of healthcare providers.  We look forward to working with you for the purpose of providing disability assessment to Veterans and Service Members in a timely manner.</p>
@@ -137,11 +136,8 @@ function carenet_update_update_7008(&$sandbox) {
 <p>We invite you to visit our website at www.infinitecarenet.com for the latest information on Infinite CareNet.</p>
 <p>Please feel free to contact your Provider Relations Representative at (301) 355-7774 with any questions you may have.</p>
 
-Best Regards,
-Provider Relations Team
-Infinite CARENET | Health Assessments for those who serve and have served
-Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com
-
-This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com. 
-');
+<p>Best Regards,</p>
+<p></p><p style="color:blue;"><img src="/sites/all/themes/evolve/logo.png" width="50" height="auto" style="float:left;margin-right:20px" />Provider Relations Team<br />Infinite CARENET | Health Assessments for those who serve and have served<br />Tel: (301) 355-7774 | Fax: (301) 330-8501 | www.infinitecarenet.com  | partnerships@infinitecarenet.com</p>
+<p></p>
+<p style="color:gray;"><i>This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). If you are not the intended recipient, please notify so to the sender by e-mail and delete the original message. In such cases, please notify us immediately at info@infinitecarenet.com.</i></p>');
 }
