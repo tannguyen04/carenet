@@ -5,8 +5,7 @@
 function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $form_id) {
     //drupal_add_js(array('carenet_profile' => array('key' => 'value')), 'setting');
     drupal_add_js(drupal_get_path('module', 'carenet_profile') . '/js/carenet_profile.js');
-    dpm($form);
-    dpm($form_state);
+
     $form['actions']['submit']['#value'] = 'Save Draft';
     $destination = 'users';
     $form['actions']['cancel'] = array(
@@ -23,6 +22,8 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
     );
     $form['some_text']['#markup'] = 'I, as the designated Office Administrator, certify that the information provided above is true and correct as of the date on this application';
     $form['some_text']['#weight'] = 100;
+    dpm($form);
+    dpm($form_state);
 }
 /**
  * cancel_button callback.
