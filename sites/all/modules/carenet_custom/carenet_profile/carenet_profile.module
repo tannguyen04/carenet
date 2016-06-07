@@ -13,7 +13,7 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
         '#type' => 'button',
         '#value' => t('Cancel'),
         '#weight' => 20,
-        '#submit' => array('carenet_profile_form_cancel'),
+        '#submit' => array('carenet_profile_form_cancel','carenet_profile_form_cancel2'),
     );
     $form['actions']['preview'] = array(
         '#type' => 'submit',
@@ -30,19 +30,18 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
 function carenet_profile_form_cancel($form, &$form_state) {
     dpm('carenet_profile_form_cancel');
 
-    $link = '';
-    $path = 'node';
-    if('user_profile_form' == $form['#form_id']){
-        $path = 'user';
-    }
-    if(arg(1) == 'add') {
-        // If adding entity link to [user|node]/add screen
-        $link = $path . '/add';
-    }
-    elseif(arg(2) == 'edit') {
+    $link = 'user';
+
+    if(arg(2) == 'edit') {
         // If editing entity, link to node view screen
-        $link = $path . '/' . arg(1);
+        $link = $link . '/' . arg(1);
     }
+    dpm($link);
+    //drupal_goto($link);
+}
+function carenet_profile_form_cancel2($form, &$form_state) {
+    dpm('carenet_profile_form_cancel');
+    $link = 'user';
     dpm($link);
     //drupal_goto($link);
 }
