@@ -12,7 +12,7 @@ function carenet_profile_form_user_profile_form_alter(&$form, &$form_state, $for
         '#type' => 'submit',
         '#value' => t('Cancel'),
         '#weight' => 20,
-        '#submit' => array('carenet_profile_form_cancel','carenet_profile_form_cancel2'),
+        '#submit' => array('carenet_profile_form_user_cancel2'),
     );
     $form['actions']['preview'] = array(
         '#type' => 'submit',
@@ -34,13 +34,12 @@ function carenet_profile_form_cancel($form, &$form_state) {
     $link = 'user';
 
     if(arg(2) == 'edit') {
-        // If editing entity, link to node view screen
         $link = $link . '/' . arg(1);
     }
     dpm($link);
     //drupal_goto($link);
 }
-function carenet_profile_form_cancel2($form, &$form_state) {
+function carenet_profile_form_user_cancel2($form, &$form_state) {
     dpm('carenet_profile_form_cancel');
     $link = 'user';
     dpm($link);
