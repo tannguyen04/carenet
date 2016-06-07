@@ -417,6 +417,7 @@ function profile2_attach_form(&$form, &$form_state) {
   }
   $form['#validate'][] = 'profile2_form_validate_handler';
   $form['#submit'][] = 'profile2_form_submit_handler';
+  dpm($form);
 }
 
 /**
