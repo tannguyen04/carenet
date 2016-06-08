@@ -28,8 +28,58 @@ function carenet_provider_active_form_program_review($form, &$form_state) {
   $form = array(
     '#type' => 'container'
   );
+
+  $markup = '<h3>Program Summary</h3>
+    <p>Established in 2001, Infinite is a globally established organization with over 5000 employees across 16 locations. Infinite provides a multitude of solutions and services, specializing in the Healthcare, Banking & Finance, Telecommunications & Technology and Media & Publishing industries for Fortune 1000 companies including Federal Government. For more information visit <a href="http://www.infinite.com/">www.infinite.com.</a></p>
+    <p>Infinite CareNET (<a href="http://www.infinitecarenet.com/">www.infinitecarenet.com</a>) is a strategic business unit under Infinite’s Healthcare division that has established its provider network to provide health assessments for Veterans across the USA. Our strong network of physicians and medical staff conduct evaluations and capture information required by referring organizations. Our healthcare providers work with the details of each individual to ensure that matters are handled with the respect and sensitivity they deserve. </p>
+    <p>Due to the increase in demand of CareNET’s services, we are rapidly enhancing our network of healthcare providers.  We are looking for healthcare providers across most specialties including General Practitioners, Audiologist, Psychiatrist, Neurologist, Dentist, etc. </p>
+    <p>Our team will be working very closely to make sure that the process remains simple and easy to follow for the network with online tools, training and a help desk to mitigate any issues.</p>
+    <p>Once you express interest in getting more detail, Infinite will provide all the reimbursement rates and contract details through our automated portal.  Rates are dependent on the complexity of the health assessment being conducted.</p>
+    <h3>Key Highlights</h3>
+    <ul>
+        <li>The assessments are single sessions of 30-60 minutes that involve no therapeutic intervention, follow-ups or prescriptions.</li>
+        <li>Payments will be made directly by Infinite within 30 days of uploading of completed a requested Benefits Questionnaire (DBQ) and other required information</li>
+        <li>All examinations are to be performed in an OSHA/ADA compliant facility.</li>
+        <li>Examinations can be provided by a physician, physician assistant or Nurse Practitioner.</li>
+        <li>All providers need to be State licensed and have active certifications.</li>
+        <li>Typically, each Veteran’s assessment request will include 1-2 questionnaires while others might have additional forms depending on their medical history and condition. Examples of DBQs -
+            <ul>
+                <li>General Medicine - <a href="http://www.vba.va.gov/pubs/forms/VBA-21-0960M-10-ARE.pdf">Muscle Injuries</a></li>
+                <li>Ophthalmology - <a href="http://www.vba.va.gov/pubs/forms/VBA-21-0960N-2-ARE.pdf">Eye Conditions</a></li>
+                <li>Psychiatry - <a href="http://www.vba.va.gov/pubs/forms/VBA-21-0960P-3-ARE.pdf">Review Post Traumatic Stress Disorder (PTSD)</a></li>
+                <li>Audiology - <a href="http://www.vba.va.gov/pubs/forms/VBA-21-0960N-1-ARE.pdf">Ear Conditions (including Vestibular and Infectious Conditions)</a></li>
+            </ul>
+        </li>
+        <li>The entire process is managed via Infinite CareNET’s state-of-the-art provider portal where you will be able to submit responses against each of the DBQs online. Infinite CareNet team will provide training, dedicated IT support and assign a relationship manager to your practice.</li>
+        <li>Should a computer-centric approach not be practical, although it is more HIPAA compliant and less cumbersome, Infinite CareNet will fax documents to your office and mail copies to the Veteran. The evaluation may then be faxed to a designated fax number.</li>
+        <li>Appointment scheduling is completed between 7-10 days giving you the option of setting your own pace and accepting as many or as few appointments as you wish to accommodate on your schedule.</li>
+    </ul>
+    <h3>The Process</h3>
+    <ul>
+        <li>Infinite will train the medical network on how to manage evaluations</li>
+        <li>Schedule Veteran Appointment</li>
+        <li>Provider will conduct the examinations based on the health condition being assessed</li>
+        <li>Provider will also receive a list of diagnostic tests to be conducted on order to make the evaluation</li>
+        <li>Provider will submit paperwork post assessment via the online portal</li>
+        <li>Infinite CareNET will provide payment per contract terms</li>
+    </ul>
+    <h3>Key Benefits</h3>
+    <ul>
+        <li>Opportunity to augment revenue stream with low overhead</li>
+        <li>No interface with insurance companies</li>
+        <li>Robust volume</li>
+        <li>Ability to see additional patients as part of the normal work day</li>
+        <li>Evaluations may be conducted by physicians, physician extenders, or independent licensed practitioners to allow for optimization of services provided with cost to deliver the service</li>
+        <li>Online tools and workflows creating a simplified process to follow</li>
+        <li>Great opportunity to serve Veterans who have served our country</li>
+    </ul>
+  ';
+
   $form['program_review'] = array(
     '#markup' => variable_get('carenet_provider_active_program_review', ''),
+  );
+  $form['program_review'] = array(
+    '#markup' => $markup,
   );
   return $form;
 }
@@ -105,6 +155,7 @@ function carenet_provider_active_form_contract($form, &$form_state) {
 //    ),
 //  ));
   $contract_file = file_load(variable_get('carenet_contract_file', 0));
+  $contract_file = file_uri_to_object('public://infinite_contract/Participation__AGREEMENT_Final.pdf');
   if ($contract_file) {
     $form['pdf_contract'] = array(
       '#theme' => 'pdf_formatter_default',
