@@ -4,41 +4,6 @@
  * Form admin provider active
  */
 function carenet_admin_provider_active_form($form, &$form_state) {
-  if (!isset($sandbox['total'])) {
-    //$result = db_query('SELECT nid FROM {node} WHERE type="fortune_cookie"');
-
-    $query = new EntityFieldQuery();
-    $query->entityCondition('entity_type', 'node')
-      ->entityCondition('bundle', 'discuss')
-      ->propertyCondition('status', NODE_PUBLISHED)
-      ->fieldCondition('field_list_provider', 'target_id', 'NULL', '!=')
-      ->addMetaData('account', user_load(1)); // Run the query as user 1.
-    $result = $query->execute();
-    $sandbox['total'] = count($result['node']);
-    $sandbox['current'] = 0;
-  }
-  if (isset($result['node'])) {
-    $news_items_nids = array_keys($result['node']);
-    $news_items = entity_load('node', $news_items_nids);
-    foreach ($news_items as $discussion) {
-      $ewrapper = entity_metadata_wrapper('node', $discussion);
-      $dc_status = $ewrapper->field_dc_status->value()->tid;
-      //Update provider status same discussion status
-      $providers = $ewrapper->field_list_provider->value();
-      if (!empty($providers)) {
-        foreach ($providers as $key => $provider) {
-          if ($provider) {
-            $wrap_provider = entity_metadata_wrapper('node', $provider);
-            $wrap_provider->field_pv_status->set($dc_status);
-            $wrap_provider->save();
-          }
-        }
-      }
-      drupal_set_message(t('We processed node @nid', array('@nid' => $discussion->title)));
-      $sandbox['current']++;
-    }
-  }
-
   $form['carenet_signature'] = array(
     '#type' => 'managed_file',
     '#title' => t('Signature'),
