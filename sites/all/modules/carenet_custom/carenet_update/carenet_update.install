@@ -150,3 +150,60 @@ function carenet_update_update_7008(&$sandbox) {
 
   variable_set('email_provider_receive_when_ask_question_subject', 'Dear [user:name]');
 }
+
+/**
+ * Implements hook_update_N()
+ * Sync status provider and discussion
+ */
+function carenet_update_update_7011(&$sandbox) {
+  // If this is the first pass through this update function then set some variables.
+  if (!isset($sandbox['total'])) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+      ->entityCondition('bundle', 'discuss')
+      ->propertyCondition('status', NODE_PUBLISHED)
+      ->fieldCondition('field_list_provider', 'target_id', 'NULL', '!=')
+      ->addMetaData('account', user_load(1)); // Run the query as user 1.
+    $result = $query->execute();
+    $sandbox['total'] = count($result['node']);
+    $sandbox['current'] = 0;
+  }
+
+  $nodes_per_pass = 10;
+
+// Get the nodes to process during this pass.
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'discuss')
+    ->propertyCondition('status', NODE_PUBLISHED)
+    ->fieldCondition('field_list_provider', 'target_id', 'NULL', '!=')
+    ->range($sandbox['current'], $nodes_per_pass)
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $news_items_nids = array_keys($result['node']);
+    $news_items = entity_load('node', $news_items_nids);
+    foreach ($news_items as $discussion) {
+      $ewrapper = entity_metadata_wrapper('node', $discussion);
+      $dc_status = $ewrapper->field_dc_status->value()->tid;
+      //Update provider status same discussion status
+      $providers = $ewrapper->field_list_provider->value();
+      if (!empty($providers)) {
+        foreach ($providers as $key => $provider) {
+          if ($provider) {
+            $wrap_provider = entity_metadata_wrapper('node', $provider);
+            $wrap_provider->field_pv_status->set($dc_status);
+            $wrap_provider->save();
+          }
+        }
+      }
+      drupal_set_message(t('We processed node @nid', array('@nid' => $discussion->title)));
+      $sandbox['current']++;
+    }
+  }
+  // Set the value for finished. If current == total then finished will be 1, signifying we are done.
+  $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  if ($sandbox['#finished'] === 1) {
+    drupal_set_message(t('We processed @nodes nodes. DONE!!!', array('@nodes' => $sandbox['total'])));
+  }
+}
